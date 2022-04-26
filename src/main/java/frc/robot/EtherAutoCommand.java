@@ -38,27 +38,29 @@ public class EtherAutoCommand extends CommandBase {
   @Override
   public void initialize() {
     //train.startDrive();
-    //train.setDist(totalDistance);
-    //train.setEtherAuto(totalDistance);
+    train.zero();
+    //SmartDashboard.putNumber("anglglgl", DISTANGLE.angleuno);
+    //SmartDashboard.putNumber("distt", DISTANGLE.distanceuno);
+    train.setEtherAuto(totalDistance);
     //SmartDashboard.putBoolean("key", true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //train.etherAutoUpdate(thetaTurn, RCWauto, mode, turny, turnyAuto);
+    train.etherAutoUpdate(thetaTurn, RCWauto, mode, turny, turnyAuto);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //MkSwerveTrain.getInstance().stopEverything();
+    //train.stopEverything();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
    // SmartDashboard.putBoolean("false", false);
-    return true;
+    return train.isFinished();
   }
 }

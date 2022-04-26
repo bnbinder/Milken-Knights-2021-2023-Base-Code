@@ -109,6 +109,19 @@ public class MkSwerveTrain
         modules[3].turnMotor().set(ControlMode.Position, angle);
     }
 
+    public void zero()
+    {
+        modules[0].zeroDrive();
+        modules[1].zeroDrive();
+        modules[2].zeroDrive();
+        modules[3].zeroDrive();
+
+        modules[0].zeroTurn();
+        modules[1].zeroTurn();
+        modules[2].zeroTurn();
+        modules[3].zeroTurn();
+    }
+
     public void stopEverything()
     {
         modules[0].setModule(0, ControlMode.PercentOutput, 0, ControlMode.PercentOutput);
@@ -168,13 +181,21 @@ public class MkSwerveTrain
             if(vars.max>1){vars.mod1[0]/=vars.max; vars.mod2[0]/=vars.max; vars.mod3[0]/=vars.max; vars.mod4[0]/=vars.max;}
         }
 
-        SmartDashboard.putNumber("wa1", vars.mod1[1]);
+
 
         vars.mod1 = setDirection(modules[1].turnMotor().getSelectedSensorPosition(), vars.mod1);
         vars.mod2 = setDirection(modules[0].turnMotor().getSelectedSensorPosition(), vars.mod2);
         vars.mod3 = setDirection(modules[2].turnMotor().getSelectedSensorPosition(), vars.mod3);
         vars.mod4 = setDirection(modules[3].turnMotor().getSelectedSensorPosition(), vars.mod4);
 
+      /*if(mode == ControlMode.MotionMagic)
+        {
+            vars.mod1[0] = Math.abs(vars.mod1[0]);
+            vars.mod2[0] = Math.abs(vars.mod2[0]);
+            vars.mod3[0] = Math.abs(vars.mod3[0]);
+            vars.mod4[0] = Math.abs(vars.mod4[0]);
+        }*/
+        SmartDashboard.putNumber("wa1", vars.mod1[1]);
         modules[1].setModule(vars.mod1[0], mode, MathFormulas.degreesToNative(vars.mod1[1], MKTURN.greerRatio));
         modules[0].setModule(vars.mod2[0], mode, MathFormulas.degreesToNative(vars.mod2[1], MKTURN.greerRatio));
         modules[2].setModule(vars.mod3[0], mode, MathFormulas.degreesToNative(vars.mod3[1], MKTURN.greerRatio));
@@ -230,13 +251,14 @@ public class MkSwerveTrain
 
     public void setDist(double setpoint)
     {
-        vars.autoDist = MathFormulas.inchesToNative(setpoint);
+        
     }
 
     //turn distance is degrees
 
     public void setEtherAuto(double totalDistance)
     {
+        vars.autoDist = MathFormulas.inchesToNative(totalDistance);
         vars.totalDistance = totalDistance;
         vars.avgDistInches = 0;
     }
@@ -253,10 +275,11 @@ public class MkSwerveTrain
     public void etherAutoUpdate(double thetaTurn, double RCWauto, ETHERAUTO mode, ETHERRCW turny, double turnyAuto)
     {
         double RCWtemp = RCWauto;
+        double calcangle = (90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn));
         if(mode == ETHERAUTO.Curve)
         {
-            vars.FWDauto = Math.cos(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
-            vars.STRauto = Math.sin(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
+            vars.FWDauto = Math.cos(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
+            vars.STRauto = Math.sin(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         }
         else if(mode == ETHERAUTO.Straight)
         {
@@ -267,13 +290,18 @@ public class MkSwerveTrain
         {
             RCWtemp = headerStraighter(turnyAuto);
         }
+        else 
+        {
+            RCWtemp = RCWauto;
+        }
         etherSwerve(vars.FWDauto, -vars.STRauto, RCWtemp, ControlMode.MotionMagic);
+        SmartDashboard.putNumber("calc", calcangle);
         SmartDashboard.putNumber("dist", vars.avgDistInches);
     }
 
     public boolean isFinished()
     {
-        return vars.avgDistInches >= Math.abs(vars.totalDistance) - 1;
+        return Math.abs(vars.avgDistInches) >= Math.abs(vars.totalDistance) - 0.1;
     }
 
     /**Mode of the ether auto's path*/

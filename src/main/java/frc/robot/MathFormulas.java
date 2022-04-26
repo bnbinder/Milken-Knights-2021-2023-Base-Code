@@ -62,7 +62,7 @@ public class MathFormulas {
      */
     public static double calculateArcOfPath(double distanceA, double lengthB) {
         double radius = calculateCircleRadius(distanceA, lengthB);
-        double theta = 2 * (Math.toDegrees((Math.asin((distanceA / (2 * radius))))));
+        double theta = calculateAngleOfPath(distanceA, lengthB);//2 * (Math.toDegrees((Math.asin((distanceA / (2 * radius))))));
         return (theta / 360) * (2 * (Constants.kPi * radius));
     }
 

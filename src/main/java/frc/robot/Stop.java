@@ -9,6 +9,7 @@ import frc.robot.MkSwerveTrain;
 
 public class Stop extends CommandBase {
   /** Creates a new Stop. */
+  private MkSwerveTrain train = MkSwerveTrain.getInstance();
   public Stop() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -16,13 +17,13 @@ public class Stop extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    MkSwerveTrain.getInstance().stopEverything();
+    train.stopEverything();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    MkSwerveTrain.getInstance().stopEverything();
+    train.stopEverything();
   }
 
   // Called once the command ends or is interrupted.

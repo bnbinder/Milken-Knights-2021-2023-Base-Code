@@ -281,8 +281,8 @@ public final class Constants {
 
         public static class DISTANGLE 
         {
-            public static final double distanceuno = MathFormulas.calculateArcOfPath(24, 24);
-            public static final double angleuno = MathFormulas.calculateAngleOfPath(24, 24);
+            public static final double distanceuno = MathFormulas.calculateArcOfPath(50, 10);// + 20;//1;
+            public static final double angleuno = MathFormulas.calculateAngleOfPath(50, 10);
         }
         //auto controlling pid
         public static final double turnSwerveControlKp = 1;

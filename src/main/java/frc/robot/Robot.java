@@ -4,9 +4,14 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.AUTO.DISTANGLE;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -20,6 +25,8 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
   private Command m_autonomousCommand;
+  private XboxController xbox = new XboxController(0);
+  private double fwd, str, rcw;
   private MkSwerveTrain train = MkSwerveTrain.getInstance();
   @Override
   public void robotInit() {
@@ -54,7 +61,44 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    
+    fwd = (xbox.getRawAxis(1) - 0.1) / (1 - 0.1);
+    str = (xbox.getRawAxis(0) - 0.1) / (1 - 0.1);
+    rcw = (xbox.getRawAxis(5) - 0.1) / (1 - 0.1);
+      
+
+
+      if(Math.abs(xbox.getRawAxis(1)) < 0.1)
+      {
+        fwd = 0;
+      }
+      if(Math.abs(xbox.getRawAxis(0)) < 0.1)
+      {
+        str = 0;
+      }
+      if(Math.abs(xbox.getRawAxis(5)) < 0.1)
+      {
+        rcw = 0;
+      }
+
+      
+
+      if(fwd != 0 || str != 0 || rcw != 0)
+      {
+        //weird negative cuz robot is weird. should be negative fwd positive str rcw
+        train.etherSwerve(fwd/5, -str/5, rcw/5, ControlMode.PercentOutput); //+,-,+
+        //mDrive.updateDriveDriveRaw();
+      }
+      else
+      {
+        train.stopEverything();
+      }
+      if(xbox.getAButton())
+      {
+        navx.getInstance().getNavx().zeroYaw();
+      }
+  }
 
   @Override
   public void disabledInit() {}
@@ -63,8 +107,14 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {}
 
   @Override
-  public void testInit() {}
+  public void testInit() {
+    train.zero();
+    train.stopEverything();
+    SmartDashboard.putNumber("anglglgl", DISTANGLE.angleuno);
+    SmartDashboard.putNumber("distttt", DISTANGLE.distanceuno);
+  }
 
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() 
+  {}
 }
