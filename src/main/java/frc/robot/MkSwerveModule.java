@@ -129,6 +129,21 @@ public class MkSwerveModule
         return turn;
     }
 
+    public double getDrivePos()
+    {
+        return drive.getSelectedSensorPosition();
+    }
+
+    public double getTurnDeg()
+    {
+        return MathFormulas.nativeToDegrees(turn.getSelectedSensorPosition(), MKTURN.greerRatio);
+    }
+
+    public void configKp(double setpoint)
+    {
+        drive.config_kP(0, setpoint);
+    }
+
     public CANCoder encoder()
     {
         return encoder;

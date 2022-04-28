@@ -20,7 +20,8 @@ public class Swrv extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(//deadline(new Turn(((DISTANGLE.angleuno)))).withTimeout(1),
-    deadline(new EtherAutoCommand(DISTANGLE.distanceuno, ((DISTANGLE.angleuno)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever)).withTimeout(6));
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distanceuno, ((DISTANGLE.angleuno)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever)).withTimeout(6));
+    //deadline(new EtherAutoCommand(DISTANGLE.distancedos, ((DISTANGLE.angledos)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever)).withTimeout(6));
              // deadline(new Stop()));
   }
 }

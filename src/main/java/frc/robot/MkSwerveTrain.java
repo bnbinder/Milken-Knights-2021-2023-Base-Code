@@ -22,27 +22,18 @@ import frc.robot.MathFormulas;
 public class MkSwerveTrain 
 {
     public variables vars;
-    private MkSwerveModule[] modules = {
-        new MkSwerveModule(CANID.MkTrainIds[0], MKCANCODER.offset[0], MKDRIVE.pidf, MKTURN.pidf),
-        new MkSwerveModule(CANID.MkTrainIds[1], MKCANCODER.offset[1], MKDRIVE.pidf, MKTURN.pidf),
-        new MkSwerveModule(CANID.MkTrainIds[2], MKCANCODER.offset[2], MKDRIVE.pidf, MKTURN.pidf),
-        new MkSwerveModule(CANID.MkTrainIds[3], MKCANCODER.offset[3], MKDRIVE.pidf, MKTURN.pidf)
-    };
+    private MkSwerveModule topLeftModule = new MkSwerveModule(CANID.topLeftCANID, MKCANCODER.offset[0], MKDRIVE.pidf, MKTURN.pidf);
+    private MkSwerveModule topRightModule = new MkSwerveModule(CANID.topRightCANID, MKCANCODER.offset[1], MKDRIVE.pidf, MKTURN.pidf);
+    private MkSwerveModule bottomLeftModule = new MkSwerveModule(CANID.bottomLeftCANID, MKCANCODER.offset[2], MKDRIVE.pidf, MKTURN.pidf);
+    private MkSwerveModule bottomRightModule = new MkSwerveModule(CANID.bottomRightCANID, MKCANCODER.offset[3], MKDRIVE.pidf, MKTURN.pidf);
 
     private MkSwerveTrain()
     {
         vars = new variables();
-        vars.deg = new double[4];
-        vars.posInch = new double[4];
-        vars.posMeters = new double[4];
-        vars.posNative = new double[4];
-        vars.velInch = new double[4];
-        vars.velMeters = new double[4];
-        vars.velNative = new double[4];
-        vars.mod1 = new double[2];
-        vars.mod2 = new double[2];
-        vars.mod3 = new double[2];
-        vars.mod4 = new double[2];
+        vars.mod1 = new double[4];
+        vars.mod2 = new double[4];
+        vars.mod3 = new double[4];
+        vars.mod4 = new double[4];
     }
 
     public static MkSwerveTrain getInstance()
@@ -52,82 +43,63 @@ public class MkSwerveTrain
 
     public void startTrain()
     {
-        for(int i = 0; i < modules.length; i++)
-        {
-            modules[i].zeroTurn();
-            modules[i].zeroDrive();
-        }
+        topLeftModule.zeroDrive();
+        topRightModule.zeroDrive();
+        bottomLeftModule.zeroDrive();
+        bottomRightModule.zeroDrive();
+
+        topLeftModule.zeroTurn();
+        topRightModule.zeroTurn();
+        bottomLeftModule.zeroTurn();
+        bottomRightModule.zeroTurn();
     }
 
     public void startDrive()
     {
-        modules[0].zeroDrive();
-        modules[1].zeroDrive();
-        modules[2].zeroDrive();
-        modules[3].zeroDrive();
+        topLeftModule.zeroDrive();
+        topRightModule.zeroDrive();
+        bottomLeftModule.zeroDrive();
+        bottomRightModule.zeroDrive();
     }
 
     public void updateSwerve()
     {
-        SmartDashboard.putNumber("angle", vars.deg[0]);
-        for(int i = 0; i < modules.length; i++)
-        {
-            //vars.velNative[i] = modules[i].driveMotor().getVelocity();
-            
+        //SmartDashboard.putNumber("anglet", vars.deg[0]);
+        //SmartDashboard.putNumber("distancet", vars.posInch[0]);
+        SmartDashboard.putNumber("distancetopleft", vars.posInchTL);
+        SmartDashboard.putNumber("distancetopright", vars.posInchTR);
+        SmartDashboard.putNumber("distancetbotleft", vars.posInchBL);
+        SmartDashboard.putNumber("distancetbotright", vars.posInchBR);
+        vars.posInchTL = MathFormulas.nativeToInches(topLeftModule.getDrivePos());
+        vars.posInchTR = MathFormulas.nativeToInches(topRightModule.getDrivePos());
+        vars.posInchBL = MathFormulas.nativeToInches(bottomLeftModule.getDrivePos());
+        vars.posInchBR = MathFormulas.nativeToInches(bottomRightModule.getDrivePos());
 
-           vars.posNative[i] = modules[i].driveMotor().getSelectedSensorPosition();
-            
-           // vars.velInch[i] = MathFormulas.nativePer100MstoInchesPerSec(vars.velNative[i]);
-            
+        vars.degTL = topLeftModule.getTurnDeg();
+        vars.degTR = topRightModule.getTurnDeg();
+        vars.degBL = bottomLeftModule.getTurnDeg();
+        vars.degBR = bottomRightModule.getTurnDeg();
 
-            vars.posInch[i] = MathFormulas.nativeToInches(vars.posNative[i]);
-        
-            
-           // vars.velMeters[i] = MathFormulas.nativePer100MsToMetersPerSec(vars.velNative[i]);
-            
-
-           // vars.posMeters[i] = MathFormulas.nativeToMeters(vars.posNative[i]);
-
-           vars.deg[i] = MathFormulas.nativeToDegrees(modules[i].turnMotor().getSelectedSensorPosition(), MKTURN.greerRatio);
-        }
-        vars.avgDistInches = (Math.abs(vars.posInch[0]) + Math.abs(vars.posInch[1]) + Math.abs(vars.posInch[2]) + Math.abs(vars.posInch[3])) /4.0;
+        vars.avgDistInches = (Math.abs(vars.posInchTL) + Math.abs(vars.posInchTR) + Math.abs(vars.posInchBL) + Math.abs(vars.posInchBR)) /4.0;
      //vars.avgVelInches = (vars.velInch[0] + vars.velInch[1] + vars.velInch[2] + vars.velInch[3]) / 4.0;
        // vars.avgVelNative = (vars.velNative[0] + vars.velNative[1] + vars.velNative[2] + vars.velNative[3]) / 4.0;
-      vars.avgDeg = (vars.deg[0] + vars.deg[1] + vars.deg[2] + vars.deg[3]) / 4.0;
-    }
-
-    public MkSwerveModule[] getModules()
-    {
-        return modules;
+        vars.avgDeg = (vars.degTL + vars.degTR + vars.degBL + vars.degBR) / 4.0;
     }
 
     public void setModuleTurn(double angle)
     {
-        modules[0].turnMotor().set(ControlMode.Position, angle);
-        modules[1].turnMotor().set(ControlMode.Position, angle);
-        modules[2].turnMotor().set(ControlMode.Position, angle);
-        modules[3].turnMotor().set(ControlMode.Position, angle);
-    }
-
-    public void zero()
-    {
-        modules[0].zeroDrive();
-        modules[1].zeroDrive();
-        modules[2].zeroDrive();
-        modules[3].zeroDrive();
-
-        modules[0].zeroTurn();
-        modules[1].zeroTurn();
-        modules[2].zeroTurn();
-        modules[3].zeroTurn();
+        topLeftModule.turnMotor().set(ControlMode.Position, angle);
+        topRightModule.turnMotor().set(ControlMode.Position, angle);
+        bottomLeftModule.turnMotor().set(ControlMode.Position, angle);
+        bottomRightModule.turnMotor().set(ControlMode.Position, angle);
     }
 
     public void stopEverything()
     {
-        modules[0].setModule(0, ControlMode.PercentOutput, 0, ControlMode.PercentOutput);
-        modules[1].setModule(0, ControlMode.PercentOutput, 0, ControlMode.PercentOutput);
-        modules[2].setModule(0, ControlMode.PercentOutput, 0, ControlMode.PercentOutput);
-        modules[3].setModule(0, ControlMode.PercentOutput, 0, ControlMode.PercentOutput);
+        topLeftModule.setModule(0, ControlMode.PercentOutput, 0, ControlMode.PercentOutput);
+        topRightModule.setModule(0, ControlMode.PercentOutput, 0, ControlMode.PercentOutput);
+        bottomLeftModule.setModule(0, ControlMode.PercentOutput, 0, ControlMode.PercentOutput);
+        bottomRightModule.setModule(0, ControlMode.PercentOutput, 0, ControlMode.PercentOutput);
     }
 
      /**
@@ -155,8 +127,8 @@ public class MkSwerveTrain
         vars.C = FWD - RCW*(MKTRAIN.W/MKTRAIN.R);
         vars.D = FWD + RCW*(MKTRAIN.W/MKTRAIN.R);
 
-        vars.mod1[1] = Math.atan2(vars.B,vars.C)*180/Constants.kPi;
-        vars.mod2[1] = Math.atan2(vars.B,vars.D)*180/Constants.kPi;
+        vars.mod2[1] = Math.atan2(vars.B,vars.C)*180/Constants.kPi;
+        vars.mod1[1] = Math.atan2(vars.B,vars.D)*180/Constants.kPi;
         vars.mod3[1] = Math.atan2(vars.A,vars.D)*180/Constants.kPi;
         vars.mod4[1] = Math.atan2(vars.A,vars.C)*180/Constants.kPi; 
 
@@ -172,8 +144,8 @@ public class MkSwerveTrain
         else
         {
             
-            vars.mod1[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.C, 2)));      
-            vars.mod2[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.D, 2))); 
+            vars.mod2[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.C, 2)));      
+            vars.mod1[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.D, 2))); 
             vars.mod3[0] = Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.D, 2)));           
             vars.mod4[0] = Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.C, 2)));
         
@@ -183,10 +155,10 @@ public class MkSwerveTrain
 
 
 
-        vars.mod1 = setDirection(modules[1].turnMotor().getSelectedSensorPosition(), vars.mod1);
-        vars.mod2 = setDirection(modules[0].turnMotor().getSelectedSensorPosition(), vars.mod2);
-        vars.mod3 = setDirection(modules[2].turnMotor().getSelectedSensorPosition(), vars.mod3);
-        vars.mod4 = setDirection(modules[3].turnMotor().getSelectedSensorPosition(), vars.mod4);
+        vars.mod1 = setDirection(topLeftModule.getTurnDeg(), vars.mod1);
+        vars.mod2 = setDirection(topLeftModule.getTurnDeg(), vars.mod2);
+        vars.mod3 = setDirection(topLeftModule.getTurnDeg(), vars.mod3);
+        vars.mod4 = setDirection(topLeftModule.getTurnDeg(), vars.mod4);
 
       /*if(mode == ControlMode.MotionMagic)
         {
@@ -196,10 +168,10 @@ public class MkSwerveTrain
             vars.mod4[0] = Math.abs(vars.mod4[0]);
         }*/
         SmartDashboard.putNumber("wa1", vars.mod1[1]);
-        modules[1].setModule(vars.mod1[0], mode, MathFormulas.degreesToNative(vars.mod1[1], MKTURN.greerRatio));
-        modules[0].setModule(vars.mod2[0], mode, MathFormulas.degreesToNative(vars.mod2[1], MKTURN.greerRatio));
-        modules[2].setModule(vars.mod3[0], mode, MathFormulas.degreesToNative(vars.mod3[1], MKTURN.greerRatio));
-        modules[3].setModule(vars.mod4[0], mode, MathFormulas.degreesToNative(vars.mod4[1], MKTURN.greerRatio));
+        topLeftModule.setModule(vars.mod1[0], mode, MathFormulas.degreesToNative(vars.mod1[1], MKTURN.greerRatio));
+        topRightModule.setModule(vars.mod2[0], mode, MathFormulas.degreesToNative(vars.mod2[1], MKTURN.greerRatio));
+        bottomLeftModule.setModule(vars.mod3[0], mode, MathFormulas.degreesToNative(vars.mod3[1], MKTURN.greerRatio));
+        bottomRightModule.setModule(vars.mod4[0], mode, MathFormulas.degreesToNative(vars.mod4[1], MKTURN.greerRatio));
         //TODO velocity might break the drive pidf
     }
 
@@ -212,9 +184,9 @@ public class MkSwerveTrain
      * @return returns best angle of travel for the angular motor, as well as the flip value for the driving motor (as an array so it can return two things in one instead of two seperatly)
      * @author team 6624
      */
-    public static double[] setDirection(double position, double[] mod)
+    public static double[] setDirection(double pos, double[] mod)
     {
-        double currentAngle = MathFormulas.nativeToDegrees(position, MKTURN.greerRatio);
+        double currentAngle = pos;
         // find closest angle to setpoint
         double setpointAngle = MathFormulas.closestAngle(currentAngle, mod[1]);
         // find closest angle to setpoint + 180
@@ -223,13 +195,16 @@ public class MkSwerveTrain
         if (Math.abs(setpointAngle) <= Math.abs(setpointAngleFlipped))
         {
             // unflip the motor direction use the setpoint
+            //an = currentAngle + setpointAngle;
             return new double[] {mod[0],(currentAngle + setpointAngle)};
         }
         // if the closest angle to setpoint + 180 is shorter
         else
         {
             // flip the motor direction and use the setpoint + 180
-            return new double[] {Math.abs(mod[0]) * -1.0, (currentAngle + setpointAngleFlipped)};
+            //di = Math.abs(di) * -1.0; 
+            //an = currentAngle + setpointAngleFlipped;
+            return new double[] {Math.abs(mod[0]) * -1,(currentAngle + setpointAngleFlipped)};
         }
     }
 
@@ -256,11 +231,12 @@ public class MkSwerveTrain
 
     //turn distance is degrees
 
-    public void setEtherAuto(double totalDistance)
+    public void setEtherAuto(double totalDistance, double distanceA)
     {
         vars.autoDist = MathFormulas.inchesToNative(totalDistance);
         vars.totalDistance = totalDistance;
         vars.avgDistInches = 0;
+        vars.distanceA = distanceA;
     }
 
     /**
@@ -274,8 +250,10 @@ public class MkSwerveTrain
     */
     public void etherAutoUpdate(double thetaTurn, double RCWauto, ETHERAUTO mode, ETHERRCW turny, double turnyAuto)
     {
-        double RCWtemp = RCWauto;
-        double calcangle = (90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn));
+                                            //numbers fall short of high by 3ish inches and short of length by 4ish inches
+        double RCWtemp = RCWauto; //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
+                                                                            //minus subtracotr
+        double calcangle = (90-(thetaTurn/2))+((vars.avgDistInches/(vars.distanceA))*(thetaTurn));
         if(mode == ETHERAUTO.Curve)
         {
             vars.FWDauto = Math.cos(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
@@ -283,8 +261,8 @@ public class MkSwerveTrain
         }
         else if(mode == ETHERAUTO.Straight)
         {
-            vars.FWDauto = Math.cos(thetaTurn);
-            vars.STRauto = Math.sin(thetaTurn);
+            vars.FWDauto = Math.cos(thetaTurn* (Constants.kPi/180));
+            vars.STRauto = Math.sin(thetaTurn* (Constants.kPi/180));
         }
         if(turny == ETHERRCW.Specific)
         {
@@ -329,6 +307,7 @@ public class MkSwerveTrain
     public static class variables
     {
 
+        public double distanceA;
         public double STRauto;
         public double FWDauto;
     public double totalDistance;
@@ -339,38 +318,38 @@ public class MkSwerveTrain
         public double B;
         public double C;
         public double D;
-        public double mod1[];
-        public double mod2[];
-        public double mod3[];
-        public double mod4[];
+        public double[] mod1;
+        public double[] mod2;
+        public double[] mod3;
+        public double[] mod4;
         public double max;
 
         /**Distance variable for driving in autonomous*/
         public double straightDistance;
 
     /**Position of the driving motor in native units*/
-    public double[] posNative;
+    public double posNativeTL, posNativeTR, posNativeBL, posNativeBR;
        
     /**Position of the driving motor in inches*/
-    public double[] posInch;
+    public double posInchTL, posInchTR, posInchBL, posInchBR;
    
     /**Position of the driving motor in meters*/
-    public double[] posMeters;
+    public double posMetersTL, posMetersTR, posMetersBL, posMetersBR;
        
     /**Velocity of the driving motor in inches*/
-    public double[] velInch;
+    public double velInchTL, velInchTR, velInchBL, velInchBR;
    
     /**Velocity of the driving motor in native units*/
-    public double[] velNative;
+    public double velNativeTL, velNativeTR, velNativeBL, velNativeBR;
        
     /**Velocity of the driving motor in meters*/
-    public double[] velMeters;
+    public double velMetersTL, velMetersTR, velMetersBL, velMetersBR;
    
     /**Position of the turning motor in degrees*/
-    public double[] deg;
+    public double degTL, degTR, degBL, degBR;
    
     /**Driving motor values for autonomous*/
-    public double[] output;
+    //public double[] output;
    
     /**Average velocity of driving motors in inches*/
     public double avgVelInches;

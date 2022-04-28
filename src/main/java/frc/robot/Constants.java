@@ -56,7 +56,7 @@ public final class Constants {
 
     public static class MKTURN 
     {
-        public static final double kP = 0.085;//0.00008;
+        public static final double kP = 0.087;//0.00008;
         public static final double kI = 0;
         public static final double kD = 0.00000001;
         public static final double kF = 0;
@@ -183,7 +183,7 @@ public final class Constants {
 
     public static class NAVX 
     {
-        public static final double offset = 0;
+        public static final double offset = 180;
     }
 
     public static class CONTROLLERS 
@@ -267,22 +267,24 @@ public final class Constants {
 
         public static final int elevatorCANID = 10;
         
-        public static final int[][] MkTrainIds =
-        {
-            {topDriveLeftCANID, topTurnLeftCANID, topTurnLeftCANCoderCANID},
-            {topDriveRightCANID, topTurnRightCANID, topTurnRightCANCoderCANID},
-            {bottomDriveLeftCANID, bottomTurnLeftCANID, bottomTurnLeftCANCoderCANID},
-            {bottomDriveRightCANID, bottomTurnRightCANID, bottomTurnRightCANCoderCANID}
-        };
+        public static final int[] topLeftCANID = {topDriveLeftCANID, topTurnLeftCANID, topTurnLeftCANCoderCANID};
+        public static final int[] topRightCANID = {topDriveRightCANID, topTurnRightCANID, topTurnRightCANCoderCANID};
+        public static final int[] bottomLeftCANID = {bottomDriveLeftCANID, bottomTurnLeftCANID, bottomTurnLeftCANCoderCANID};
+        public static final int[] bottomRightCANID = {bottomDriveRightCANID, bottomTurnRightCANID, bottomTurnRightCANCoderCANID};
     }
 
     public static class AUTO
     {
 
         public static class DISTANGLE 
-        {
-            public static final double distanceuno = MathFormulas.calculateArcOfPath(50, 10);// + 20;//1;
-            public static final double angleuno = MathFormulas.calculateAngleOfPath(50, 10);
+        {                             
+            public static final double distanceA = 50;
+            public static final double lengthB = 10;///2;
+                                                                              //          /2
+            public static final double distanceuno = MathFormulas.calculateArcOfPath(distanceA, lengthB);
+            public static final double angleuno = -MathFormulas.calculateAngleOfPath(distanceA, lengthB);
+            public static final double distancedos = MathFormulas.calculateArcOfPath(distanceA, lengthB);
+            public static final double angledos = MathFormulas.calculateAngleOfPath(distanceA, lengthB);
         }
         //auto controlling pid
         public static final double turnSwerveControlKp = 1;

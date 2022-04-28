@@ -27,6 +27,11 @@ public class navx {
         return navx;
     }
 
+    public void reset()
+    {
+        navx.zeroYaw();
+    }
+
     private static class InstanceHolder
     {
         private static final navx mInstance = new navx();

@@ -41,7 +41,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = new Swrv();
-
+    train.startDrive();
     if (m_autonomousCommand != null) {
      // SmartDashboard.putBoolean("yuy", true);
       m_autonomousCommand.schedule();
@@ -58,11 +58,12 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    train.startDrive();
   }
 
   @Override
   public void teleopPeriodic() {
-    
+    train.updateSwerve();
     fwd = (xbox.getRawAxis(1) - 0.1) / (1 - 0.1);
     str = (xbox.getRawAxis(0) - 0.1) / (1 - 0.1);
     rcw = (xbox.getRawAxis(5) - 0.1) / (1 - 0.1);
@@ -96,7 +97,7 @@ public class Robot extends TimedRobot {
       }
       if(xbox.getAButton())
       {
-        navx.getInstance().getNavx().zeroYaw();
+        navx.getInstance().reset();
       }
   }
 
@@ -108,10 +109,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
-    train.zero();
+    train.startTrain();
     train.stopEverything();
     SmartDashboard.putNumber("anglglgl", DISTANGLE.angleuno);
     SmartDashboard.putNumber("distttt", DISTANGLE.distanceuno);
+    SmartDashboard.putNumber("radi", MathFormulas.calculateCircleRadius(50, 10));
   }
 
   @Override

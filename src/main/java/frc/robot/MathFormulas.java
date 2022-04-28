@@ -13,9 +13,9 @@ import frc.robot.Constants.MKFALCON;
 public class MathFormulas {
 /*
                                                   
-                                                   E
-                                               ~~~~~~~~~
-                                            ~~     +     ~~     
+                                                     E
+                                                 ~~~~~~~~~
+                                              ~~     +     ~~     
                              /o----o\       ~~       + B     ~~       /o----o\
                              |  (F) |  (2) ~~        +        ~~ (1)  |  (F) |
                              \o----o/      ==========A==========      \o----o/ 
@@ -50,7 +50,8 @@ public class MathFormulas {
      * @return Radius of the path
      */
     public static double calculateCircleRadius(double distanceA, double lengthB) {
-        return ((Math.pow(distanceA, 2) / 4) + Math.pow(lengthB, 2)) * (1 / (2 * lengthB));
+        //return ((Math.pow(distanceA, 2) / 4) + Math.pow(lengthB, 2)) * (1 / (2 * lengthB));
+        return ((lengthB/2) + ((Math.pow(distanceA, 2))/(8*lengthB)));
     }
 
     /**
@@ -63,7 +64,8 @@ public class MathFormulas {
     public static double calculateArcOfPath(double distanceA, double lengthB) {
         double radius = calculateCircleRadius(distanceA, lengthB);
         double theta = calculateAngleOfPath(distanceA, lengthB);//2 * (Math.toDegrees((Math.asin((distanceA / (2 * radius))))));
-        return (theta / 360) * (2 * (Constants.kPi * radius));
+        //return (theta / 360) * (2 * (Constants.kPi * radius));
+        return Math.toRadians(theta * radius);
     }
 
     /**
