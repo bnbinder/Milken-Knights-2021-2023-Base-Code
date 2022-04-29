@@ -21,9 +21,11 @@ public class EtherAutoCommand extends CommandBase {
   private ETHERRCW turny;
   private double turnyAuto;
   private double distanceA;
+  private double heading;
+  private int side;
   private MkSwerveTrain train = MkSwerveTrain.getInstance();
   
-  public EtherAutoCommand(double distanceA, double dist, double ang, double RCWauto, double turnyAuto, ETHERAUTO mode, ETHERRCW turny)
+  public EtherAutoCommand(double distanceA, double dist, double ang, double RCWauto, double turnyAuto, ETHERAUTO mode, ETHERRCW turny, int side, double heading)
   {
     this.RCWauto = RCWauto;
     this.mode = mode;
@@ -32,6 +34,8 @@ public class EtherAutoCommand extends CommandBase {
     this.thetaTurn = ang;
     this.turnyAuto = turnyAuto;
     this.distanceA = distanceA;
+    this.heading = heading;
+    this.side = side;
 
     //want theta turn, want turny auto, dont want rcw, curve and specific
   }
@@ -43,7 +47,7 @@ public class EtherAutoCommand extends CommandBase {
     //train.startTrain();
     //SmartDashboard.putNumber("anglglgl", DISTANGLE.angleuno);
     //SmartDashboard.putNumber("distt", DISTANGLE.distanceuno);
-    train.setEtherAuto(totalDistance, distanceA);
+    train.setEtherAuto(totalDistance, distanceA, side, heading);
     //SmartDashboard.putBoolean("key", true);
   }
 

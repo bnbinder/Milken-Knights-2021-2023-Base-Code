@@ -33,7 +33,7 @@ public final class Constants {
         public static final double kV = 0.1;
 
         public static final double maxNativeVelocity = 21600; 
-        public static final double maxNativeAcceleration = maxNativeVelocity / 10;
+        public static final double maxNativeAcceleration = maxNativeVelocity / 8;
         
         public static final double kP = 0.21;
         public static final double kI = 0;
@@ -278,13 +278,38 @@ public final class Constants {
 
         public static class DISTANGLE 
         {                             
+            /*
+                +, +, -, -
+            */
             public static final double distanceA = 50;
             public static final double lengthB = 10;///2;
+
+            public static final int sidePos = 1;
+            public static final int sideCon = -1;
+
+            public static final double headinguno = 90;
+            public static final double headingdos = -90;
+            public static final double headingtres = 90;
+            public static final double headingquad = -90;
+
+            public static final double headingsinco = 270;
+            public static final double headingsix = -270;
+            public static final double headingsev = 270;
+            public static final double headingocto = -270;
+
+            public static final double headingnine = 360;
+            public static final double headingten = 180;
+            public static final double headingele = 360;
+            public static final double headingtwel = 180;
+
+            public static final double headingthir = 360;
+            public static final double headingfourt = 180;
+            public static final double headingfif = 360;
+            public static final double headingsixt = 180;
                                                                               //          /2
-            public static final double distanceuno = MathFormulas.calculateArcOfPath(distanceA, lengthB);
-            public static final double angleuno = -MathFormulas.calculateAngleOfPath(distanceA, lengthB);
-            public static final double distancedos = MathFormulas.calculateArcOfPath(distanceA, lengthB);
-            public static final double angledos = MathFormulas.calculateAngleOfPath(distanceA, lengthB);
+            public static final double distance = MathFormulas.calculateArcOfPath(distanceA, lengthB);
+            public static final double angle = MathFormulas.calculateAngleOfPath(distanceA, lengthB);
+
         }
         //auto controlling pid
         public static final double turnSwerveControlKp = 1;

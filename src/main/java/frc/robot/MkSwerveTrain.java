@@ -224,19 +224,17 @@ public class MkSwerveTrain
         }
     }
 
-    public void setDist(double setpoint)
-    {
-        
-    }
-
     //turn distance is degrees
 
-    public void setEtherAuto(double totalDistance, double distanceA)
+    public void setEtherAuto(double totalDistance, double distanceA, int side, double heading)
     {
+        startDrive();
         vars.autoDist = MathFormulas.inchesToNative(totalDistance);
         vars.totalDistance = totalDistance;
         vars.avgDistInches = 0;
         vars.distanceA = distanceA;
+        vars.side = side;
+        vars.heading = heading;
     }
 
     /**
@@ -253,7 +251,7 @@ public class MkSwerveTrain
                                             //numbers fall short of high by 3ish inches and short of length by 4ish inches
         double RCWtemp = RCWauto; //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
                                                                             //minus subtracotr
-        double calcangle = (90-(thetaTurn/2))+((vars.avgDistInches/(vars.distanceA))*(thetaTurn));
+        double calcangle = ((vars.heading) + (vars.side * (thetaTurn/2))+((vars.avgDistInches/(vars.distanceA))*(thetaTurn)));
         if(mode == ETHERAUTO.Curve)
         {
             vars.FWDauto = Math.cos(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
@@ -307,6 +305,8 @@ public class MkSwerveTrain
     public static class variables
     {
 
+        public double heading;
+        public int side;
         public double distanceA;
         public double STRauto;
         public double FWDauto;

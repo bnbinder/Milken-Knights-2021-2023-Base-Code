@@ -20,8 +20,34 @@ public class Swrv extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(//deadline(new Turn(((DISTANGLE.angleuno)))).withTimeout(1),
-    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distanceuno, ((DISTANGLE.angleuno)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever)).withTimeout(6));
-    //deadline(new EtherAutoCommand(DISTANGLE.distancedos, ((DISTANGLE.angledos)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever)).withTimeout(6));
+    
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever, DISTANGLE.sidePos, DISTANGLE.headingnine)).withTimeout(6),
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever, DISTANGLE.sidePos, DISTANGLE.headingten)).withTimeout(6),
+    
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever, DISTANGLE.sideCon, DISTANGLE.headingele)).withTimeout(6),
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever, DISTANGLE.sideCon, DISTANGLE.headingtwel)).withTimeout(6),
+    
+
+
+
+    
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever, DISTANGLE.sidePos, DISTANGLE.headinguno)).withTimeout(6),
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever, DISTANGLE.sidePos, DISTANGLE.headingdos)).withTimeout(6),
+    
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever, DISTANGLE.sideCon, DISTANGLE.headingtres)).withTimeout(6),
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever, DISTANGLE.sideCon, DISTANGLE.headingquad)).withTimeout(6),
+    
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever, DISTANGLE.sidePos, DISTANGLE.headingsinco)).withTimeout(6),
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever, DISTANGLE.sidePos, DISTANGLE.headingsix)).withTimeout(6),
+    
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever, DISTANGLE.sideCon, DISTANGLE.headingsev)).withTimeout(6),
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever, DISTANGLE.sideCon, DISTANGLE.headingocto)).withTimeout(6),
+
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever, DISTANGLE.sidePos, DISTANGLE.headingthir)).withTimeout(6),
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever, DISTANGLE.sidePos, DISTANGLE.headingfourt)).withTimeout(6),
+    
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever, DISTANGLE.sideCon, DISTANGLE.headingfif)).withTimeout(6),
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)), 0, 0, ETHERAUTO.Curve, ETHERRCW.Forever, DISTANGLE.sideCon, DISTANGLE.headingsixt)).withTimeout(6));
              // deadline(new Stop()));
   }
 }

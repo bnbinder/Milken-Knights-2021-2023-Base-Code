@@ -42,6 +42,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = new Swrv();
     train.startDrive();
+    navx.getInstance().reset();
     if (m_autonomousCommand != null) {
      // SmartDashboard.putBoolean("yuy", true);
       m_autonomousCommand.schedule();
@@ -59,6 +60,8 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     train.startDrive();
+    navx.getInstance().reset();
+
   }
 
   @Override
@@ -111,8 +114,8 @@ public class Robot extends TimedRobot {
   public void testInit() {
     train.startTrain();
     train.stopEverything();
-    SmartDashboard.putNumber("anglglgl", DISTANGLE.angleuno);
-    SmartDashboard.putNumber("distttt", DISTANGLE.distanceuno);
+    SmartDashboard.putNumber("anglglgl", DISTANGLE.angle);
+    SmartDashboard.putNumber("distttt", DISTANGLE.distance);
     SmartDashboard.putNumber("radi", MathFormulas.calculateCircleRadius(50, 10));
   }
 
