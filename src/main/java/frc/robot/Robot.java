@@ -30,7 +30,8 @@ public class Robot extends TimedRobot {
   private MkSwerveTrain train = MkSwerveTrain.getInstance();
   @Override
   public void robotInit() {
-
+    train.startTrain();
+    navx.getInstance().reset();
   }
 
   @Override

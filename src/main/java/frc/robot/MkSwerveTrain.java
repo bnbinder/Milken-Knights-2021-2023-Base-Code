@@ -133,17 +133,8 @@ public class MkSwerveTrain
         vars.mod4[1] = Math.atan2(vars.A,vars.C)*180/Constants.kPi; 
 
       
-        if(mode == ControlMode.MotionMagic)
+        if(mode != ControlMode.MotionMagic)
         {
-            vars.mod1[0] = vars.autoDist;
-            vars.mod2[0] = vars.autoDist;
-            vars.mod3[0] = vars.autoDist;
-            vars.mod4[0] = vars.autoDist;
-        }
-
-        else
-        {
-            
             vars.mod2[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.C, 2)));      
             vars.mod1[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.D, 2))); 
             vars.mod3[0] = Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.D, 2)));           
@@ -154,11 +145,18 @@ public class MkSwerveTrain
         }
 
 
-
         vars.mod1 = setDirection(topLeftModule.getTurnDeg(), vars.mod1);
         vars.mod2 = setDirection(topLeftModule.getTurnDeg(), vars.mod2);
         vars.mod3 = setDirection(topLeftModule.getTurnDeg(), vars.mod3);
         vars.mod4 = setDirection(topLeftModule.getTurnDeg(), vars.mod4);
+
+        if(mode == ControlMode.MotionMagic)
+        {
+            vars.mod1[0] = vars.autoDist;
+            vars.mod2[0] = vars.autoDist;
+            vars.mod3[0] = vars.autoDist;
+            vars.mod4[0] = vars.autoDist;
+        }
 
       /*if(mode == ControlMode.MotionMagic)
         {
@@ -251,7 +249,7 @@ public class MkSwerveTrain
                                             //numbers fall short of high by 3ish inches and short of length by 4ish inches
         double RCWtemp = RCWauto; //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
                                                                             //minus subtracotr
-        double calcangle = ((vars.heading) + (vars.side * (thetaTurn/2))+((vars.avgDistInches/(vars.distanceA))*(thetaTurn)));
+        double calcangle = ((vars.heading) + (vars.side * ((thetaTurn/2)+((vars.avgDistInches/(vars.distanceA))*(thetaTurn)))));
         if(mode == ETHERAUTO.Curve)
         {
             vars.FWDauto = Math.cos(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
@@ -271,8 +269,8 @@ public class MkSwerveTrain
             RCWtemp = RCWauto;
         }
         etherSwerve(vars.FWDauto, -vars.STRauto, RCWtemp, ControlMode.MotionMagic);
-        SmartDashboard.putNumber("calc", calcangle);
-        SmartDashboard.putNumber("dist", vars.avgDistInches);
+        SmartDashboard.putNumber("calc", vars.avgDistInches);
+        SmartDashboard.putNumber("dist", thetaTurn);
     }
 
     public boolean isFinished()

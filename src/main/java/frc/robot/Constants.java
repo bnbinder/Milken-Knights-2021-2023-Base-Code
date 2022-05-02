@@ -297,15 +297,15 @@ public final class Constants {
             public static final double headingsev = 270;
             public static final double headingocto = -270;
 
-            public static final double headingnine = 360;
-            public static final double headingten = 180;
+            public static final double headingnine = 0;
+            public static final double headingten = 0;
             public static final double headingele = 360;
             public static final double headingtwel = 180;
 
-            public static final double headingthir = 360;
-            public static final double headingfourt = 180;
-            public static final double headingfif = 360;
-            public static final double headingsixt = 180;
+            public static final double headingthir = -360;
+            public static final double headingfourt = -180;
+            public static final double headingfif = -360;
+            public static final double headingsixt = -180;
                                                                               //          /2
             public static final double distance = MathFormulas.calculateArcOfPath(distanceA, lengthB);
             public static final double angle = MathFormulas.calculateAngleOfPath(distanceA, lengthB);
