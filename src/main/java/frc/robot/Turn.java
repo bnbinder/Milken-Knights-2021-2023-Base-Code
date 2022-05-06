@@ -23,7 +23,7 @@ public class Turn extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    MkSwerveTrain.getInstance().setModuleTurn(angle);
+    MkSwerveTrain.getInstance().setModuleTurn(angle,angle,angle,angle);
   }
 
   // Called once the command ends or is interrupted.

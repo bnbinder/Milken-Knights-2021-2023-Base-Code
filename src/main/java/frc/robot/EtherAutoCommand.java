@@ -25,15 +25,15 @@ public class EtherAutoCommand extends CommandBase {
   private int side;
   private MkSwerveTrain train = MkSwerveTrain.getInstance();
   
-  public EtherAutoCommand(double distanceA, double dist, double ang, double RCWauto, double turnyAuto, ETHERAUTO mode, ETHERRCW turny, int side, double heading)
+  public EtherAutoCommand(double distanceA, double dist, double ang, int side, double heading)
   {
-    this.RCWauto = RCWauto;
+   /* this.RCWauto = RCWauto;
     this.mode = mode;
-    this.turny = turny;
+    this.turny = turny;*/
     this.totalDistance = dist;
     this.thetaTurn = ang;
-    this.turnyAuto = turnyAuto;
-    this.distanceA = distanceA;
+   // this.turnyAuto = turnyAuto;
+   this.distanceA = distanceA;
     this.heading = heading;
     this.side = side;
 
@@ -43,18 +43,20 @@ public class EtherAutoCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //train.startDrive();
+    train.startDrive();
     //train.startTrain();
     //SmartDashboard.putNumber("anglglgl", DISTANGLE.angleuno);
     //SmartDashboard.putNumber("distt", DISTANGLE.distanceuno);
-    train.setEtherAuto(totalDistance, distanceA, side, heading);
+    train.setEtherAuto(totalDistance, distanceA);
+    SmartDashboard.putNumber("dist", heading);
+    SmartDashboard.putNumber("calc", side);
     //SmartDashboard.putBoolean("key", true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    train.etherAutoUpdate(thetaTurn, RCWauto, mode, turny, turnyAuto);
+    train.etherAutoUpdate(thetaTurn, heading, side);
   }
 
   // Called once the command ends or is interrupted.

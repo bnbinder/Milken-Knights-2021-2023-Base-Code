@@ -33,9 +33,10 @@ public class MkSwerveModule
 
     public MkSwerveModule(int[] canid, double offset, double pidd[], double pidt[])
     {  
-        drive = new TalonFX(canid[0]);
-        turn = new TalonFX(canid[1]);
-        encoder = new CANCoder(canid[2]);
+        
+        drive = new TalonFX(canid[0], "train");
+        turn = new TalonFX(canid[1], "train");
+        encoder = new CANCoder(canid[2], "train");
         driveFeed = new SimpleMotorFeedforward(MKDRIVE.kS, MKDRIVE.kV, MKDRIVE.kA);
         drive.configFactoryDefault();
         drive.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);

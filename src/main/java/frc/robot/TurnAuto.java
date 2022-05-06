@@ -22,7 +22,7 @@ public class TurnAuto {
 
     public void updateTurnAuto()
     {
-        MkSwerveTrain.getInstance().setModuleTurn(angle);
+        MkSwerveTrain.getInstance().setModuleTurn(angle,angle,angle,angle);
     }
 
     public boolean isFinished()

@@ -204,4 +204,75 @@ public class MathFormulas {
         }
         return dir;
   }
+
+  /**
+   * "Get the closest angle between the given angles."
+   * @param a angle a
+   * @param b angle b
+   * @return angle closest between the two angles
+   * @author team 6624
+   */
+  public static double closestAngleAuto(double a, double b)
+  {
+        double dir = (b % 360.0) - (a % 360.0);
+
+        // convert from -360 to 360 to -180 to 180
+        if (Math.abs(dir) > 180.0)
+        {
+                dir = -(Math.signum(dir) * 360.0) + dir;
+        }
+        return dir;
+  }
+
+
+  public static double setAutoDirection(double current, double setpoint)
+  {
+  
+      // use the fastest way
+      return current + closestAngle(current, setpoint);
+  
+  }
+
+
+
+
+  public static double[] optimize(double currentAngle, double[] mod) {
+    double targetAngle = placeInAppropriate0To360Scope(currentAngle, mod[1]);
+    double delta = targetAngle - currentAngle;
+    if (Math.abs(delta) > 90){
+        targetAngle = delta > 90 ? (targetAngle -= 180) : (targetAngle += 180);
+        mod[0] = Math.abs(mod[0]) * -1;
+    }        
+    return new double[] {mod[0], targetAngle};
+  }
+
+  /**
+     * @param scopeReference Current Angle
+     * @param newAngle Target Angle
+     * @return Closest angle within scope
+     */
+    private static double placeInAppropriate0To360Scope(double scopeReference, double newAngle) {
+      double lowerBound;
+      double upperBound;
+      double lowerOffset = scopeReference % 360;
+      if (lowerOffset >= 0) {
+          lowerBound = scopeReference - lowerOffset;
+          upperBound = scopeReference + (360 - lowerOffset);
+      } else {
+          upperBound = scopeReference - lowerOffset;
+          lowerBound = scopeReference - (360 + lowerOffset);
+      }
+      while (newAngle < lowerBound) {
+          newAngle += 360;
+      }
+      while (newAngle > upperBound) {
+          newAngle -= 360;
+      }
+      if (newAngle - scopeReference > 180) {
+          newAngle -= 360;
+      } else if (newAngle - scopeReference < -180) {
+          newAngle += 360;
+      }
+      return newAngle;
+  }
 }

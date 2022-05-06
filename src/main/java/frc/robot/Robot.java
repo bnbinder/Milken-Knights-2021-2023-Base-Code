@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -43,11 +44,13 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = new Swrv();
     train.startDrive();
+    train.startTurn();
     navx.getInstance().reset();
     if (m_autonomousCommand != null) {
      // SmartDashboard.putBoolean("yuy", true);
       m_autonomousCommand.schedule();
     }
+    //SmartDashboard.putNumber("stupid dumbass", DriverStation.getMatchTime());
   }
 
   @Override
@@ -61,6 +64,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     train.startDrive();
+    train.startTurn();
     navx.getInstance().reset();
 
   }

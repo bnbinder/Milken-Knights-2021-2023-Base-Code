@@ -19,9 +19,9 @@ public final class Constants {
 
     public static class MKFALCON 
     {
-        public static final int velocityMeasAmount = 16;
-        public static final int statusOneMeas = 25;
-        public static final int statusTwoMeas = 25;
+        public static final int velocityMeasAmount = 26;
+        public static final int statusOneMeas = 35;
+        public static final int statusTwoMeas = 35;
         public static final double voltComp = 12;
         public static final double oneEncoderRotation = 2048;
     }
