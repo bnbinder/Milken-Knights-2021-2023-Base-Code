@@ -191,6 +191,7 @@ private Motor mMotor = Motor.getInstance();
      */
     public void etherSwerve(double FWD, double STR, double RCW, ControlMode mode)
     {
+        vars.autoDist = MathFormulas.inchesToNative(totalDistance);
         vars.yaw = navx.getInstance().getNavxYaw();
         vars.temp = FWD * Math.cos(Math.toRadians(vars.yaw)) + STR * Math.sin(Math.toRadians(vars.yaw));
         STR = -FWD * Math.sin(Math.toRadians(vars.yaw)) + STR * Math.cos(Math.toRadians(vars.yaw));
@@ -367,7 +368,6 @@ private Motor mMotor = Motor.getInstance();
     public void setEtherAuto(double totalDistance, double distanceA)
     {
         //startDrive();
-        vars.autoDist = MathFormulas.inchesToNative(totalDistance);
         vars.totalDistance = totalDistance;
         vars.avgDistInches = 0;
         vars.distanceA = distanceA;
@@ -412,8 +412,8 @@ private Motor mMotor = Motor.getInstance();
         double RCWtemp = 0; //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
                                                                             //minus subtracotr
         double calcangle = ((heading) + (side * ((thetaTurn/2)+((vars.avgDistInches/(vars.distanceA))*(thetaTurn)))));
-            vars.FWDauto = Math.cos(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
-            vars.STRauto = Math.sin(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
+        vars.FWDauto = Math.cos(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
+        vars.STRauto = Math.sin(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         etherSwerve(vars.FWDauto, -vars.STRauto, RCWtemp, ControlMode.MotionMagic);
         SmartDashboard.putNumber("dist", heading);
         SmartDashboard.putNumber("calc", side);
