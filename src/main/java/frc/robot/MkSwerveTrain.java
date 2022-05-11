@@ -59,6 +59,7 @@ private Motor mMotor = Motor.getInstance();
         vars.mod4 = new double[2];
 
         turn = new ProfiledPIDController(vars.hP, vars.hI, vars.hD, constraints);
+        turn.enableContinuousInput(0, 360);
 
         topTurnLeft = mMotor.turnMotor(CANID.topTurnLeftCANID);
         topTurnRight = mMotor.turnMotor(CANID.topTurnRightCANID);
@@ -279,18 +280,18 @@ private Motor mMotor = Motor.getInstance();
     public void moveToAngy(double setpoint)
     {        
         vars.yaw = navx.getInstance().getNavxYaw();
-        SmartDashboard.putNumber("angleclosest", setDirectionAuto(vars.yaw, setpoint));
+        //SmartDashboard.putNumber("angleclosest", setDirectionAuto(vars.yaw, setpoint));
         TrapezoidProfile turnProfile = new TrapezoidProfile(constraints, new TrapezoidProfile.State(vars.yaw,0), new TrapezoidProfile.State(0,0));
         setpoint = turn.calculate(Math.abs(vars.yaw), Math.abs(setpoint));
-        SmartDashboard.putNumber("setpointbefore", setpoint);
+        //SmartDashboard.putNumber("setpointbefore", setpoint);
 
         // double feedforward = ((1.0) / (VISION.kMaxAimAngularVel)) * trap.calculate(Constants.kDt).velocity;
    //   SmartDashboard.putNumber("feedforward", feedforward); //TODO multiply by 100 or 1000 to see if value ever changes (is currently only 0, should be bigger value, idk)
         setpoint = MathFormulas.limitAbsolute(setpoint, 1);
-        SmartDashboard.putNumber("turnprofile", turnProfile.calculate(0.01).velocity);
+        //SmartDashboard.putNumber("turnprofile", turnProfile.calculate(0.01).velocity);
 
 
-       // etherSwerve(0, 0, setpoint, ControlMode.PercentOutput);
+        etherSwerve(0, 0, setpoint, ControlMode.PercentOutput);
     }
 
 
@@ -348,7 +349,7 @@ private Motor mMotor = Motor.getInstance();
     public static double setDirectionAuto(double pos, double setpoint)
     {
         // find closest angle to setpoint
-        if (Math.abs(pos) <= Math.abs(setpoint))
+        if (MathFormulas.closestAngle(pos, setpoint) < 90)
         {
             // unflip the motor direction use the setpoint
             //an = currentAngle + setpointAngle;
@@ -529,7 +530,7 @@ private Motor mMotor = Motor.getInstance();
     public double avgDeg;
 
     public variables var;
-    public double hP = 0.005, hI = hP * 0, hD = hP * 0; //0.01
+    public double hP = 0.0005, hI = hP * 0, hD = hP * 0; //0.01
     public double hIntegral, hDerivative, hPreviousError, hError;
 
     public double autoDist;
