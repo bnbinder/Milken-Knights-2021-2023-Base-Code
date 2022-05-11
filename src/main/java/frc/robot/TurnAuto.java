@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import frc.robot.MkSwerveTrain;
 
 /** Add your docs here. */
 public class TurnAuto {

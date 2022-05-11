@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import java.util.ResourceBundle.Control;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -20,7 +19,6 @@ import frc.robot.Constants.MKCANCODER;
 import frc.robot.Constants.MKDRIVE;
 import frc.robot.Constants.MKFALCON;
 import frc.robot.Constants.MKTURN;
-import frc.robot.MathFormulas;
 
 /** Add your docs here. */
 public class MkSwerveModule

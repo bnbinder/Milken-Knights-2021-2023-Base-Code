@@ -5,7 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.MkSwerveTrain;
 
 public class Stop extends CommandBase {
   /** Creates a new Stop. */

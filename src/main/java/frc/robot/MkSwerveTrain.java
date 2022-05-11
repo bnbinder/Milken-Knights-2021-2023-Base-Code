@@ -4,21 +4,20 @@
 
 package frc.robot;
 
+import javax.swing.text.StyleContext.SmallAttributeSet;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants;
-import frc.robot.navx;
 import frc.robot.Constants.CANID;
 import frc.robot.Constants.MKCANCODER;
-import frc.robot.Constants.MKDRIVE;
 import frc.robot.Constants.MKTRAIN;
 import frc.robot.Constants.MKTURN;
-import frc.robot.MkSwerveModule;
-import frc.robot.MathFormulas;
-
 
 /** Add your docs here. */
 public class MkSwerveTrain 
@@ -44,6 +43,8 @@ private CANCoder topRightCoder;
 private CANCoder bottomLeftCoder;
 private CANCoder bottomRightCoder;
 
+private ProfiledPIDController turn;
+private TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(700,200);
 
 private Motor mMotor = Motor.getInstance();
 
@@ -51,10 +52,13 @@ private Motor mMotor = Motor.getInstance();
     private MkSwerveTrain()
     {
         vars = new variables();
+        vars.hIntegral = 0;
         vars.mod1 = new double[2];
         vars.mod2 = new double[2];
         vars.mod3 = new double[2];
         vars.mod4 = new double[2];
+
+        turn = new ProfiledPIDController(vars.hP, vars.hI, vars.hD, constraints);
 
         topTurnLeft = mMotor.turnMotor(CANID.topTurnLeftCANID);
         topTurnRight = mMotor.turnMotor(CANID.topTurnRightCANID);
@@ -79,8 +83,9 @@ private Motor mMotor = Motor.getInstance();
 
     public void startTrain()
     {
+        vars.hIntegral = 0;
         startDrive();
-        zeroTurn();
+        startTurn();
     }
 
     public void startTurn()
@@ -128,11 +133,13 @@ private Motor mMotor = Motor.getInstance();
     {
         //SmartDashboard.putNumber("anglet", vars.deg[0]);
         //SmartDashboard.putNumber("distancet", vars.posInch[0]);
+        /*
         SmartDashboard.putNumber("degtopleft", vars.degTL);
         SmartDashboard.putNumber("distancetopright", vars.posInchTR);
         SmartDashboard.putNumber("distancetbotleft", vars.posInchBL);
-        SmartDashboard.putNumber("distancetbotright", vars.posInchBR);
+        SmartDashboard.putNumber("distancetbotright", vars.posInchBR);*/
         SmartDashboard.putNumber("dri pos", topTurnLeft.getSelectedSensorPosition());
+        SmartDashboard.putNumber("navx", navx.getInstance().getNavxYaw());
 
         vars.posInchTL = MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorPosition());
         vars.posInchTR = MathFormulas.nativeToInches(topDriveRight.getSelectedSensorPosition());
@@ -191,11 +198,16 @@ private Motor mMotor = Motor.getInstance();
      */
     public void etherSwerve(double FWD, double STR, double RCW, ControlMode mode)
     {
-        vars.autoDist = MathFormulas.inchesToNative(totalDistance);
+       /* if(RCW == 0 && (FWD != 0 || STR != 0))
+        {
+            RCW = headerStraighter(Math.toDegrees(Math.atan2(FWD, STR)));
+        }*/
         vars.yaw = navx.getInstance().getNavxYaw();
         vars.temp = FWD * Math.cos(Math.toRadians(vars.yaw)) + STR * Math.sin(Math.toRadians(vars.yaw));
         STR = -FWD * Math.sin(Math.toRadians(vars.yaw)) + STR * Math.cos(Math.toRadians(vars.yaw));
         FWD = vars.temp;
+        SmartDashboard.putNumber("rcw", RCW);
+        //SmartDashboard.putNumber("header pid", (Math.toDegrees(Math.atan2(FWD, STR))));
 
         //SmartDashboard.putNumber("frd", FWD);
         //SmartDashboard.putNumber("str", STR);
@@ -210,10 +222,10 @@ private Motor mMotor = Motor.getInstance();
         vars.mod3[1] = Math.atan2(vars.A,vars.D)*180/Constants.kPi;
         vars.mod4[1] = Math.atan2(vars.A,vars.C)*180/Constants.kPi; 
 
-            vars.mod2[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.C, 2)));      
-            vars.mod1[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.D, 2))); 
-            vars.mod3[0] = Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.D, 2)));           
-            vars.mod4[0] = Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.C, 2)));
+        vars.mod2[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.C, 2)));      
+        vars.mod1[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.D, 2))); 
+        vars.mod3[0] = Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.D, 2)));           
+        vars.mod4[0] = Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.C, 2)));
         
             vars.max=vars.mod1[0]; if(vars.mod2[0]>vars.max)vars.max=vars.mod2[0]; if(vars.mod3[0]>vars.max)vars.max=vars.mod3[0]; if(vars.mod4[0]>vars.max)vars.max=vars.mod4[0];
             if(vars.max>1){vars.mod1[0]/=vars.max; vars.mod2[0]/=vars.max; vars.mod3[0]/=vars.max; vars.mod4[0]/=vars.max;}
@@ -258,6 +270,27 @@ private Motor mMotor = Motor.getInstance();
         setModuleDrive(mode, vars.mod1[0], vars.mod2[0], vars.mod3[0], vars.mod4[0]);
         setModuleTurn(vars.mod1[1], vars.mod2[1], vars.mod3[1], vars.mod4[1]);
         //TODO velocity might break the drive pidf
+    }
+
+
+
+
+
+    public void moveToAngy(double setpoint)
+    {        
+        vars.yaw = navx.getInstance().getNavxYaw();
+        SmartDashboard.putNumber("angleclosest", setDirectionAuto(vars.yaw, setpoint));
+        TrapezoidProfile turnProfile = new TrapezoidProfile(constraints, new TrapezoidProfile.State(vars.yaw,0), new TrapezoidProfile.State(0,0));
+        setpoint = turn.calculate(Math.abs(vars.yaw), Math.abs(setpoint));
+        SmartDashboard.putNumber("setpointbefore", setpoint);
+
+        // double feedforward = ((1.0) / (VISION.kMaxAimAngularVel)) * trap.calculate(Constants.kDt).velocity;
+   //   SmartDashboard.putNumber("feedforward", feedforward); //TODO multiply by 100 or 1000 to see if value ever changes (is currently only 0, should be bigger value, idk)
+        setpoint = MathFormulas.limitAbsolute(setpoint, 1);
+        SmartDashboard.putNumber("turnprofile", turnProfile.calculate(0.01).velocity);
+
+
+       // etherSwerve(0, 0, setpoint, ControlMode.PercentOutput);
     }
 
 
@@ -312,19 +345,14 @@ private Motor mMotor = Motor.getInstance();
      * @return returns best angle of travel for the angular motor, as well as the flip value for the driving motor (as an array so it can return two things in one instead of two seperatly)
      * @author team 6624
      */
-    public static double[] setDirectionAuto(double pos, double[] mod)
+    public static double setDirectionAuto(double pos, double setpoint)
     {
-        double currentAngle = pos;
         // find closest angle to setpoint
-        double setpointAngle = MathFormulas.closestAngleAuto(currentAngle, mod[1]);
-        // find closest angle to setpoint + 180
-        double setpointAngleFlipped = MathFormulas.closestAngleAuto(currentAngle, mod[1] + 360.0);
-        // if the closest angle to setpoint is shorter
-        if (Math.abs(setpointAngle) <= Math.abs(setpointAngleFlipped))
+        if (Math.abs(pos) <= Math.abs(setpoint))
         {
             // unflip the motor direction use the setpoint
             //an = currentAngle + setpointAngle;
-            return new double[] {mod[0],(currentAngle + setpointAngle)};
+            return setpoint;
         }
         // if the closest angle to setpoint + 180 is shorter
         else
@@ -332,7 +360,7 @@ private Motor mMotor = Motor.getInstance();
             // flip the motor direction and use the setpoint + 180
             //di = Math.abs(di) * -1.0; 
             //an = currentAngle + setpointAngleFlipped;
-            return new double[] {Math.abs(mod[0]) * -1,(currentAngle + setpointAngleFlipped)};
+            return -(setpoint);
         }
    
     }
@@ -350,17 +378,10 @@ private Motor mMotor = Motor.getInstance();
     //programming done right
     public double headerStraighter(double hSetpoint)
     {
-        if(hSetpoint != 361)
-        {
             vars.hError = hSetpoint -  navx.getInstance().getNavxYaw();// Error = Target - Actual
             vars.hIntegral += (vars.hError*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
             vars.hDerivative = (vars.hError - vars.hPreviousError) / .02;
             return vars.hP*vars.hError + vars.hI*vars.hIntegral + vars.hD*vars.hDerivative;
-        }
-        else
-        {
-            return 0;
-        }
     }
 
     //turn distance is degrees
@@ -368,6 +389,7 @@ private Motor mMotor = Motor.getInstance();
     public void setEtherAuto(double totalDistance, double distanceA)
     {
         //startDrive();
+        vars.autoDist = MathFormulas.inchesToNative(totalDistance);
         vars.totalDistance = totalDistance;
         vars.avgDistInches = 0;
         vars.distanceA = distanceA;
@@ -507,7 +529,7 @@ private Motor mMotor = Motor.getInstance();
     public double avgDeg;
 
     public variables var;
-    public double hP = 0.001, hI = 0.0001, hD = hP * 0.1;
+    public double hP = 0.005, hI = hP * 0, hD = hP * 0; //0.01
     public double hIntegral, hDerivative, hPreviousError, hError;
 
     public double autoDist;
@@ -516,6 +538,8 @@ private Motor mMotor = Motor.getInstance();
     public double autoDirectionTR;
     public double autoDirectionBL;
     public double autoDirectionBR;
+
+    public double yawTemp;
 
     }
 }

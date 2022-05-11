@@ -6,7 +6,6 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -43,8 +42,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = new Swrv();
-    train.startDrive();
-    train.startTurn();
+    train.startTrain();
     navx.getInstance().reset();
     if (m_autonomousCommand != null) {
      // SmartDashboard.putBoolean("yuy", true);
@@ -63,8 +61,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    train.startDrive();
-    train.startTurn();
+    train.startTrain();
     navx.getInstance().reset();
 
   }
@@ -90,10 +87,18 @@ public class Robot extends TimedRobot {
       {
         rcw = 0;
       }
+      if(xbox.getAButton())
+      {
+        navx.getInstance().reset();
+      }
+      if(xbox.getBButton())
+      {
+        train.moveToAngy(90);
+      }
 
       
 
-      if(fwd != 0 || str != 0 || rcw != 0)
+      else if(fwd != 0 || str != 0 || rcw != 0)
       {
         //weird negative cuz robot is weird. should be negative fwd positive str rcw
         train.etherSwerve(fwd/5, -str/5, rcw/5, ControlMode.PercentOutput); //+,-,+
@@ -103,10 +108,7 @@ public class Robot extends TimedRobot {
       {
         train.stopEverything();
       }
-      if(xbox.getAButton())
-      {
-        navx.getInstance().reset();
-      }
+      
   }
 
   @Override

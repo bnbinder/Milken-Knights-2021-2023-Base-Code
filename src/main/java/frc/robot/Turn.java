@@ -5,8 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.TurnAuto;
-import frc.robot.MkSwerveTrain;
 
 public class Turn extends CommandBase {
   /** Creates a new Turn. */

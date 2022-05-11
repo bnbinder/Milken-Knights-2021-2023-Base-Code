@@ -5,7 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.math.util.Units;
-import frc.robot.Constants;
 import frc.robot.Constants.MKDRIVE;
 import frc.robot.Constants.MKFALCON;
 
@@ -251,7 +250,7 @@ public class MathFormulas {
      * @param newAngle Target Angle
      * @return Closest angle within scope
      */
-    private static double placeInAppropriate0To360Scope(double scopeReference, double newAngle) {
+    public static double placeInAppropriate0To360Scope(double scopeReference, double newAngle) {
       double lowerBound;
       double upperBound;
       double lowerOffset = scopeReference % 360;
@@ -274,5 +273,27 @@ public class MathFormulas {
           newAngle += 360;
       }
       return newAngle;
+  }
+
+
+
+
+
+  public static double limit(double value, double min, double max) {
+    if (value > max) {
+      return max;
+    } else if (value < min) {
+      return min;
+    } else {
+      return value;
+    }
+  }
+
+  public static double deadband(double val, double deadband) {
+    return (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
+  }
+
+  public static double limitAbsolute(double a, double max) {
+    return Math.abs(a) < max ? a : Math.copySign(max, a);
   }
 }

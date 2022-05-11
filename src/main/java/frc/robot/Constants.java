@@ -10,7 +10,7 @@ import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import frc.robot.MathFormulas;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 
 /** Add your docs here. */
 public final class Constants {
@@ -22,7 +22,7 @@ public final class Constants {
         public static final int velocityMeasAmount = 26;
         public static final int statusOneMeas = 35;
         public static final int statusTwoMeas = 35;
-        public static final double voltComp = 12;
+        public static final double voltComp = 11;
         public static final double oneEncoderRotation = 2048;
     }
 

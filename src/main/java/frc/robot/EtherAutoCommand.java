@@ -6,11 +6,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.AUTO.DISTANGLE;
-import frc.robot.MkSwerveTrain;
+
 import frc.robot.MkSwerveTrain.ETHERAUTO;
 import frc.robot.MkSwerveTrain.ETHERRCW;
-import frc.robot.MathFormulas;
 
 public class EtherAutoCommand extends CommandBase {
   /** Creates a new EtherAuto. */
