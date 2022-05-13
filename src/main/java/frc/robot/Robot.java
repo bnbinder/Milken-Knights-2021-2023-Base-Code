@@ -6,8 +6,10 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -65,7 +67,7 @@ public class Robot extends TimedRobot {
     navx.getInstance().reset();
 
   }
-
+  
   @Override
   public void teleopPeriodic() {
     train.updateSwerve();
@@ -73,8 +75,6 @@ public class Robot extends TimedRobot {
     str = (xbox.getRawAxis(0) - 0.1) / (1 - 0.1);
     rcw = (xbox.getRawAxis(5) - 0.1) / (1 - 0.1);
       
-
-
       if(Math.abs(xbox.getRawAxis(1)) < 0.1)
       {
         fwd = 0;
