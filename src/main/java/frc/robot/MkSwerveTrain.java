@@ -43,8 +43,8 @@ private CANCoder topRightCoder;
 private CANCoder bottomLeftCoder;
 private CANCoder bottomRightCoder;
 
-private ProfiledPIDController turn;
-private TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(700,200);
+private PIDController turn;
+//private TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(2,1);
 
 private Motor mMotor = Motor.getInstance();
 
@@ -58,7 +58,7 @@ private Motor mMotor = Motor.getInstance();
         vars.mod3 = new double[2];
         vars.mod4 = new double[2];
 
-        turn = new ProfiledPIDController(vars.hP, vars.hI, vars.hD, constraints);
+        turn = new PIDController(vars.hP, vars.hI, vars.hD);
         turn.enableContinuousInput(0, 360);
 
         topTurnLeft = mMotor.turnMotor(CANID.topTurnLeftCANID);
@@ -140,7 +140,7 @@ private Motor mMotor = Motor.getInstance();
         SmartDashboard.putNumber("distancetbotleft", vars.posInchBL);
         SmartDashboard.putNumber("distancetbotright", vars.posInchBR);*/
         SmartDashboard.putNumber("dri pos", topTurnLeft.getSelectedSensorPosition());
-        SmartDashboard.putNumber("navx", navx.getInstance().getNavxYaw());
+        SmartDashboard.putNumber("navx", vars.yaw);
 
         vars.posInchTL = MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorPosition());
         vars.posInchTR = MathFormulas.nativeToInches(topDriveRight.getSelectedSensorPosition());
@@ -280,16 +280,19 @@ private Motor mMotor = Motor.getInstance();
     public void moveToAngy(double setpoint)
     {        
         vars.yaw = navx.getInstance().getNavxYaw();
-        //SmartDashboard.putNumber("angleclosest", setDirectionAuto(vars.yaw, setpoint));
-        TrapezoidProfile turnProfile = new TrapezoidProfile(constraints, new TrapezoidProfile.State(vars.yaw,0), new TrapezoidProfile.State(0,0));
+        //TrapezoidProfile.State setpointState = new TrapezoidProfile.State();
+                //SmartDashboard.putNumber("angleclosest", setDirectionAuto(vars.yaw, setpoint));
+        //TrapezoidProfile turnProfile = new TrapezoidProfile(constraints, new TrapezoidProfile.State(vars.yaw,0));
+        //setpointState = turnProfile.calculate(0.02);
         setpoint = turn.calculate(Math.abs(vars.yaw), Math.abs(setpoint));
         //SmartDashboard.putNumber("setpointbefore", setpoint);
 
         // double feedforward = ((1.0) / (VISION.kMaxAimAngularVel)) * trap.calculate(Constants.kDt).velocity;
    //   SmartDashboard.putNumber("feedforward", feedforward); //TODO multiply by 100 or 1000 to see if value ever changes (is currently only 0, should be bigger value, idk)
-        setpoint = MathFormulas.limitAbsolute(setpoint, 1);
-        //SmartDashboard.putNumber("turnprofile", turnProfile.calculate(0.01).velocity);
-
+        setpoint = MathFormulas.limitAbsolute(setpoint, 0.5);
+        //SmartDashboard.putNumber("turnvelpcityprofile", setpointState.velocity);
+        //SmartDashboard.putNumber("turnpositionprofile", setpointState.position);
+//TODO how the hell do oyu do trapezoid profiles for angles
 
         etherSwerve(0, 0, setpoint, ControlMode.PercentOutput);
     }
@@ -530,7 +533,8 @@ private Motor mMotor = Motor.getInstance();
     public double avgDeg;
 
     public variables var;
-    public double hP = 0.0005, hI = hP * 0, hD = hP * 0; //0.01
+    //three degrees error babeeeeee!!!!!!!!!!!!!!!!!!!!!
+    public double hP = 0.015, hI = hP * 0, hD = hP * 0.10; //0.03i, 0.01d
     public double hIntegral, hDerivative, hPreviousError, hError;
 
     public double autoDist;
