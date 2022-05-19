@@ -232,8 +232,31 @@ public class MathFormulas {
   
   }
 
+  public static double signumV4(double a)
+  {
+    if(a < 0)
+    {
+      return 180;
+    }
+    else
+    {
+      return 0;
+    }
+  }
 
+  public static double signumAngleEdition(double a, double b)
+  {
+    if(a < 0 && b == 0)
+    {
+      return 360;
+    }
+    else
+    {
+      return 0;
+    }
+  }
 
+  //* make tan go from 360 - 270 - 180 - 90(((( Math.toDegrees(Math.atan(fwd/str))+180 ))+ (MathFormulas.signumV4(str)))%360) + MathFormulas.signumAngleEdition(str,fwd));
 
   public static double[] optimize(double currentAngle, double[] mod) {
     double targetAngle = placeInAppropriate0To360Scope(currentAngle, mod[1]);

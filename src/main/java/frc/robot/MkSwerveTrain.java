@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import javax.swing.text.StyleContext.SmallAttributeSet;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -170,7 +169,7 @@ private Motor mMotor = Motor.getInstance();
     {
         topDriveLeft.set(mode, tl);
         topDriveRight.set(mode, tr);
-        bottomDriveLeft.set(mode, bl);
+        bottomDriveLeft.set(mode, bl);//Ben
         bottomDriveRight.set(mode, br);
     }
 
@@ -207,8 +206,9 @@ private Motor mMotor = Motor.getInstance();
         vars.temp = FWD * Math.cos(Math.toRadians(vars.yaw)) + STR * Math.sin(Math.toRadians(vars.yaw));
         STR = -FWD * Math.sin(Math.toRadians(vars.yaw)) + STR * Math.cos(Math.toRadians(vars.yaw));
         FWD = vars.temp;
-        SmartDashboard.putNumber("rcw", RCW);
         //SmartDashboard.putNumber("header pid", (Math.toDegrees(Math.atan2(FWD, STR))));
+        //RCW = moveToAngy((((((( Math.toDegrees(Math.atan(RCWY/RCWX))+360 ))+ (MathFormulas.signumV4(RCWX)))%360) - MathFormulas.signumAngleEdition(RCWX,RCWY))+360)%360);
+        SmartDashboard.putNumber("rcw", RCW);
 
         //SmartDashboard.putNumber("frd", FWD);
         //SmartDashboard.putNumber("str", STR);
@@ -270,14 +270,13 @@ private Motor mMotor = Motor.getInstance();
         SmartDashboard.putNumber("wa1", vars.mod1[1]);
         setModuleDrive(mode, vars.mod1[0], vars.mod2[0], vars.mod3[0], vars.mod4[0]);
         setModuleTurn(vars.mod1[1], vars.mod2[1], vars.mod3[1], vars.mod4[1]);
-        //TODO velocity might break the drive pidf
     }
 
 
 
 
 
-    public void moveToAngy(double setpoint)
+    public double moveToAngy(double setpoint)
     {        
         vars.yaw = navx.getInstance().getNavxYaw();
         //TrapezoidProfile.State setpointState = new TrapezoidProfile.State();
@@ -288,13 +287,12 @@ private Motor mMotor = Motor.getInstance();
         //SmartDashboard.putNumber("setpointbefore", setpoint);
 
         // double feedforward = ((1.0) / (VISION.kMaxAimAngularVel)) * trap.calculate(Constants.kDt).velocity;
-   //   SmartDashboard.putNumber("feedforward", feedforward); //TODO multiply by 100 or 1000 to see if value ever changes (is currently only 0, should be bigger value, idk)
+   //   SmartDashboard.putNumber("feedforward", feedforward); 
         setpoint = MathFormulas.limitAbsolute(setpoint, 0.5);
         //SmartDashboard.putNumber("turnvelpcityprofile", setpointState.velocity);
         //SmartDashboard.putNumber("turnpositionprofile", setpointState.position);
-//TODO how the hell do oyu do trapezoid profiles for angles
-
-        etherSwerve(0, 0, setpoint, ControlMode.PercentOutput);
+return setpoint;
+        //etherSwerve(0, 0, setpoint, ControlMode.PercentOutput);
     }
 
 
@@ -533,10 +531,11 @@ private Motor mMotor = Motor.getInstance();
     public double avgDeg;
 
     public variables var;
-    //three degrees error babeeeeee!!!!!!!!!!!!!!!!!!!!!
+    //three degrees error babeeeee!!!!
+    //TODO tune pid specififalclly d cuz p too powerful but i like the speed so inc d also because voltage drops to 9 when using this lamo
     public double hP = 0.015, hI = hP * 0, hD = hP * 0.10; //0.03i, 0.01d
     public double hIntegral, hDerivative, hPreviousError, hError;
-
+//code
     public double autoDist;
 
     public double autoDirectionTL;

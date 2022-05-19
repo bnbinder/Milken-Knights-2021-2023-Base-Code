@@ -28,8 +28,9 @@ public class Robot extends TimedRobot {
    */
   private Command m_autonomousCommand;
   private XboxController xbox = new XboxController(0);
-  private double fwd, str, rcw;
+  private double fwd, str, rcw, rcwX, rcwY;
   private MkSwerveTrain train = MkSwerveTrain.getInstance();
+  private boolean head = false;
   @Override
   public void robotInit() {
     train.startTrain();
@@ -74,6 +75,9 @@ public class Robot extends TimedRobot {
     fwd = (xbox.getRawAxis(1) - 0.1) / (1 - 0.1);
     str = (xbox.getRawAxis(0) - 0.1) / (1 - 0.1);
     rcw = (xbox.getRawAxis(5) - 0.1) / (1 - 0.1);
+    
+    rcwY = rcw;
+    rcwX =  (xbox.getRawAxis(4) - 0.1) / (1 - 0.1);
       
       if(Math.abs(xbox.getRawAxis(1)) < 0.1)
       {
@@ -83,33 +87,48 @@ public class Robot extends TimedRobot {
       {
         str = 0;
       }
-      if(Math.abs(xbox.getRawAxis(5)) < 0.1)
-      {
-        rcw = 0;
-      }
+      
       if(xbox.getAButton())
       {
         navx.getInstance().reset();
       }
       if(xbox.getBButton())
       {
-        train.moveToAngy(90);
+        rcw = train.moveToAngy(90);
       }
+      else if(xbox.getYButton())
+      {
+        rcw  = rcw/5;
+      }
+      else
+      {
+        rcw = train.moveToAngy(((((((( Math.toDegrees(Math.atan(rcwY/rcwX))+360 ))+ (MathFormulas.signumV4(rcwX)))%360) - MathFormulas.signumAngleEdition(rcwX,rcwY))+360)%360));
+      }
+      if(Math.abs(xbox.getRawAxis(5)) < 0.1)
+      {
+        rcw = 0;
+        rcwY = 0;
+      }
+      if(Math.abs(xbox.getRawAxis(4)) < 0.1)
+      {
+        rcwX = 0;
+      }
+      //penis
 
-      
-
-      else if(fwd != 0 || str != 0 || rcw != 0)
+      if(fwd != 0 || str != 0 || rcw != 0)
       {
         //weird negative cuz robot is weird. should be negative fwd positive str rcw
-        train.etherSwerve(fwd/5, -str/5, rcw/5, ControlMode.PercentOutput); //+,-,+
+        train.etherSwerve(fwd/5, -str/5, rcw, ControlMode.PercentOutput); //+,-,+
         //mDrive.updateDriveDriveRaw();
       }
       else
       {
         train.stopEverything();
       }
-      
-  }
+      //SmartDashboard.putNumber("angleplus180", ((Math.toDegrees(Math.atan(fwd/str))+180))%(360*MathFormulas.signumV2(str)));
+     //SmartDashboard.putNumber("angleminus180", ((Math.toDegrees(Math.atan(fwd/str))-180))%(360*MathFormulas.signumV2(str))); 
+     SmartDashboard.putNumber("doesthiswork",(((((( Math.toDegrees(Math.atan(rcwY/rcwX))+360 ))+ (MathFormulas.signumV4(rcwX)))%360) - MathFormulas.signumAngleEdition(rcwX,rcwY))+360)%360);
+    }
 
   @Override
   public void disabledInit() {}
