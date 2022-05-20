@@ -28,9 +28,9 @@ public class Robot extends TimedRobot {
    */
   private Command m_autonomousCommand;
   private XboxController xbox = new XboxController(0);
-  private double fwd, str, rcw, rcwX, rcwY;
+  private double fwd, str, rcw, rcwX, rcwY = 0;
   private MkSwerveTrain train = MkSwerveTrain.getInstance();
-  private boolean head = false;
+  private boolean bbutton, ybutton, pov = false;
   @Override
   public void robotInit() {
     train.startTrain();
@@ -72,12 +72,17 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     train.updateSwerve();
+    
     fwd = (xbox.getRawAxis(1) - 0.1) / (1 - 0.1);
     str = (xbox.getRawAxis(0) - 0.1) / (1 - 0.1);
     rcw = (xbox.getRawAxis(5) - 0.1) / (1 - 0.1);
     
     rcwY = rcw;
     rcwX =  (xbox.getRawAxis(4) - 0.1) / (1 - 0.1);
+
+    bbutton = xbox.getBButton();
+    ybutton = xbox.getYButton();
+    pov = xbox.getPOV() != -1;
       
       if(Math.abs(xbox.getRawAxis(1)) < 0.1)
       {
@@ -92,19 +97,29 @@ public class Robot extends TimedRobot {
       {
         navx.getInstance().reset();
       }
-      if(xbox.getBButton())
+
+      if(bbutton)
       {
         rcw = train.moveToAngy(90);
+        SmartDashboard.putBoolean("fack you b", true);
       }
-      else if(xbox.getYButton())
+      else if(ybutton)
       {
         rcw  = rcw/5;
+        SmartDashboard.putBoolean("fack you y", true);
+      }
+      else if(pov)
+      {
+        rcw = train.moveToAngy((xbox.getPOV()-90)% 360);
+        SmartDashboard.putNumber("fack you pov", (double)xbox.getPOV());
       }
       else
-      {
-        rcw = train.moveToAngy(((((((( Math.toDegrees(Math.atan(rcwY/rcwX))+360 ))+ (MathFormulas.signumV4(rcwX)))%360) - MathFormulas.signumAngleEdition(rcwX,rcwY))+360)%360));
+      {                                                                                                                                                                       //xbox angle stick offset
+        rcw = train.moveToAngy((((((((( Math.toDegrees(Math.atan(rcwY/rcwX))+360 ))+ (MathFormulas.signumV4(rcwX)))%360) - MathFormulas.signumAngleEdition(rcwX,rcwY))+360)%360)-90)%360);
+        SmartDashboard.putBoolean("fack you else", true);
       }
-      if(Math.abs(xbox.getRawAxis(5)) < 0.1)
+
+      if(Math.abs(xbox.getRawAxis(5)) < 0.1 && !pov && !bbutton && !ybutton)
       {
         rcw = 0;
         rcwY = 0;
@@ -127,7 +142,9 @@ public class Robot extends TimedRobot {
       }
       //SmartDashboard.putNumber("angleplus180", ((Math.toDegrees(Math.atan(fwd/str))+180))%(360*MathFormulas.signumV2(str)));
      //SmartDashboard.putNumber("angleminus180", ((Math.toDegrees(Math.atan(fwd/str))-180))%(360*MathFormulas.signumV2(str))); 
-     SmartDashboard.putNumber("doesthiswork",(((((( Math.toDegrees(Math.atan(rcwY/rcwX))+360 ))+ (MathFormulas.signumV4(rcwX)))%360) - MathFormulas.signumAngleEdition(rcwX,rcwY))+360)%360);
+     //SmartDashboard.putNumber("doesthiswork",(((((( Math.toDegrees(Math.atan(rcwY/rcwX))+360 ))+ (MathFormulas.signumV4(rcwX)))%360) - MathFormulas.signumAngleEdition(rcwX,rcwY))+360)%360);
+
+     SmartDashboard.putNumber("rcwrobotperiod", rcw);
     }
 
   @Override
