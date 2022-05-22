@@ -10,7 +10,6 @@ import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 
 /** Add your docs here. */
 public final class Constants {

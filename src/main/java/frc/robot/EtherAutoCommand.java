@@ -7,17 +7,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.MkSwerveTrain.ETHERAUTO;
-import frc.robot.MkSwerveTrain.ETHERRCW;
-
 public class EtherAutoCommand extends CommandBase {
   /** Creates a new EtherAuto. */
   private double totalDistance;
   private double thetaTurn;
-  private double RCWauto;
-  private ETHERAUTO mode;
-  private ETHERRCW turny;
-  private double turnyAuto;
+  //private double RCWauto;
+  //private ETHERAUTO mode;
+  //private ETHERRCW turny;
+  //private double turnyAuto;
   private double distanceA;
   private double heading;
   private int side;
