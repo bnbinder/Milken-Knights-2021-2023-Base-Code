@@ -6,7 +6,9 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -29,8 +31,31 @@ public class Robot extends TimedRobot {
   private double fwd, str, rcw, rcwX, rcwY, inverseTanAngleOG = 0;
   private MkSwerveTrain train = MkSwerveTrain.getInstance();
   private boolean bbutton, ybutton, pov = false;
+  private SerialPort arduino;
+  private Timer timer;
   @Override
   public void robotInit() {
+    try{
+      arduino = new SerialPort(9600, "/dev/ttyACM0", SerialPort.Port.kUSB, 8, SerialPort.Parity.kNone, SerialPort.StopBits.kOne);
+      System.out.println("Connected on usb port one!");
+    }
+    catch(Exception e)
+    {
+      System.out.println("Failed to connect on usb port one, trying usb port two");
+      try
+      {
+        arduino = new SerialPort(9600, "/dev/ttyACM1", SerialPort.Port.kUSB, 8, SerialPort.Parity.kNone, SerialPort.StopBits.kOne);
+        System.out.println("Connected on usb port two!");
+      }
+      catch(Exception e1)
+      {
+        System.out.println("Failed to connect on usb port two, failed all usb ports. Is your Ardunio plugged in?");
+      }
+    }
+  
+  timer = new Timer();
+  timer.start();
+
     train.startTrain();
     navx.getInstance().reset();
   }
@@ -69,6 +94,14 @@ public class Robot extends TimedRobot {
   
   @Override
   public void teleopPeriodic() {
+    if(timer.get() > 5)
+    {
+      System.out.print(arduino.readString());
+      //System.out.println("Reading arduino");
+      //arduino.readString();
+      timer.reset();
+    }
+     
     train.updateSwerve();
     
     fwd = (xbox.getRawAxis(1) - 0.1) / (1 - 0.1);
