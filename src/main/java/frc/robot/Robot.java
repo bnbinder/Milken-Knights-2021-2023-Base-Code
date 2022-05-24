@@ -33,15 +33,17 @@ public class Robot extends TimedRobot {
   private boolean bbutton, ybutton, pov = false;
   private SerialPort arduino;
   private Timer timer;
+  private String keyIn = "";
+  private boolean accessible = false;
   @Override
   public void robotInit() {
-    try{
-      arduino = new SerialPort(9600, "/dev/ttyACM0", SerialPort.Port.kUSB, 8, SerialPort.Parity.kNone, SerialPort.StopBits.kOne);
-      System.out.println("Connected on usb port one!");
-    }
-    catch(Exception e)
-    {
-      System.out.println("Failed to connect on usb port one, trying usb port two");
+  //  try{
+    //  arduino = new SerialPort(9600, "/dev/ttyACM0", SerialPort.Port.kUSB, 8, SerialPort.Parity.kNone, SerialPort.StopBits.kOne);
+    //  System.out.println("Connected on usb port one!");
+    //}
+    //catch(Exception e)
+    //{
+      //System.out.println("Failed to connect on usb port one, trying usb port two");
       try
       {
         arduino = new SerialPort(9600, "/dev/ttyACM1", SerialPort.Port.kUSB, 8, SerialPort.Parity.kNone, SerialPort.StopBits.kOne);
@@ -51,7 +53,7 @@ public class Robot extends TimedRobot {
       {
         System.out.println("Failed to connect on usb port two, failed all usb ports. Is your Ardunio plugged in?");
       }
-    }
+   // }
   
   timer = new Timer();
   timer.start();
@@ -94,14 +96,22 @@ public class Robot extends TimedRobot {
   
   @Override
   public void teleopPeriodic() {
-    if(timer.get() > 5)
+    
+    if(timer.get() > 2)
     {
-      System.out.print(arduino.readString());
-      //System.out.println("Reading arduino");
+      keyIn = arduino.readString().substring(36);
+      SmartDashboard.putString("string", arduino.readString());
       //arduino.readString();
       timer.reset();
+      
     }
-     
+
+    if(keyIn == "30 93 7C 22")
+ 
+
+    if(accessible)
+    {
+      SmartDashboard.putBoolean("your uin", true);
     train.updateSwerve();
     
     fwd = (xbox.getRawAxis(1) - 0.1) / (1 - 0.1);
@@ -177,6 +187,7 @@ public class Robot extends TimedRobot {
 
      SmartDashboard.putNumber("rcwrobotperiod", rcw);
     }
+  }
 
   @Override
   public void disabledInit() {}
