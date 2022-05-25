@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
   private Timer timer;
   private String keyIn = "";
   private boolean accessible = false;
+  private String bullshit = "30937C22";
   @Override
   public void robotInit() {
   //  try{
@@ -46,8 +47,9 @@ public class Robot extends TimedRobot {
       //System.out.println("Failed to connect on usb port one, trying usb port two");
       try
       {
-        arduino = new SerialPort(9600, "/dev/ttyACM1", SerialPort.Port.kUSB, 8, SerialPort.Parity.kNone, SerialPort.StopBits.kOne);
-        System.out.println("Connected on usb port two!");
+        arduino = new SerialPort(9600, "/dev/ttyACM0", SerialPort.Port.kUSB, 8, SerialPort.Parity.kNone, SerialPort.StopBits.kOne);
+        //arduino = new SerialPort(9600, SerialPort.Port.kUSB);
+        System.out.println("Connected on usb port zero!");
       }
       catch(Exception e1)
       {
@@ -91,24 +93,47 @@ public class Robot extends TimedRobot {
     }
     train.startTrain();
     navx.getInstance().reset();
-
+    accessible = false;
+    keyIn = "";
+ // }
   }
   
   @Override
   public void teleopPeriodic() {
-    
+   // keyIn = arduino.readString();//.substring(10, 24);
+    /*if(keyIn.length() > 12)
+    {
+      //substring because idk why but arduino reads number but when put into a string things get funky
+      keyIn = keyIn.substring(0,12);
+    }
+    */
     if(timer.get() > 2)
     {
-      keyIn = arduino.readString().substring(36);
-      SmartDashboard.putString("string", arduino.readString());
+ 
+        keyIn = arduino.readString();//.substring(10, 24);
+      
+      SmartDashboard.putString("string", keyIn);
+      //SmartDashboard.putString("string", keyIn);
+
+      //System.out.println(keyIn);
+      //System.out.println(arduino.readString());
+      System.out.println(keyIn);
+      
+      //System.out.println(keyIn.toCharArray());
       //arduino.readString();
       timer.reset();
-      
+      //System.out.println(arduino.toString());
     }
 
-    if(keyIn == "30 93 7C 22")
- 
+    SmartDashboard.putBoolean("acess", accessible);//accessible = true;
 
+    if(keyIn.equals(bullshit))
+    {
+      accessible = true;
+    }
+  
+  
+    
     if(accessible)
     {
       SmartDashboard.putBoolean("your uin", true);
@@ -187,6 +212,11 @@ public class Robot extends TimedRobot {
 
      SmartDashboard.putNumber("rcwrobotperiod", rcw);
     }
+    else {
+      SmartDashboard.putBoolean("your uin", false);
+      train.stopEverything();
+    }
+  
   }
 
   @Override
