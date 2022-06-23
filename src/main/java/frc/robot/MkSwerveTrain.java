@@ -20,6 +20,7 @@ import frc.robot.Constants.MKTURN;
 public class MkSwerveTrain 
 {
     public variables vars;/*
+    //TODO how to simplify this without slowing down everything
     private MkSwerveModule topLeftModule = new MkSwerveModule(CANID.topLeftCANID, MKCANCODER.offset[0], MKDRIVE.pidf, MKTURN.pidf);
     private MkSwerveModule topRightModule = new MkSwerveModule(CANID.topRightCANID, MKCANCODER.offset[1], MKDRIVE.pidf, MKTURN.pidf);
     private MkSwerveModule bottomLeftModule = new MkSwerveModule(CANID.bottomLeftCANID, MKCANCODER.offset[2], MKDRIVE.pidf, MKTURN.pidf);
@@ -530,8 +531,8 @@ return setpoint;
 
     public variables var;
     //three degrees error babeeeee!!!!
-    //TODO tune pid specififalclly d cuz p too powerful but i like the speed so inc d also because voltage drops to 9 when using this lamo
-    public double hP = 0.015, hI = hP * 0, hD = hP * 0.10; //0.03i, 0.01d
+    public double hP = 0.017, hI = hP * 0, hD = hP * 0.10; //0.03i, 0.01d
+                   //  0.015
     public double hIntegral, hDerivative, hPreviousError, hError;
 //code
     public double autoDist;

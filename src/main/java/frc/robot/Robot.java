@@ -36,6 +36,10 @@ public class Robot extends TimedRobot {
   private String keyIn = "";
   private boolean accessible = false;
   private String bullshit = "30937C22";
+  private boolean in;
+
+  private boolean povToggled = false;
+  private double povValue = 0;
   @Override
   public void robotInit() {
   //  try{
@@ -50,10 +54,12 @@ public class Robot extends TimedRobot {
         arduino = new SerialPort(9600, "/dev/ttyACM0", SerialPort.Port.kUSB, 8, SerialPort.Parity.kNone, SerialPort.StopBits.kOne);
         //arduino = new SerialPort(9600, SerialPort.Port.kUSB);
         System.out.println("Connected on usb port zero!");
+        in = true;
       }
       catch(Exception e1)
       {
         System.out.println("Failed to connect on usb port two, failed all usb ports. Is your Ardunio plugged in?");
+        in = false;
       }
    // }
   
@@ -107,23 +113,25 @@ public class Robot extends TimedRobot {
       keyIn = keyIn.substring(0,12);
     }
     */
-    if(timer.get() > 2)
+    if(in)
     {
- 
-        keyIn = arduino.readString();//.substring(10, 24);
-      
-      SmartDashboard.putString("string", keyIn);
-      //SmartDashboard.putString("string", keyIn);
+      if(timer.get() > 2)
+      {
+  
+          keyIn = arduino.readString();//.substring(10, 24);
+        
+        SmartDashboard.putString("string", keyIn);
+        //SmartDashboard.putString("string", keyIn);
 
-      //System.out.println(keyIn);
-      //System.out.println(arduino.readString());
-      System.out.println(keyIn);
-      
-      //System.out.println(keyIn.toCharArray());
-      //arduino.readString();
-      timer.reset();
-      //System.out.println(arduino.toString());
-    }
+        //System.out.println(keyIn);
+        //System.out.println(arduino.readString());
+        System.out.println(keyIn);
+        
+        //System.out.println(keyIn.toCharArray());
+        //arduino.readString();
+        timer.reset();
+        //System.out.println(arduino.toString());
+      }
 
     SmartDashboard.putBoolean("acess", accessible);//accessible = true;
 
@@ -133,10 +141,10 @@ public class Robot extends TimedRobot {
     }
   
   
-    
-    if(true)
-    {
+  
+
       SmartDashboard.putBoolean("your uin", true);
+  }
     train.updateSwerve();
     
     fwd = (xbox.getRawAxis(1) - 0.1) / (1 - 0.1);
@@ -150,6 +158,13 @@ public class Robot extends TimedRobot {
     ybutton = xbox.getYButton();
     pov = xbox.getPOV() != -1;
 
+    //if pov toggle
+    if(pov)
+    {
+      povToggled = true;
+      povValue = xbox.getPOV();
+    }
+    
     inverseTanAngleOG = (((((( Math.toDegrees(Math.atan(rcwY/rcwX))+360 ))+ (MathFormulas.signumV4(rcwX)))%360) - MathFormulas.signumAngleEdition(rcwX,rcwY))+360)%360;
 
       if(Math.abs(xbox.getRawAxis(1)) < 0.1)
@@ -164,28 +179,44 @@ public class Robot extends TimedRobot {
       if(xbox.getAButton())
       {
         navx.getInstance().reset();
+
+        //if pov toggle
+        povValue = 0;
       }
 
       if(bbutton)
       {
+        //pov toggle
+        povToggled = false;
+
         rcw = train.moveToAngy(90);
       }
       else if(ybutton)
       {
+        //pov toggle
+        povToggled = false;
+
         rcw  = rcw/5;
       }
-      else if(pov)
+      
+      //else if not toggle
+      else if(Math.abs(xbox.getRawAxis(5)) >= 0.1 || Math.abs(xbox.getRawAxis(4)) >= 0.1)
       {
-        rcw = train.moveToAngy((xbox.getPOV()+180)% 360);
-      }
-      else
-      {
+        //pov toggle
+        povToggled = false;
+
         //TODO                     why the FUCK did java make mod (%) stupidly >:(
         rcw = train.moveToAngy((inverseTanAngleOG + 270) % 360);
         SmartDashboard.putNumber("inverseTanAngleOG with the 90", (inverseTanAngleOG + 270) % 360);
       }
+      //povtoggle instead of pov for pov toggle and after else
+      else if(povToggled)
+      {
+        rcw = train.moveToAngy((povValue+180)% 360);
+      }
+      
 
-      if(Math.abs(xbox.getRawAxis(5)) < 0.1 && !pov && !bbutton && !ybutton)
+      if(Math.abs(xbox.getRawAxis(5)) < 0.1 && !povToggled && !bbutton && !ybutton)
       {
         rcw = 0;
         rcwY = 0;
@@ -211,12 +242,12 @@ public class Robot extends TimedRobot {
      SmartDashboard.putNumber("doesthiswork", inverseTanAngleOG);
 
      SmartDashboard.putNumber("rcwrobotperiod", rcw);
-    }
-    else {
+    SmartDashboard.putBoolean("pov", pov);
+    SmartDashboard.putBoolean("povtoggled", povToggled);
+   /* else {
       SmartDashboard.putBoolean("your uin", false);
       train.stopEverything();
-    }
-  
+    }*/
   }
 
   @Override
@@ -237,4 +268,6 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() 
   {}
+
+  
 }
