@@ -164,7 +164,7 @@ public class Robot extends TimedRobot {
       povToggled = true;
       povValue = xbox.getPOV();
     }
-    
+
     inverseTanAngleOG = (((((( Math.toDegrees(Math.atan(rcwY/rcwX))+360 ))+ (MathFormulas.signumV4(rcwX)))%360) - MathFormulas.signumAngleEdition(rcwX,rcwY))+360)%360;
 
       if(Math.abs(xbox.getRawAxis(1)) < 0.1)
@@ -181,44 +181,37 @@ public class Robot extends TimedRobot {
         navx.getInstance().reset();
 
         //if pov toggle
-        povValue = 0;
+
+          povValue = 0;
+        
       }
 
-      if(bbutton)
-      {
-        //pov toggle
-        povToggled = false;
 
-        rcw = train.moveToAngy(90);
-      }
-      else if(ybutton)
-      {
-        //pov toggle
-        povToggled = false;
-
-        rcw  = rcw/5;
-      }
       
-      //else if not toggle
-      else if(Math.abs(xbox.getRawAxis(5)) >= 0.1 || Math.abs(xbox.getRawAxis(4)) >= 0.1)
+      //"else" if not toggle
+      if(Math.abs(xbox.getRawAxis(5)) >= 0.1 || Math.abs(xbox.getRawAxis(4)) >= 0.1)
       {
-        //pov toggle
-        povToggled = false;
+//pov toggle
+          povToggled = false;
+  
 
         //TODO                     why the FUCK did java make mod (%) stupidly >:(
         rcw = train.moveToAngy((inverseTanAngleOG + 270) % 360);
         SmartDashboard.putNumber("inverseTanAngleOG with the 90", (inverseTanAngleOG + 270) % 360);
       }
-      //povtoggle instead of pov for pov toggle and after else
+      //povtoggle instead of pov for pov toggle and after "else" (when not toggle)
       else if(povToggled)
       {
         rcw = train.moveToAngy((povValue+180)% 360);
       }
       
 
-      if(Math.abs(xbox.getRawAxis(5)) < 0.1 && !povToggled && !bbutton && !ybutton)
+      if(!povToggled && !bbutton && !ybutton && Math.abs(xbox.getRawAxis(5)) < 0.1 && Math.abs(xbox.getRawAxis(4)) < 0.1)
       {
         rcw = 0;
+      }
+      if(Math.abs(xbox.getRawAxis(5)) < 0.1)
+      {
         rcwY = 0;
       }
       if(Math.abs(xbox.getRawAxis(4)) < 0.1)
