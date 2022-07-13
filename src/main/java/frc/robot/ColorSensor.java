@@ -7,14 +7,36 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
 public class ColorSensor {
+
+  /**
+   * A Rev Color Match object is used to register and detect known colors. This can 
+   * be calibrated ahead of time or during operation.
+   * 
+   * This object uses a simple euclidian distance to estimate the closest match
+   * with given confidence range.
+   */
+  private final ColorMatch m_colorMatcher = new ColorMatch();
+
+  /**
+   * Note: Any example colors should be calibrated as the user needs, these
+   * are here as a basic example.
+   */
+  private final Color kBlueTarget = new Color(0.181396484375, 0.411865234375, 0.406982421875);
+  private final Color kFarBlueTarget = new Color(0.32666015625, 0.431884765625, 0.24169921875);
+  private final Color kGreenTarget = new Color(0.197, 0.561, 0.240);
+  private final Color kRedTarget = new Color(0.408203125, 0.39599609375, 0.196044921875);
+  private final Color kYellowTarget = new Color(0.361, 0.524, 0.113);
+
+
   /**
    * Change the I2C port below to match the connection of your color sensor
    */
@@ -25,13 +47,26 @@ public class ColorSensor {
    * parameter. The device will be automatically initialized with default 
    * parameters.
    */
-  private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
  private int proximity = m_colorSensor.getProximity();
  private Color detectedColor = m_colorSensor.getColor();
  private double IR =  m_colorSensor.getIR();
+ public static ColorSensor getInstance()
+ {
+     return InstanceHolder.mInstance;
+ }
+
   public ColorSensor()
   {
 
+  }
+
+  public void colorInit()
+  {
+    m_colorMatcher.addColorMatch(kBlueTarget);
+    m_colorMatcher.addColorMatch(kGreenTarget);
+    m_colorMatcher.addColorMatch(kRedTarget);
+    m_colorMatcher.addColorMatch(kYellowTarget);   
   }
 
   public Color getDetectedColor()
@@ -46,7 +81,7 @@ public class ColorSensor {
      * an object is the more light from the surroundings will bleed into the 
      * measurements and make it difficult to accurately determine its color.
      */
-    return m_colorSensor.getColor();
+    return detectedColor;
   }
     
   public double getIR()
@@ -54,12 +89,12 @@ public class ColorSensor {
     /**
      * The sensor returns a raw IR value of the infrared light detected.
      */
-    return m_colorSensor.getIR();
+    return IR;
   }
 
   public int getProximity()
   {
-    return m_colorSensor.getProximity();
+    return proximity;
   }
 
   public void updateValues()
@@ -67,6 +102,28 @@ public class ColorSensor {
     proximity = m_colorSensor.getProximity();
     detectedColor = m_colorSensor.getColor();
     IR = m_colorSensor.getIR();
+
+     /**
+     * Run the color match algorithm on our detected color
+     */
+    String colorString;
+    ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+
+    if (match.color == kBlueTarget) {
+      colorString = "Blue";
+    } else if (match.color == kRedTarget) {
+      colorString = "Red";
+    } else if (match.color == kGreenTarget) {
+      colorString = "Green";
+    } else if (match.color == kYellowTarget) {
+      colorString = "Yellow";
+    } else if (match.color == kFarBlueTarget) {
+      colorString = "FarBlue";
+    } else {
+      colorString = "Unknown";
+    }
+
+
     /**
      * Open Smart Dashboard or Shuffleboard to see the color detected by the 
      * sensor.
@@ -88,5 +145,49 @@ public class ColorSensor {
      */
 
     SmartDashboard.putNumber("Proximity", proximity);
+    SmartDashboard.putNumber("red", m_colorSensor.getRed());
+    SmartDashboard.putString("Detected Color", colorString);
+
+    SmartDashboard.putNumber("Confidence", match.confidence);
   }
+
+
+  public void test()
+  {
+   
+  }
+  private static class InstanceHolder
+  {
+      private static final ColorSensor mInstance = new ColorSensor();
+  } 
 }
+
+
+
+
+/*
+
+test for distances
+
+measurmenents from robot to wall 
+(robot distance - length of sensor = actual distance)
+
+ir - inches
+
+
+800 - 1 inch
+
+1500 - 33 inches
+the fuck happened between these numbers (._.)
+2000 - 46 inches
+
+3500 - 57 inches 
+
+4100 - 67 inches
+
+5000 - 108 inches
+
+
+in conclsion - the color distance sensor is kinda shit (if my data is correct)
+
+*/
