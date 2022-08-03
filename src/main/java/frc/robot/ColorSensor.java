@@ -47,10 +47,17 @@ public class ColorSensor {
    * parameter. The device will be automatically initialized with default 
    * parameters.
    */
-private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+ private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
  private int proximity = m_colorSensor.getProximity();
  private Color detectedColor = m_colorSensor.getColor();
  private double IR =  m_colorSensor.getIR();
+
+
+
+
+ private String colorString;
+ private ColorMatchResult match;
+ 
  public static ColorSensor getInstance()
  {
      return InstanceHolder.mInstance;
@@ -97,7 +104,7 @@ private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
     return proximity;
   }
 
-  public void updateValues()
+  public void updateColor()
   {
     proximity = m_colorSensor.getProximity();
     detectedColor = m_colorSensor.getColor();
@@ -106,8 +113,8 @@ private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
      /**
      * Run the color match algorithm on our detected color
      */
-    String colorString;
-    ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+    
+    match = m_colorMatcher.matchClosestColor(detectedColor);
 
     if (match.color == kBlueTarget) {
       colorString = "Blue";
@@ -128,10 +135,7 @@ private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
      * Open Smart Dashboard or Shuffleboard to see the color detected by the 
      * sensor.
      */
-    SmartDashboard.putNumber("Red", detectedColor.red);
-    SmartDashboard.putNumber("Green", detectedColor.green);
-    SmartDashboard.putNumber("Blue", detectedColor.blue);
-    SmartDashboard.putNumber("IR", IR);
+    
      /**
      * In addition to RGB IR values, the color sensor can also return an 
      * infrared proximity value. The chip contains an IR led which will emit
@@ -143,7 +147,15 @@ private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
      * or provide a threshold for when an object is close enough to provide
      * accurate color values.
      */
+    
+  }
 
+  public void colorSmartDashboard()
+  {
+    SmartDashboard.putNumber("Red", detectedColor.red);
+    SmartDashboard.putNumber("Green", detectedColor.green);
+    SmartDashboard.putNumber("Blue", detectedColor.blue);
+    SmartDashboard.putNumber("IR", IR);
     SmartDashboard.putNumber("Proximity", proximity);
     SmartDashboard.putNumber("red", m_colorSensor.getRed());
     SmartDashboard.putString("Detected Color", colorString);

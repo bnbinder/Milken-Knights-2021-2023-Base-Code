@@ -8,6 +8,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -28,6 +29,7 @@ public class Robot extends TimedRobot {
   private MkSwerveTrain train = MkSwerveTrain.getInstance();
   private ColorSensor color = ColorSensor.getInstance();
   private SupaStruct supaKoopa = SupaStruct.getInstance();
+  private UltraSensor ultra = UltraSensor.getInstance();
   private SerialPort arduino;
   private Timer timer;
   private String keyIn = "";
@@ -129,7 +131,11 @@ public class Robot extends TimedRobot {
     }
 
     supaKoopa.updateTele();
-    color.updateValues();
+    color.updateColor();
+    ultra.updateUltra();
+
+    ultra.ultraSmartDashboard();
+    color.colorSmartDashboard();
   }
 
   @Override
