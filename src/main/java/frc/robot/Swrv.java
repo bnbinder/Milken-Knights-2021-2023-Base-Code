@@ -19,11 +19,12 @@ public class Swrv extends SequentialCommandGroup {
     addCommands(//deadline(new Turn(((DISTANGLE.angleuno)))).withTimeout(1),
     
     //deadline(new Turn(0)).withTimeout(1),
-    deadline(new Turn(0).withTimeout(1)),
+    deadline(new Turn(0).withTimeout(1)), //forward curve
     deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)), DISTANGLE.sidePos, DISTANGLE.headinguno)).withTimeout(6),
-    deadline(new Turn(0)).withTimeout(1),
+    deadline(new Turn(0)).withTimeout(1), // backward curve
     deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sidePos, DISTANGLE.headingdos)).withTimeout(6),
-    
+    deadline(new Turn(0)).withTimeout(1),
+
     deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sideCon, DISTANGLE.headingtres)).withTimeout(6),
     deadline(new Turn(0)).withTimeout(1),
     deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sideCon, DISTANGLE.headingquad)).withTimeout(6),
@@ -37,8 +38,8 @@ public class Swrv extends SequentialCommandGroup {
     deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sideCon, DISTANGLE.headingsev)).withTimeout(6),
     deadline(new Turn(0)).withTimeout(1),
     deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sideCon, DISTANGLE.headingocto)).withTimeout(6),
-    deadline(new Turn(0)).withTimeout(1),
-
+    deadline(new Turn(0)).withTimeout(1));
+/* 
     deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sidePos, DISTANGLE.headingnine)).withTimeout(6),
     deadline(new Turn(0)).withTimeout(1),
     deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sidePos, DISTANGLE.headingele)).withTimeout(6),
@@ -54,6 +55,6 @@ public class Swrv extends SequentialCommandGroup {
     
     deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sideCon, DISTANGLE.headingfif)).withTimeout(6),
     deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sideCon, DISTANGLE.headingsixt)).withTimeout(6));
-             // deadline(new Stop()));
+             // deadline(new Stop()));*/
   }
 }

@@ -405,7 +405,7 @@ return setpoint;
      * @param turny Specific or Infinite
      * @param turnyAuto (if using specific for turny) angle that robot tries to keep when moving
     */
-    public void etherAutoUpdateOld(double thetaTurn, double RCWauto, ETHERAUTO mode, ETHERRCW turny, double turnyAuto, double heading, int side)
+    /*public void etherAutoUpdateOld(double thetaTurn, double RCWauto, ETHERAUTO mode, ETHERRCW turny, double turnyAuto, double heading, int side)
     {
                                             //numbers fall short of high by 3ish inches and short of length by 4ish inches
         double RCWtemp = RCWauto; //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
@@ -426,7 +426,7 @@ return setpoint;
             RCWtemp = headerStraighter(turnyAuto);
         }
         etherSwerve(vars.FWDauto, -vars.STRauto, RCWtemp, ControlMode.MotionMagic);
-    }
+    }*/
 
 
     public void etherAutoUpdate(double thetaTurn, double heading, int side)
@@ -438,8 +438,46 @@ return setpoint;
         vars.FWDauto = Math.cos(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         vars.STRauto = Math.sin(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         etherSwerve(vars.FWDauto, -vars.STRauto, RCWtemp, ControlMode.MotionMagic);
-        SmartDashboard.putNumber("dist", heading);
-        SmartDashboard.putNumber("calc", side);
+        /*SmartDashboard.putNumber("heading", heading);
+        SmartDashboard.putNumber("side", side);
+        SmartDashboard.putNumber("thetaTurn", thetaTurn);
+        SmartDashboard.putNumber("avgDist", vars.avgDistInches);
+        SmartDashboard.putNumber("distA", vars.distanceA);
+        SmartDashboard.putNumber("calcangle", calcangle);
+        SmartDashboard.putNumber("FWDauto", vars.FWDauto);
+        SmartDashboard.putNumber("STRauto", vars.STRauto);*/
+
+        if(heading > 0 && side > 0)
+        {
+            SmartDashboard.putBoolean("1", true);
+            SmartDashboard.putBoolean("2", false);
+            SmartDashboard.putBoolean("3", false);
+            SmartDashboard.putBoolean("4", false);
+        }
+
+        else if(heading < 0 && side > 0)
+        {
+            SmartDashboard.putBoolean("1", false);
+            SmartDashboard.putBoolean("2", true);
+            SmartDashboard.putBoolean("3", false);
+            SmartDashboard.putBoolean("4", false);
+        }
+
+        else if(heading > 0 && side < 0)
+        {
+            SmartDashboard.putBoolean("1", false);
+            SmartDashboard.putBoolean("2", false);
+            SmartDashboard.putBoolean("3", true);
+            SmartDashboard.putBoolean("4", false);
+        }
+
+        else
+        {
+            SmartDashboard.putBoolean("1", false);
+            SmartDashboard.putBoolean("2", false);
+            SmartDashboard.putBoolean("3", false);
+            SmartDashboard.putBoolean("4", true);
+        }
     }
 
     public boolean isFinished()

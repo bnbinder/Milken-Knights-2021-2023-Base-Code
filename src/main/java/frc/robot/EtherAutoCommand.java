@@ -43,8 +43,8 @@ public class EtherAutoCommand extends CommandBase {
     //SmartDashboard.putNumber("anglglgl", DISTANGLE.angleuno);
     //SmartDashboard.putNumber("distt", DISTANGLE.distanceuno);
     train.setEtherAuto(totalDistance, distanceA);
-    SmartDashboard.putNumber("dist", heading);
-    SmartDashboard.putNumber("calc", side);
+    //SmartDashboard.putNumber("dist", heading);
+    //SmartDashboard.putNumber("calc", side);
     //SmartDashboard.putBoolean("key", true);
   }
 

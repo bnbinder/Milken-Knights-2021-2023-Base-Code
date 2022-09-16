@@ -132,6 +132,15 @@ public class SupaStruct {
         SmartDashboard.putBoolean("itsreal", itsreal);
     }
 
+    public void teleopDisabled()
+    {
+        bbutton = false;
+        ybutton = false;
+        pov = false;
+        povToggled = false;
+        itsreal = false;
+    }
+
     private static class InstanceHolder
     {
             private static final SupaStruct mInstance = new SupaStruct();
