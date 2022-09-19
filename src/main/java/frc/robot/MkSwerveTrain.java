@@ -128,6 +128,25 @@ private Motor mMotor = Motor.getInstance();
         return MathFormulas.nativeToDegrees(bottomTurnRight.getSelectedSensorPosition(), MKTURN.greerRatio);
     }
 
+
+
+    public double tlCoder()
+    {
+        return topLeftCoder.getAbsolutePosition();
+    }
+    public double trCoder()
+    {
+        return topRightCoder.getAbsolutePosition();
+    }
+    public double blCoder()
+    {
+        return bottomLeftCoder.getAbsolutePosition();
+    }
+    public double brCoder()
+    {
+        return bottomRightCoder.getAbsolutePosition();
+    }
+
     public void updateSwerve()
     {
         //SmartDashboard.putNumber("anglet", vars.deg[0]);
@@ -139,6 +158,11 @@ private Motor mMotor = Motor.getInstance();
         SmartDashboard.putNumber("distancetbotright", vars.posInchBR);*/
         SmartDashboard.putNumber("dri pos", topTurnLeft.getSelectedSensorPosition());
         SmartDashboard.putNumber("navx", vars.yaw);
+
+        SmartDashboard.putNumber("tlcoder", tlCoder());
+        SmartDashboard.putNumber("trcoder", trCoder());
+        SmartDashboard.putNumber("blcoder", blCoder());
+        SmartDashboard.putNumber("brcoder", brCoder());
 
         vars.posInchTL = MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorPosition());
         vars.posInchTR = MathFormulas.nativeToInches(topDriveRight.getSelectedSensorPosition());

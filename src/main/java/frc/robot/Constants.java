@@ -62,7 +62,7 @@ public final class Constants {
         
         public static final double[] pidf = {kP, kI, kD, kF};
 
-        public static final NeutralMode mode = NeutralMode.Brake;
+        public static final NeutralMode mode = NeutralMode.Coast;
 
         public static final boolean inverted = true;
 
@@ -73,10 +73,10 @@ public final class Constants {
 
     public static class MKCANCODER
     {
-        public static final double topLeftOffset = -74.53125;
-        public static final double topRightOffset = 131.1328125;
-        public static final double bottomLeftOffset = -121.640625;
-        public static final double bottomRightOffset = 47.197265625;
+        public static final double topLeftOffset = -113.90625;
+        public static final double topRightOffset = 92.109375;
+        public static final double bottomLeftOffset = -10.546875;
+        public static final double bottomRightOffset = 95.537109375;
 
         public static final double[] offset = {MKCANCODER.topLeftOffset, MKCANCODER.topRightOffset, MKCANCODER.bottomLeftOffset, MKCANCODER.bottomRightOffset};
 
@@ -87,11 +87,11 @@ public final class Constants {
 
     public static class MKTRAIN 
     {
-        public static final double L = 22.57;
-        public static final double W = 22.57;
+        public static final double L = 22.75;
+        public static final double W = 22.75;
 
-        public static final double widthInches = 29;
-        public static final double heightInches = 29;
+        public static final double widthInches = 28;
+        public static final double heightInches = 28;
 
         public static final double R = Math.sqrt(Math.pow(L, 2) + Math.pow(W, 2));
 
