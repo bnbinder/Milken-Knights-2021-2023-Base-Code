@@ -49,7 +49,10 @@ public class SupaStruct {
 
 
 
-        
+        if(xbox.getXButton())
+        {
+            train.setModuleTurn(90, 90, 90, 90);
+        }
 
 
         if(xbox.getAButton())

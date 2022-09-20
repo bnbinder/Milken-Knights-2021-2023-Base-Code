@@ -68,15 +68,15 @@ public final class Constants {
 
         public static final int scurve = 6;
 
-        public static final double greerRatio = 12.8;
+        public static final double greerRatio = 150/7;
     }
 
     public static class MKCANCODER
     {
-        public static final double topLeftOffset = -113.90625;
-        public static final double topRightOffset = 92.109375;
-        public static final double bottomLeftOffset = -10.546875;
-        public static final double bottomRightOffset = 95.537109375;
+        public static final double topLeftOffset = -116.3671875;
+        public static final double topRightOffset = -84.0234375;
+        public static final double bottomLeftOffset = 1.7578125;
+        public static final double bottomRightOffset = -83.2324218;
 
         public static final double[] offset = {MKCANCODER.topLeftOffset, MKCANCODER.topRightOffset, MKCANCODER.bottomLeftOffset, MKCANCODER.bottomRightOffset};
 
