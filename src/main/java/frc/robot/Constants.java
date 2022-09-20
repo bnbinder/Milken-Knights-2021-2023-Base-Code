@@ -73,10 +73,10 @@ public final class Constants {
 
     public static class MKCANCODER
     {
-        public static final double topLeftOffset = -115.048828125;//-116.2792;
-        public static final double topRightOffset = -84.19921875; //-82.5292968;
-        public static final double bottomLeftOffset = -83.056640625;//-83.583984375;
-        public static final double bottomRightOffset = 179.033203125;//0;
+        public static final double topLeftOffset = -115.048828125;
+        public static final double topRightOffset = -84.19921875; 
+        public static final double bottomLeftOffset = -83.056640625;
+        public static final double bottomRightOffset = 179.033203125;
 
         public static final double[] offset = {MKCANCODER.topLeftOffset, MKCANCODER.topRightOffset, MKCANCODER.bottomLeftOffset, MKCANCODER.bottomRightOffset};
 
@@ -147,7 +147,7 @@ public final class Constants {
     public static class INTAKE 
     {
         public static final double maxIntakeNativePosition = 7350;
-        public static final NeutralMode intakeNeutralMode = NeutralMode.Brake;
+        public static final NeutralMode intakeNeutralMode = NeutralMode.Coast;
         public static final NeutralMode rollerNeutralMode = NeutralMode.Coast;
 
         public static final double kP = 0.04;

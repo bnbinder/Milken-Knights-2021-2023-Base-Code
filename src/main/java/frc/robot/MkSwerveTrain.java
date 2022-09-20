@@ -159,10 +159,10 @@ private Motor mMotor = Motor.getInstance();
         SmartDashboard.putNumber("dri pos", topTurnLeft.getSelectedSensorPosition());
         SmartDashboard.putNumber("navx", vars.yaw);
 
-        SmartDashboard.putNumber("tlcoder", tlCoder());
-        SmartDashboard.putNumber("trcoder", trCoder());
-        SmartDashboard.putNumber("blcoder", blCoder());
-        SmartDashboard.putNumber("brcoder", brCoder());
+        SmartDashboard.putNumber("TopLeft", tlCoder());
+        SmartDashboard.putNumber("TopRight", trCoder());
+        SmartDashboard.putNumber("BottomLeft", blCoder());
+        SmartDashboard.putNumber("BottomRight", brCoder());
 
         SmartDashboard.putNumber("tldeg", tlDeg());
         SmartDashboard.putNumber("trdeg", trDeg());
