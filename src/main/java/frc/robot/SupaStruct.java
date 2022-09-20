@@ -71,14 +71,15 @@ public class SupaStruct {
 
         
 //      if statments
-        if(ybutton)
+        /*if(ybutton)
         {
             rcw = rcwX/5;
             povToggled = false;
-        }       
-        else if(Math.abs(xbox.getRawAxis(5)) >= 0.1 || Math.abs(xbox.getRawAxis(4)) >= 0.1)
+        }       */
+        if(Math.abs(xbox.getRawAxis(5)) >= 0.1 || Math.abs(xbox.getRawAxis(4)) >= 0.1)
         {
-            rcw = train.moveToAngy((inverseTanAngleOG + 270) % 360);
+            //rcw = train.moveToAngy((inverseTanAngleOG + 270) % 360);
+            rcw = rcwX/5;
             povToggled = false;
         }
         else if(povToggled)
@@ -89,7 +90,7 @@ public class SupaStruct {
         itsreal = false;
 
 //      else statements
-        if(!ybutton && !povToggled && !bbutton && Math.abs(xbox.getRawAxis(5)) < 0.1 && Math.abs(xbox.getRawAxis(4)) < 0.1)
+        if(/*!ybutton&&*/ !povToggled && !bbutton && Math.abs(xbox.getRawAxis(5)) < 0.1 && Math.abs(xbox.getRawAxis(4)) < 0.1)
         {
             rcw = 0;
             itsreal = true;
