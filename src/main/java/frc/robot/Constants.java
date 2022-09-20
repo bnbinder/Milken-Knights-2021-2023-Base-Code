@@ -64,7 +64,7 @@ public final class Constants {
 
         public static final NeutralMode mode = NeutralMode.Coast;
 
-        public static final boolean inverted = true;
+        public static final boolean inverted = false;
 
         public static final int scurve = 6;
 
@@ -73,10 +73,10 @@ public final class Constants {
 
     public static class MKCANCODER
     {
-        public static final double topLeftOffset = -116.3671875;
-        public static final double topRightOffset = -84.0234375;
-        public static final double bottomLeftOffset = 1.7578125;
-        public static final double bottomRightOffset = -83.2324218;
+        public static final double topLeftOffset = -116.2792;//63.89648437;//-116.3671875;
+        public static final double topRightOffset = -82.5292968;//-84.0234375;
+        public static final double bottomLeftOffset = -83.583984375;//-168.13476562;//2.109375;//1.7578125;
+        public static final double bottomRightOffset = 0;//64.775390625;//96.50390625;//-83.2324218;
 
         public static final double[] offset = {MKCANCODER.topLeftOffset, MKCANCODER.topRightOffset, MKCANCODER.bottomLeftOffset, MKCANCODER.bottomRightOffset};
 

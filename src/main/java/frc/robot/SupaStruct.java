@@ -38,6 +38,8 @@ public class SupaStruct {
         ybutton = xbox.getYButton();
         pov = xbox.getPOV() != -1;
 
+        
+         
 //      i dont remember how i got this lol
         inverseTanAngleOG = ((((((Math.toDegrees(Math.atan(rcwY/rcwX))+360 )) + 
                             (MathFormulas.signumV4(rcwX)))%360) - 
@@ -49,11 +51,7 @@ public class SupaStruct {
 
 
 
-        if(xbox.getXButton())
-        {
-            train.setModuleTurn(90, 90, 90, 90);
-        }
-
+       
 
         if(xbox.getAButton())
         {
@@ -116,7 +114,7 @@ public class SupaStruct {
 
 //      applying numbers
         if(fwd != 0 || str != 0 || rcw != 0)
-        {
+        {//+,-,+
             train.etherSwerve(fwd/5, -str/5, rcw, ControlMode.PercentOutput); //+,-,+
         }
         else
