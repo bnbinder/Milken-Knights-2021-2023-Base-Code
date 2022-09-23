@@ -62,7 +62,7 @@ public final class Constants {
         
         public static final double[] pidf = {kP, kI, kD, kF};
 
-        public static final NeutralMode mode = NeutralMode.Brake;
+        public static final NeutralMode mode = NeutralMode.Coast;
 
         public static final boolean inverted = false;
 
@@ -73,10 +73,10 @@ public final class Constants {
 
     public static class MKCANCODER
     {
-        public static final double topLeftOffset = -115.048828125;
-        public static final double topRightOffset = -84.19921875; 
-        public static final double bottomLeftOffset = -83.056640625;
-        public static final double bottomRightOffset = 179.033203125;
+        public static final double topLeftOffset = -115.224609375;//-115.048828125;
+        public static final double topRightOffset = -84.19921875;//-84.19921875; 
+        public static final double bottomLeftOffset = -83.3203125;//-83.056640625;
+        public static final double bottomRightOffset = 1.494140625;//179.033203125;
 
         public static final double[] offset = {MKCANCODER.topLeftOffset, MKCANCODER.topRightOffset, MKCANCODER.bottomLeftOffset, MKCANCODER.bottomRightOffset};
 
