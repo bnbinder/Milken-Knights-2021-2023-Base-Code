@@ -11,9 +11,9 @@ import frc.robot.Constants.AUTO.DISTANGLE;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class Swrv extends SequentialCommandGroup {
+public class SwrvForwardBackward extends SequentialCommandGroup {
   /** Creates a new Swrv. */
-  public Swrv() {
+  public SwrvForwardBackward() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(//deadline(new Turn(((DISTANGLE.angleuno)))).withTimeout(1),

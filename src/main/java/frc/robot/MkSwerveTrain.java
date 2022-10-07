@@ -308,6 +308,101 @@ private Motor mMotor = Motor.getInstance();
 
 
 
+
+
+
+
+
+
+    public void etherAutoSwerve(double FWD, double STR, double RCW, ControlMode mode)
+    {
+       /* if(RCW == 0 && (FWD != 0 || STR != 0))
+        {
+            RCW = headerStraighter(Math.toDegrees(Math.atan2(FWD, STR)));
+        }*/
+        vars.yaw = 0;
+        vars.temp = FWD * Math.cos(Math.toRadians(vars.yaw)) + STR * Math.sin(Math.toRadians(vars.yaw));
+        STR = -FWD * Math.sin(Math.toRadians(vars.yaw)) + STR * Math.cos(Math.toRadians(vars.yaw));
+        FWD = vars.temp;
+        //SmartDashboard.putNumber("header pid", (Math.toDegrees(Math.atan2(FWD, STR))));
+        //RCW = moveToAngy((((((( Math.toDegrees(Math.atan(RCWY/RCWX))+360 ))+ (MathFormulas.signumV4(RCWX)))%360) - MathFormulas.signumAngleEdition(RCWX,RCWY))+360)%360);
+        SmartDashboard.putNumber("rcw", RCW);
+
+        //SmartDashboard.putNumber("frd", FWD);
+        //SmartDashboard.putNumber("str", STR);
+
+        vars.A = STR - RCW*(MKTRAIN.L/MKTRAIN.R);
+        vars.B = STR + RCW*(MKTRAIN.L/MKTRAIN.R);
+        vars.C = FWD - RCW*(MKTRAIN.W/MKTRAIN.R);
+        vars.D = FWD + RCW*(MKTRAIN.W/MKTRAIN.R);
+
+        vars.mod2[1] = Math.atan2(vars.B,vars.C)*180/Constants.kPi;
+        vars.mod1[1] = Math.atan2(vars.B,vars.D)*180/Constants.kPi;
+        vars.mod3[1] = Math.atan2(vars.A,vars.D)*180/Constants.kPi;
+        vars.mod4[1] = Math.atan2(vars.A,vars.C)*180/Constants.kPi; 
+
+        vars.mod2[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.C, 2)));      
+        vars.mod1[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.D, 2))); 
+        vars.mod3[0] = Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.D, 2)));           
+        vars.mod4[0] = Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.C, 2)));
+        
+            vars.max=vars.mod1[0]; if(vars.mod2[0]>vars.max)vars.max=vars.mod2[0]; if(vars.mod3[0]>vars.max)vars.max=vars.mod3[0]; if(vars.mod4[0]>vars.max)vars.max=vars.mod4[0];
+            if(vars.max>1){vars.mod1[0]/=vars.max; vars.mod2[0]/=vars.max; vars.mod3[0]/=vars.max; vars.mod4[0]/=vars.max;}
+
+            /*vars.mod1 = MathFormulas.optimize(topLeftModule.getTurnDeg(), vars.mod1);
+            vars.mod2 = MathFormulas.optimize(topRightModule.getTurnDeg(), vars.mod2);
+            vars.mod3 = MathFormulas.optimize(bottomLeftModule.getTurnDeg(), vars.mod3);
+            vars.mod4 = MathFormulas.optimize(bottomRightModule.getTurnDeg(), vars.mod4);*/
+    
+            vars.mod1 = setDirection(tlDeg(), vars.mod1);
+            vars.mod2 = setDirection(trDeg(), vars.mod2);
+            vars.mod3 = setDirection(blDeg(), vars.mod3);
+            vars.mod4 = setDirection(brDeg(), vars.mod4);
+            
+            if(mode == ControlMode.MotionMagic)
+            {
+                vars.mod1[0] = Math.signum(vars.mod1[0]) * vars.autoDist;
+                vars.mod2[0] = Math.signum(vars.mod2[0]) * vars.autoDist;
+                vars.mod3[0] = Math.signum(vars.mod3[0]) * vars.autoDist;
+                vars.mod4[0] = Math.signum(vars.mod4[0]) * vars.autoDist;
+            }
+          /*  vars.mod1[1] = MathFormulas.setAutoDirection(topLeftModule.getTurnDeg(), vars.mod1[1]);
+            vars.mod2[1] = MathFormulas.setAutoDirection(topRightModule.getTurnDeg(), vars.mod2[1]);
+            vars.mod3[1] = MathFormulas.setAutoDirection(bottomLeftModule.getTurnDeg(), vars.mod3[1]);
+            vars.mod4[1] = MathFormulas.setAutoDirection(bottomRightModule.getTurnDeg(), vars.mod4[1]);
+            */
+
+          /*  vars.mod1[0] = vars.autoDist;
+            vars.mod2[0] = vars.autoDist;
+            vars.mod3[0] = vars.autoDist;
+            vars.mod4[0] = vars.autoDist;*/
+        
+
+      /*if(mode == ControlMode.MotionMagic)
+        {
+            vars.mod1[0] = Math.abs(vars.mod1[0]);
+            vars.mod2[0] = Math.abs(vars.mod2[0]);
+            vars.mod3[0] = Math.abs(vars.mod3[0]);
+            vars.mod4[0] = Math.abs(vars.mod4[0]);
+        }*/
+        SmartDashboard.putNumber("wa1", vars.mod1[1]);
+        setModuleDrive(mode, vars.mod1[0], vars.mod2[0], vars.mod3[0], vars.mod4[0]);
+        setModuleTurn(vars.mod1[1], vars.mod2[1], vars.mod3[1], vars.mod4[1]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public double moveToAngy(double setpoint)
     {        
         vars.yaw = navx.getInstance().getNavxYaw();
@@ -470,7 +565,7 @@ return setpoint;
         double calcangle = ((heading) + (side * ((thetaTurn/2)+((vars.avgDistInches/(vars.distanceA))*(thetaTurn)))));
         vars.FWDauto = Math.cos(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         vars.STRauto = Math.sin(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
-        etherSwerve(vars.FWDauto, -vars.STRauto, RCWtemp, ControlMode.MotionMagic);
+        etherAutoSwerve(vars.FWDauto, -vars.STRauto, RCWtemp, ControlMode.MotionMagic);
         /*SmartDashboard.putNumber("heading", heading);
         SmartDashboard.putNumber("side", side);
         SmartDashboard.putNumber("thetaTurn", thetaTurn);
@@ -479,6 +574,7 @@ return setpoint;
         SmartDashboard.putNumber("calcangle", calcangle);
         SmartDashboard.putNumber("FWDauto", vars.FWDauto);
         SmartDashboard.putNumber("STRauto", vars.STRauto);*/
+        SmartDashboard.putNumber("calcangle", calcangle);
 
         if(heading > 0 && side > 0)
         {
