@@ -187,6 +187,7 @@ private Motor mMotor = Motor.getInstance();
      //vars.avgVelInches = (vars.velInch[0] + vars.velInch[1] + vars.velInch[2] + vars.velInch[3]) / 4.0;
        // vars.avgVelNative = (vars.velNative[0] + vars.velNative[1] + vars.velNative[2] + vars.velNative[3]) / 4.0;
         vars.avgDeg = (vars.degTL + vars.degTR + vars.degBL + vars.degBR) / 4.0;
+        //TODO maybe abs values if some are negative and some are positive?
     }
 
     public void setModuleTurn(double tl, double tr, double bl, double br)
