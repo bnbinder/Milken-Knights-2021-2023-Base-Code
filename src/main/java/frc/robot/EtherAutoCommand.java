@@ -46,6 +46,7 @@ public class EtherAutoCommand extends CommandBase {
     //SmartDashboard.putNumber("dist", heading);
     //SmartDashboard.putNumber("calc", side);
     //SmartDashboard.putBoolean("key", true);
+    System.out.println("im starting");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
