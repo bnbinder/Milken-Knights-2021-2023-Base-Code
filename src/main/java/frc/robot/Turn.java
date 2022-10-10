@@ -16,7 +16,9 @@ public class Turn extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    TurnAuto.getInstance().setTurnAuto(angle);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
