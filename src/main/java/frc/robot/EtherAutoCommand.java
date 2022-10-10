@@ -46,7 +46,7 @@ public class EtherAutoCommand extends CommandBase {
     //SmartDashboard.putNumber("dist", heading);
     //SmartDashboard.putNumber("calc", side);
     //SmartDashboard.putBoolean("key", true);
-    System.out.println("im starting");
+    System.out.println("start move");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -59,7 +59,7 @@ public class EtherAutoCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     train.stopEverything();
-    System.out.println("im done");
+    System.out.println("end move");
   }
 
   // Returns true when the command should end.

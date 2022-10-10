@@ -18,6 +18,7 @@ public class Turn extends CommandBase {
   @Override
   public void initialize() {
     TurnAuto.getInstance().setTurnAuto(angle);
+    System.out.println("start turn");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -28,7 +29,10 @@ public class Turn extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    MkSwerveTrain.getInstance().stopEverything();
+    System.out.println("end turn");
+  }
 
   // Returns true when the command should end.
   @Override
