@@ -58,6 +58,7 @@ public class EtherAutoCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     train.stopEverything();
+    System.out.println("im done");
   }
 
   // Returns true when the command should end.

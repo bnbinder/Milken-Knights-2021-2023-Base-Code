@@ -353,12 +353,12 @@ private Motor mMotor = Motor.getInstance();
             vars.mod2 = MathFormulas.optimize(topRightModule.getTurnDeg(), vars.mod2);
             vars.mod3 = MathFormulas.optimize(bottomLeftModule.getTurnDeg(), vars.mod3);
             vars.mod4 = MathFormulas.optimize(bottomRightModule.getTurnDeg(), vars.mod4);*/
-    
+    /* 
             vars.mod1 = setDirection(tlDeg(), vars.mod1);
             vars.mod2 = setDirection(trDeg(), vars.mod2);
             vars.mod3 = setDirection(blDeg(), vars.mod3);
             vars.mod4 = setDirection(brDeg(), vars.mod4);
-            
+    */        
             if(mode == ControlMode.MotionMagic)
             {
                 vars.mod1[0] = Math.signum(vars.mod1[0]) * vars.autoDist;
@@ -385,7 +385,7 @@ private Motor mMotor = Motor.getInstance();
             vars.mod3[0] = Math.abs(vars.mod3[0]);
             vars.mod4[0] = Math.abs(vars.mod4[0]);
         }*/
-        SmartDashboard.putNumber("wa1", vars.mod1[1]);
+        //SmartDashboard.putNumber("wa1", vars.mod1[1]);
         setModuleDrive(mode, vars.mod1[0], vars.mod2[0], vars.mod3[0], vars.mod4[0]);
         setModuleTurn(vars.mod1[1], vars.mod2[1], vars.mod3[1], vars.mod4[1]);
     }
