@@ -107,13 +107,13 @@ private Motor mMotor = Motor.getInstance();
     public void startDrive()
     {
         topDriveLeft.setSelectedSensorPosition(0);
-        check(topDriveLeft, "top left motor err", true);
+        //check(topDriveLeft, "top left motor err", true);
         topDriveRight.setSelectedSensorPosition(0);
-        check(topDriveRight, "top right motor err", true);
+        //check(topDriveRight, "top right motor err", true);
         bottomDriveLeft.setSelectedSensorPosition(0);
-        check(bottomDriveLeft, "bot left motor err", true);
+        //check(bottomDriveLeft, "bot left motor err", true);
         bottomDriveRight.setSelectedSensorPosition(0);
-        check(bottomDriveRight, "bot right motor err", true);
+        //check(bottomDriveRight, "bot right motor err", true);
     }
 
     public double tlDeg()
@@ -667,6 +667,8 @@ return setpoint;
      * @return 1 for error and 0 for no error
      * @author
      */
+
+     /*
     public int check(TalonFX motorController, String message, boolean printAll) 
     {
         var rc = motorController.getLastError();
@@ -675,7 +677,7 @@ return setpoint;
             System.out.println("[Talon] " + message + " " + rc);
         }
         return rc == ErrorCode.OK ? 0 : 1;
-    }
+    }*/
 
     /**Mode of the ether auto's path*/
     public enum ETHERAUTO
