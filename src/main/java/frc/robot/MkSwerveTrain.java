@@ -5,6 +5,7 @@
 package frc.robot;
 
 
+import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
@@ -106,9 +107,13 @@ private Motor mMotor = Motor.getInstance();
     public void startDrive()
     {
         topDriveLeft.setSelectedSensorPosition(0);
+        check(topDriveLeft, "top left motor err", true);
         topDriveRight.setSelectedSensorPosition(0);
+        check(topDriveRight, "top right motor err", true);
         bottomDriveLeft.setSelectedSensorPosition(0);
+        check(bottomDriveLeft, "bot left motor err", true);
         bottomDriveRight.setSelectedSensorPosition(0);
+        check(bottomDriveRight, "bot right motor err", true);
     }
 
     public double tlDeg()
@@ -152,6 +157,34 @@ private Motor mMotor = Motor.getInstance();
     {
         return MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorPosition());
     }
+
+
+
+
+    public TalonFX tlMotor()
+    {
+        return topDriveLeft;
+    }
+
+    public TalonFX trMotor()
+    {
+        return topDriveRight;
+    }
+
+    public TalonFX blMotor()
+    {
+        return bottomDriveLeft;
+    }
+
+    public TalonFX brMotor()
+    {
+        return bottomDriveRight;
+    }
+
+
+
+
+
 
     public void updateSwerve()
     {
@@ -618,6 +651,30 @@ return setpoint;
     public boolean isFinished()
     {
         return Math.abs(vars.avgDistInches) >= Math.abs(vars.totalDistance) - 0.1;
+    }
+
+
+
+
+
+    /**
+     * Check the TalonFX function for an error and print a message
+     *
+     * 
+     * @param TalonFX
+     * @param message  to print
+     * @param printAll flag to print all (true) or just errors (false)
+     * @return 1 for error and 0 for no error
+     * @author
+     */
+    public int check(TalonFX motorController, String message, boolean printAll) 
+    {
+        var rc = motorController.getLastError();
+        if (rc != ErrorCode.OK || printAll) 
+        {
+            System.out.println("[Talon] " + message + " " + rc);
+        }
+        return rc == ErrorCode.OK ? 0 : 1;
     }
 
     /**Mode of the ether auto's path*/
