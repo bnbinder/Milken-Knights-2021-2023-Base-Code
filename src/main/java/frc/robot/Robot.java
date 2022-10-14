@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
   private Timer timer;
   private String keyIn = "";
   private boolean accessible, in = false;
-  private String bullshit = "30937C22";
+  private String bull = "30937C22";
 
 
   @Override
@@ -122,7 +122,7 @@ public class Robot extends TimedRobot {
 
       SmartDashboard.putBoolean("acess", accessible);
 
-      if(keyIn.equals(bullshit))
+      if(keyIn.equals(bull))
       {
         accessible = true;
       }

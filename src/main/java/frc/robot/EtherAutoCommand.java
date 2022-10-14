@@ -34,11 +34,17 @@ public class EtherAutoCommand extends CommandBase {
 
     //want theta turn, want turny auto, dont want rcw, curve and specific
   }
-
+// youre doing a great job
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    train.startDrive();
+    System.out.println("start move: " + train.isFinished() + " dist: " + train.vars.avgDistInches);
+    System.out.println("motor dist: " + train.tlDist());
+    while(Math.abs(train.tlDist()) >= 5)
+    {
+      System.out.println("buggggggggg!");
+      train.startDrive();
+    }
     //train.startTrain();
     //SmartDashboard.putNumber("anglglgl", DISTANGLE.angleuno);
     //SmartDashboard.putNumber("distt", DISTANGLE.distanceuno);
@@ -46,7 +52,7 @@ public class EtherAutoCommand extends CommandBase {
     //SmartDashboard.putNumber("dist", heading);
     //SmartDashboard.putNumber("calc", side);
     //SmartDashboard.putBoolean("key", true);
-    System.out.println("start move");
+    System.out.println("isfinished TWO THE SEQUEL: " + train.isFinished()+ " dist: " + train.vars.avgDistInches);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -58,8 +64,8 @@ public class EtherAutoCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    System.out.println("end move / isfinished the saga: " + train.isFinished()+ " dist: " + train.vars.avgDistInches);
     train.stopEverything();
-    System.out.println("end move");
   }
 
   // Returns true when the command should end.

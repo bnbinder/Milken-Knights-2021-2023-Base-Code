@@ -190,7 +190,7 @@ ir - inches
 800 - 1 inch
 
 1500 - 33 inches
-the fuck happened between these numbers (._.)
+the heck happened between these numbers (._.)
 2000 - 46 inches
 
 3500 - 57 inches 
@@ -200,6 +200,6 @@ the fuck happened between these numbers (._.)
 5000 - 108 inches
 
 
-in conclsion - the color distance sensor is kinda shit (if my data is correct)
+in conclsion - the color distance sensor is kinda poopy (if my data is correct)
 
 */

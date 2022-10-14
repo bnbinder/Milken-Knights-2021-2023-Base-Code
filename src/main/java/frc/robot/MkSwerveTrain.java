@@ -147,6 +147,12 @@ private Motor mMotor = Motor.getInstance();
         return bottomRightCoder.getAbsolutePosition();
     }
 
+
+    public double tlDist()
+    {
+        return MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorPosition());
+    }
+
     public void updateSwerve()
     {
         //SmartDashboard.putNumber("anglet", vars.deg[0]);
@@ -327,7 +333,6 @@ private Motor mMotor = Motor.getInstance();
         FWD = vars.temp;
         //SmartDashboard.putNumber("header pid", (Math.toDegrees(Math.atan2(FWD, STR))));
         //RCW = moveToAngy((((((( Math.toDegrees(Math.atan(RCWY/RCWX))+360 ))+ (MathFormulas.signumV4(RCWX)))%360) - MathFormulas.signumAngleEdition(RCWX,RCWY))+360)%360);
-        SmartDashboard.putNumber("rcw", RCW);
 
         //SmartDashboard.putNumber("frd", FWD);
         //SmartDashboard.putNumber("str", STR);
@@ -354,12 +359,12 @@ private Motor mMotor = Motor.getInstance();
             vars.mod2 = MathFormulas.optimize(topRightModule.getTurnDeg(), vars.mod2);
             vars.mod3 = MathFormulas.optimize(bottomLeftModule.getTurnDeg(), vars.mod3);
             vars.mod4 = MathFormulas.optimize(bottomRightModule.getTurnDeg(), vars.mod4);*/
-    /* 
+     
             vars.mod1 = setDirection(tlDeg(), vars.mod1);
             vars.mod2 = setDirection(trDeg(), vars.mod2);
             vars.mod3 = setDirection(blDeg(), vars.mod3);
             vars.mod4 = setDirection(brDeg(), vars.mod4);
-    */        
+            
             if(mode == ControlMode.MotionMagic)
             {
                 vars.mod1[0] = Math.signum(vars.mod1[0]) * vars.autoDist;
@@ -564,17 +569,17 @@ return setpoint;
         double RCWtemp = 0; //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
                                                                             //minus subtracotr
         double calcangle = ((heading) + (side * ((thetaTurn/2)+((vars.avgDistInches/(vars.distanceA))*(thetaTurn)))));
-        vars.FWDauto = Math.cos(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
-        vars.STRauto = Math.sin(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
+        vars.FWDauto = Math.sin(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
+        vars.STRauto = Math.cos(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         etherAutoSwerve(vars.FWDauto, -vars.STRauto, RCWtemp, ControlMode.MotionMagic);
-        /*SmartDashboard.putNumber("heading", heading);
-        SmartDashboard.putNumber("side", side);
-        SmartDashboard.putNumber("thetaTurn", thetaTurn);
-        SmartDashboard.putNumber("avgDist", vars.avgDistInches);
+        //SmartDashboard.putNumber("heading", heading);
+        //SmartDashboard.putNumber("side", side);
+        //SmartDashboard.putNumber("thetaTurn", thetaTurn);
+        //SmartDashboard.putNumber("avgDist", vars.avgDistInches);
         SmartDashboard.putNumber("distA", vars.distanceA);
-        SmartDashboard.putNumber("calcangle", calcangle);
-        SmartDashboard.putNumber("FWDauto", vars.FWDauto);
-        SmartDashboard.putNumber("STRauto", vars.STRauto);*/
+        //SmartDashboard.putNumber("calcangle", calcangle);
+        //SmartDashboard.putNumber("FWDauto", vars.FWDauto);
+        //SmartDashboard.putNumber("STRauto", vars.STRauto);*/
         SmartDashboard.putNumber("calcangle", calcangle);
 
         if(heading > 0 && side > 0)
