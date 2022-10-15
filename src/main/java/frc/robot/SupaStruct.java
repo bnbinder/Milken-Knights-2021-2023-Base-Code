@@ -69,8 +69,10 @@ public class SupaStruct {
         }
         if(bbutton)
         {
-            str = Math.cos(inverseTanAngleDrive* (Constants.kPi/180));
-            fwd = Math.sin(inverseTanAngleDrive* (Constants.kPi/180));
+            MkSwerveTrain.getInstance().vars.avgDistInches = 0;
+            MkSwerveTrain.getInstance().startDrive();
+            //str = Math.cos(inverseTanAngleDrive* (Constants.kPi/180));
+            //fwd = Math.sin(inverseTanAngleDrive* (Constants.kPi/180));
         }
 //      for toggle so povValue doesnt equal -1 and toggle for povToggle
         if(pov)

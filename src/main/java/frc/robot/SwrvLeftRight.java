@@ -46,16 +46,25 @@ public class SwrvLeftRight extends SequentialCommandGroup {
     *///deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sideCon, DISTANGLE.headingele)).withTimeout(6),
     deadline(new Turn(0)).withTimeout(1),
     deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sidePos, DISTANGLE.headingele)).withTimeout(6),
+    
     deadline(new Turn(0)).withTimeout(1),
     deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sideCon, DISTANGLE.headingele)).withTimeout(6),
+
+    deadline(new Turn(0)).withTimeout(1),
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sidePos, DISTANGLE.headingtwel)).withTimeout(6),
+    
     deadline(new Turn(0)).withTimeout(1),
     deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sideCon, DISTANGLE.headingtwel)).withTimeout(6),
+    
     deadline(new Turn(0)).withTimeout(1),
     deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sidePos, DISTANGLE.headingthir)).withTimeout(6),
-    deadline(new Turn(0)).withTimeout(1),
-    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sidePos, DISTANGLE.headingfourt)).withTimeout(6),
+    
     deadline(new Turn(0)).withTimeout(1),
     deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sideCon, DISTANGLE.headingfif)).withTimeout(6),
+
+    deadline(new Turn(0)).withTimeout(1),
+    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sidePos, DISTANGLE.headingfourt)).withTimeout(6),
+    
     deadline(new Turn(0)).withTimeout(1),
     deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.distance, ((DISTANGLE.angle)),    DISTANGLE.sideCon, DISTANGLE.headingsixt)).withTimeout(6));
              // deadline(new Stop()));

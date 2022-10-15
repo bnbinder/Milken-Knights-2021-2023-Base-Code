@@ -69,7 +69,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() 
   {
-    m_autonomousCommand = new SwrvLeftRight();
+    m_autonomousCommand = new SwrvTest();
     train.startTrain();
     navx.getInstance().reset();
     if (m_autonomousCommand != null) 
@@ -87,6 +87,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() 
   {
+    SmartDashboard.putNumber("distance total", Constants.AUTO.DISTANGLE.distance);
+    SmartDashboard.putNumber("angle real", Constants.AUTO.DISTANGLE.angle);
     color.colorInit();
     if (m_autonomousCommand != null) 
     {
@@ -142,7 +144,7 @@ public class Robot extends TimedRobot {
   public void disabledInit()
   {
     supaKoopa.teleopDisabled();
-    m_autonomousCommand = new SwrvLeftRight();
+    m_autonomousCommand = new SwrvTest();
   }
 
   @Override

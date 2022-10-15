@@ -43,6 +43,8 @@ private CANCoder bottomLeftCoder;
 private CANCoder bottomRightCoder;
 
 private PIDController turn;
+private double anglereal;
+private double distancereal;
 //private TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(2,1);
 
 private Motor mMotor = Motor.getInstance();
@@ -107,13 +109,13 @@ private Motor mMotor = Motor.getInstance();
     public void startDrive()
     {
         topDriveLeft.setSelectedSensorPosition(0);
-        //check(topDriveLeft, "top left motor err", true);
+        check(topDriveLeft, "top left motor err", true);
         topDriveRight.setSelectedSensorPosition(0);
-        //check(topDriveRight, "top right motor err", true);
+        check(topDriveRight, "top right motor err", true);
         bottomDriveLeft.setSelectedSensorPosition(0);
-        //check(bottomDriveLeft, "bot left motor err", true);
+        check(bottomDriveLeft, "bot left motor err", true);
         bottomDriveRight.setSelectedSensorPosition(0);
-        //check(bottomDriveRight, "bot right motor err", true);
+        check(bottomDriveRight, "bot right motor err", true);
     }
 
     public double tlDeg()
@@ -190,11 +192,14 @@ private Motor mMotor = Motor.getInstance();
     {
         //SmartDashboard.putNumber("anglet", vars.deg[0]);
         //SmartDashboard.putNumber("distancet", vars.posInch[0]);
-        /*
+        anglereal = Constants.AUTO.DISTANGLE.angle;
+        distancereal = Constants.AUTO.DISTANGLE.distance;
+
         SmartDashboard.putNumber("degtopleft", vars.degTL);
-        SmartDashboard.putNumber("distancetopright", vars.posInchTR);
+        /*SmartDashboard.putNumber("distancetopright", vars.posInchTR);
         SmartDashboard.putNumber("distancetbotleft", vars.posInchBL);
         SmartDashboard.putNumber("distancetbotright", vars.posInchBR);*/
+        SmartDashboard.putNumber("calcangle teletop", ((360) + (1 * ((anglereal/2)+((vars.avgDistInches/(distancereal))*(anglereal)))))%360);
         SmartDashboard.putNumber("topdriveleft", MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorPosition()));
         SmartDashboard.putNumber("topdriveright", MathFormulas.nativeToInches(topDriveRight.getSelectedSensorPosition()));
         SmartDashboard.putNumber("botdriveleft", MathFormulas.nativeToInches(bottomDriveLeft.getSelectedSensorPosition()));
@@ -221,6 +226,7 @@ private Motor mMotor = Motor.getInstance();
         vars.degTR = trDeg();
         vars.degBL = blDeg();
         vars.degBR = brDeg();
+
 
         vars.avgDistInches = (Math.abs(vars.posInchTL) + Math.abs(vars.posInchTR) + Math.abs(vars.posInchBL) + Math.abs(vars.posInchBR)) /4.0;
      //vars.avgVelInches = (vars.velInch[0] + vars.velInch[1] + vars.velInch[2] + vars.velInch[3]) / 4.0;
@@ -601,19 +607,19 @@ return setpoint;
                                             //numbers fall short of high by 3ish inches and short of length by 4ish inches
         double RCWtemp = 0; //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
                                                                             //minus subtracotr
-        double calcangle = ((heading) + (side * ((thetaTurn/2)+((vars.avgDistInches/(vars.distanceA))*(thetaTurn)))));
-        vars.FWDauto = Math.sin(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
-        vars.STRauto = Math.cos(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
+        double calcangle = ((heading) + (side * ((thetaTurn/2)+((vars.avgDistInches/(vars.totalDistance))*(thetaTurn)))));
+        vars.FWDauto = -1* Math.cos(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
+        vars.STRauto = Math.sin(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         etherAutoSwerve(vars.FWDauto, -vars.STRauto, RCWtemp, ControlMode.MotionMagic);
-        //SmartDashboard.putNumber("heading", heading);
-        //SmartDashboard.putNumber("side", side);
+        SmartDashboard.putNumber("heading", heading);
+        SmartDashboard.putNumber("side", side);
         //SmartDashboard.putNumber("thetaTurn", thetaTurn);
         //SmartDashboard.putNumber("avgDist", vars.avgDistInches);
-        SmartDashboard.putNumber("distA", vars.distanceA);
+        //SmartDashboard.putNumber("distA", vars.distanceA);
         //SmartDashboard.putNumber("calcangle", calcangle);
         //SmartDashboard.putNumber("FWDauto", vars.FWDauto);
         //SmartDashboard.putNumber("STRauto", vars.STRauto);*/
-        SmartDashboard.putNumber("calcangle", calcangle);
+        SmartDashboard.putNumber("calcangle", calcangle%360);
 
         if(heading > 0 && side > 0)
         {
@@ -668,7 +674,7 @@ return setpoint;
      * @author
      */
 
-     /*
+     
     public int check(TalonFX motorController, String message, boolean printAll) 
     {
         var rc = motorController.getLastError();
@@ -677,7 +683,7 @@ return setpoint;
             System.out.println("[Talon] " + message + " " + rc);
         }
         return rc == ErrorCode.OK ? 0 : 1;
-    }*/
+    }
 
     /**Mode of the ether auto's path*/
     public enum ETHERAUTO
