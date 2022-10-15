@@ -607,7 +607,7 @@ return setpoint;
                                             //numbers fall short of high by 3ish inches and short of length by 4ish inches
         double RCWtemp = 0; //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
                                                                             //minus subtracotr
-        double calcangle = ((heading) + (side * ((thetaTurn/2)+((vars.avgDistInches/(vars.totalDistance))*(thetaTurn)))));
+        double calcangle = ((heading) + (((-thetaTurn/2)+((vars.avgDistInches/(vars.totalDistance))*(thetaTurn)))));
         vars.FWDauto = -1* Math.cos(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         vars.STRauto = Math.sin(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         etherAutoSwerve(vars.FWDauto, -vars.STRauto, RCWtemp, ControlMode.MotionMagic);
@@ -620,7 +620,7 @@ return setpoint;
         //SmartDashboard.putNumber("FWDauto", vars.FWDauto);
         //SmartDashboard.putNumber("STRauto", vars.STRauto);*/
         SmartDashboard.putNumber("calcangle", calcangle%360);
-
+/* 
         if(heading > 0 && side > 0)
         {
             SmartDashboard.putBoolean("1", true);
@@ -652,6 +652,7 @@ return setpoint;
             SmartDashboard.putBoolean("3", false);
             SmartDashboard.putBoolean("4", true);
         }
+        */
     }
 
     public boolean isFinished()
