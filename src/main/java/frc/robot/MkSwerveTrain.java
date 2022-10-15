@@ -199,7 +199,7 @@ private Motor mMotor = Motor.getInstance();
         /*SmartDashboard.putNumber("distancetopright", vars.posInchTR);
         SmartDashboard.putNumber("distancetbotleft", vars.posInchBL);
         SmartDashboard.putNumber("distancetbotright", vars.posInchBR);*/
-        SmartDashboard.putNumber("calcangle teletop", ((360) + (1 * ((anglereal/2)+((vars.avgDistInches/(distancereal))*(anglereal)))))%360);
+        SmartDashboard.putNumber("calcangle teletop", ((360) + ((-anglereal/2)+((vars.avgDistInches/(distancereal))*(anglereal)))));
         SmartDashboard.putNumber("topdriveleft", MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorPosition()));
         SmartDashboard.putNumber("topdriveright", MathFormulas.nativeToInches(topDriveRight.getSelectedSensorPosition()));
         SmartDashboard.putNumber("botdriveleft", MathFormulas.nativeToInches(bottomDriveLeft.getSelectedSensorPosition()));
