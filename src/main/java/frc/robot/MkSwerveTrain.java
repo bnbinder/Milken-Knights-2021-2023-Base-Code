@@ -563,7 +563,7 @@ return setpoint;
     public void setEtherAuto(double totalDistance, double distanceA)
     {
         //startDrive();
-        vars.autoDist = MathFormulas.inchesToNative(totalDistance + 15);
+        vars.autoDist = MathFormulas.inchesToNative(totalDistance);
         vars.totalDistance = totalDistance;
         vars.avgDistInches = 0;
         vars.distanceA = distanceA;
