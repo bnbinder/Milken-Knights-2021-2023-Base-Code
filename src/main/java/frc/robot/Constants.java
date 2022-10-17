@@ -280,8 +280,8 @@ public final class Constants {
             /*
                 +, +, -, -
             */
-            public static final double distanceA = 50;
-            public static final double lengthB = 20;///2;
+            public static final double distanceA = 80;
+            public static final double lengthB = 40;///2;
 
             public static final int sidePos = 1;
             public static final int sideCon = -1;

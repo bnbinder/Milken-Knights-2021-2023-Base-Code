@@ -1,0 +1,12 @@
+notes
+
+cant directly add to arc length, will overshoot b and err increases
+cant shorten wheel diameter, overshoots a and b, same err
+
+
+measurments(err)
+a = distanceA, b = lengthB, err = err from wanted point
+a(in), b(in) = err(in)
+
+80, 40 = 15
+
