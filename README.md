@@ -1,5 +1,5 @@
 # Milken-Knights-2021-2023-Base-Code-Stuff
-## ~~stolen~~ code from
+## code from
 - ### SWERVE DRIVE:
      - Team 6624 - best path code and 180 awarness code
      - Team 1684 - 180 awarness code
