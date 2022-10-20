@@ -264,8 +264,11 @@ public final class Constants {
         public static final int intakeCANID = 11;
         public static final int rollerCANID = 9;
 
-        public static final int elevatorCANID = 10;
-        
+        public static final int leftelevatorCANID = 10;
+        public static final int rightelevatorCANID = 9;
+
+         public static final int turretCANID = 11;
+
         public static final int[] topLeftCANID = {topDriveLeftCANID, topTurnLeftCANID, topTurnLeftCANCoderCANID};
         public static final int[] topRightCANID = {topDriveRightCANID, topTurnRightCANID, topTurnRightCANCoderCANID};
         public static final int[] bottomLeftCANID = {bottomDriveLeftCANID, bottomTurnLeftCANID, bottomTurnLeftCANCoderCANID};
