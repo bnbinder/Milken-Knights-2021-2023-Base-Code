@@ -17,7 +17,7 @@ public class Intake {
 
     private Intake()
     {
-        roller = mMotor.rollerMotor(CANID.rollerCANID);
+        roller = mMotor.motor(CANID.rollerCANID, MKINTAKE.rollerNeutralMode, 0, MKINTAKE.pidf, MKINTAKE.inverted);
     }
 
     public static Intake getInstance()
@@ -34,5 +34,4 @@ public class Intake {
     {
         private static final Intake mInstance = new Intake();
     } 
-
 }

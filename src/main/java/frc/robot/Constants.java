@@ -144,11 +144,24 @@ public final class Constants {
         public static final double kV = 0;
     }
 
+    public static class MKTURRET
+    {
+        public static final double kP = 0.55;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double kF = 0;
+
+        public static final double[] pidf = {kP, kI, kD, kF};
+
+        public static final NeutralMode mode = NeutralMode.Brake;
+        public static final boolean inverted = false;
+    }
+
     public static class MKINTAKE 
     {
         public static final double maxIntakeNativePosition = 7350;
         public static final NeutralMode rollerNeutralMode = NeutralMode.Coast;
-
+        
         public static final double kP = 0.04;
         public static final double kI = 0;
         public static final double kD = kP * 0.6;
