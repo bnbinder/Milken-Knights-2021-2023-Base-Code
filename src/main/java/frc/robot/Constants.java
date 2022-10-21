@@ -41,7 +41,7 @@ public final class Constants {
 
         public static final double[] pidf = {kP, kI, kD, kF};
 
-        public static final NeutralMode mode = NeutralMode.Brake;
+        public static final NeutralMode mode = NeutralMode.Coast;
 
         public static final boolean inverted = false;
 
