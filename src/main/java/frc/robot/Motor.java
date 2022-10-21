@@ -76,10 +76,11 @@ public class Motor {
 
     public TalonFX elevatorMotor(int canid)
     {
-        TalonFX drive = new TalonFX(canid, "");
-        drive.configFactoryDefault();
-        drive.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-        drive.setNeutralMode(MKELEVATOR.elevatorNeutralMode);
+        TalonFX elevator = new TalonFX(canid, "train");
+        elevator.configFactoryDefault();
+        elevator.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+        elevator.setNeutralMode(MKELEVATOR.elevatorNeutralMode);
+        return elevator; 
     }
 
     public CANCoder cancoder(int canid, double offset)
