@@ -147,7 +147,6 @@ public final class Constants {
     public static class MKINTAKE 
     {
         public static final double maxIntakeNativePosition = 7350;
-        public static final NeutralMode intakeNeutralMode = NeutralMode.Coast;
         public static final NeutralMode rollerNeutralMode = NeutralMode.Coast;
 
         public static final double kP = 0.04;
@@ -157,15 +156,17 @@ public final class Constants {
 
         public static final double[] pidf = {kP, kI, kD, kF};
 
+        public static final boolean inverted = false;
+
         public static final int scurve = 0;
 
-        public static final double intakePercentSpeed = 0.2;
         public static final double rollerPercentSpeed = 0.5;
     }
 
     public static class MKELEVATOR 
     {
         public static final NeutralMode elevatorNeutralMode = NeutralMode.Coast;
+        public static final boolean inverted = false;
 
         public static final double kP = 0.1;
         public static final double kI = 0;
@@ -262,7 +263,7 @@ public final class Constants {
         public static final int rightShooterCANID = 20;
 
         public static final int intakeCANID = 11;
-        public static final int rollerCANID = 9;
+        public static final int rollerCANID = 21;
 
         public static final int leftelevatorCANID = 10;
         public static final int rightelevatorCANID = 9;

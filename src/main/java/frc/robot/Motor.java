@@ -10,11 +10,12 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.SensorVelocityMeasPeriod;
 
-import frc.robot.Constants.MKFALCON;
-import frc.robot.Constants.MKTURN;
 import frc.robot.Constants.MKCANCODER;
 import frc.robot.Constants.MKDRIVE;
 import frc.robot.Constants.MKELEVATOR;
+import frc.robot.Constants.MKFALCON;
+import frc.robot.Constants.MKINTAKE;
+import frc.robot.Constants.MKTURN;
 
 /** Add your docs here. */
 public class Motor {
@@ -80,7 +81,39 @@ public class Motor {
         elevator.configFactoryDefault();
         elevator.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
         elevator.setNeutralMode(MKELEVATOR.elevatorNeutralMode);
+        elevator.config_kP(0, MKELEVATOR.kP);
+        elevator.config_kI(0, MKELEVATOR.kI);
+        elevator.config_kD(0, MKELEVATOR.kD);
+        elevator.config_kF(0, MKELEVATOR.kF);
+        elevator.setInverted(MKELEVATOR.inverted);      
+        elevator.configVelocityMeasurementPeriod(SensorVelocityMeasPeriod.Period_100Ms);
+        elevator.configVelocityMeasurementWindow(MKFALCON.velocityMeasAmount);
+        elevator.configVoltageCompSaturation(MKFALCON.voltComp);
+        elevator.enableVoltageCompensation(true);
+        elevator.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, MKFALCON.statusOneMeas);
+        elevator.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, MKFALCON.statusTwoMeas);
         return elevator; 
+    }
+
+
+    public TalonFX rollerMotor(int canid)
+    {
+        TalonFX roller = new TalonFX(canid, "train");
+        roller.configFactoryDefault();
+        roller.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+        roller.setNeutralMode(MKINTAKE.rollerNeutralMode);
+        roller.config_kP(0, MKINTAKE.kP);
+        roller.config_kI(0, MKINTAKE.kI);
+        roller.config_kD(0, MKINTAKE.kD);
+        roller.config_kF(0, MKINTAKE.kF);
+        roller.setInverted(MKINTAKE.inverted);      
+        roller.configVelocityMeasurementPeriod(SensorVelocityMeasPeriod.Period_100Ms);
+        roller.configVelocityMeasurementWindow(MKFALCON.velocityMeasAmount);
+        roller.configVoltageCompSaturation(MKFALCON.voltComp);
+        roller.enableVoltageCompensation(true);
+        roller.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, MKFALCON.statusOneMeas);
+        roller.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, MKFALCON.statusTwoMeas);
+        return roller; 
     }
 
     public CANCoder cancoder(int canid, double offset)

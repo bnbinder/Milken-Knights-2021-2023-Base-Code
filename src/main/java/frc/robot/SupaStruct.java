@@ -15,6 +15,7 @@ public class SupaStruct {
     private XboxController xbox = new XboxController(0);
     private double fwd, fwdSignum, str, strSignum, rcw, rcwX, rcwY, inverseTanAngleOG, inverseTanAngleDrive, povValue = 0;
     private MkSwerveTrain train = MkSwerveTrain.getInstance();
+    private Intake intake = Intake.getInstance();
     private boolean abutton, bbutton, xbutton, ybutton, pov, povToggled, itsreal = false;
    
    
@@ -124,8 +125,19 @@ public class SupaStruct {
         {
             str = 0;
         }
-
-
+        
+        if(Math.abs(xbox.getRawAxis(2)) > 0)
+        {
+            intake.move(xbox.getRawAxis(2)/3);
+        }
+        else if(Math.abs(xbox.getRawAxis(3)) > 0)
+        {
+            intake.move(-xbox.getRawAxis(3)/3);
+        }
+        else
+        {
+            intake.move(0);
+        }
 
 //      applying numbers
         if(fwd != 0 || str != 0 || rcw != 0)
