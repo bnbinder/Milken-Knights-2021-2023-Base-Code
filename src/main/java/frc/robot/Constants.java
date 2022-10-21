@@ -100,7 +100,7 @@ public final class Constants {
         public static final double speedLimit = 5;
     }
 
-    public static class CLIMBER 
+    public static class MKCLIMBER 
     {
         public static final double maxNativePosition = 290000;
         public static final double minNativePosition = 9000;
@@ -121,7 +121,7 @@ public final class Constants {
         public static final double climbDownSpeed = -0.1;
     }
 
-    public static class SHOOTER 
+    public static class MKSHOOTER 
     {
         public static final double maxNativeShooterVelocity = 18900;
         public static final double maxError = 1580;
@@ -144,7 +144,7 @@ public final class Constants {
         public static final double kV = 0;
     }
 
-    public static class INTAKE 
+    public static class MKINTAKE 
     {
         public static final double maxIntakeNativePosition = 7350;
         public static final NeutralMode intakeNeutralMode = NeutralMode.Coast;
@@ -163,7 +163,7 @@ public final class Constants {
         public static final double rollerPercentSpeed = 0.5;
     }
 
-    public static class ELEVATOR 
+    public static class MKELEVATOR 
     {
         public static final NeutralMode elevatorNeutralMode = NeutralMode.Coast;
 

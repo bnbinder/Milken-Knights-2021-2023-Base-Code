@@ -14,6 +14,7 @@ import frc.robot.Constants.MKFALCON;
 import frc.robot.Constants.MKTURN;
 import frc.robot.Constants.MKCANCODER;
 import frc.robot.Constants.MKDRIVE;
+import frc.robot.Constants.MKELEVATOR;
 
 /** Add your docs here. */
 public class Motor {
@@ -71,6 +72,14 @@ public class Motor {
         drive.configMotionSCurveStrength(MKDRIVE.scurve);
 
         return drive;
+    }
+
+    public TalonFX elevatorMotor(int canid)
+    {
+        TalonFX drive = new TalonFX(canid, "");
+        drive.configFactoryDefault();
+        drive.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+        drive.setNeutralMode(MKELEVATOR.elevatorNeutralMode);
     }
 
     public CANCoder cancoder(int canid, double offset)
