@@ -78,7 +78,7 @@ public class Motor {
 
     public TalonFX motor(int canid, NeutralMode mode, int pidslot, double[] pidf, boolean inverted)
     {
-        TalonFX elevator = new TalonFX(canid, "train");
+        TalonFX elevator = new TalonFX(canid, "rio");
         elevator.configFactoryDefault();
         elevator.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
         elevator.setNeutralMode(mode);
