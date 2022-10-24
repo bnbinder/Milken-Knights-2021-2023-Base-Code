@@ -129,7 +129,7 @@ public final class Constants {
 
         public static final double lowGoalNativeVelocity = 0;
         public static final boolean isLeftInverted = false;
-        
+
         public static final NeutralMode leftShootNeutralMode = NeutralMode.Coast;
         public static final NeutralMode rightShootNeutralMode = NeutralMode.Coast;
 
@@ -289,7 +289,7 @@ public final class Constants {
         public static final int rightShooterCANID = 20;
 
         //turret motor
-        public static final int turretCANID = 11;
+        public static final int turretCANID = 999;
 
         //elevator motors
         public static final int leftelevatorCANID = 10;
