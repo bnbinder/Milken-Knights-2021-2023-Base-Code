@@ -21,7 +21,7 @@ import frc.robot.Constants.MKTURN;
 public class MkSwerveTrain 
 {
     public variables vars;/*
-    //TODO how to simplify this without slowing down everything
+    
     private MkSwerveModule topLeftModule = new MkSwerveModule(CANID.topLeftCANID, MKCANCODER.offset[0], MKDRIVE.pidf, MKTURN.pidf);
     private MkSwerveModule topRightModule = new MkSwerveModule(CANID.topRightCANID, MKCANCODER.offset[1], MKDRIVE.pidf, MKTURN.pidf);
     private MkSwerveModule bottomLeftModule = new MkSwerveModule(CANID.bottomLeftCANID, MKCANCODER.offset[2], MKDRIVE.pidf, MKTURN.pidf);
@@ -155,6 +155,7 @@ private Motor mMotor = Motor.getInstance();
     }
 
 
+    
     public double tlDist()
     {
         return MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorPosition());
@@ -716,7 +717,7 @@ return setpoint;
         public double distanceA;
         public double STRauto;
         public double FWDauto;
-    public double totalDistance;
+        public double totalDistance;
 
         public double temp;
         public double yaw;

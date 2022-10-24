@@ -15,6 +15,7 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 public final class Constants {
 
     public static final double kPi = 3.14159265359;
+    public static final double[] nullPID = {0,0,0,0};
 
     public static class MKFALCON 
     {
@@ -125,8 +126,10 @@ public final class Constants {
     {
         public static final double maxNativeShooterVelocity = 18900;
         public static final double maxError = 1580;
+
         public static final double lowGoalNativeVelocity = 0;
         public static final boolean isLeftInverted = false;
+        
         public static final NeutralMode leftShootNeutralMode = NeutralMode.Coast;
         public static final NeutralMode rightShootNeutralMode = NeutralMode.Coast;
 
@@ -178,8 +181,13 @@ public final class Constants {
 
     public static class MKELEVATOR 
     {
-        public static final NeutralMode elevatorNeutralMode = NeutralMode.Coast;
-        public static final boolean inverted = false;
+        public static final NeutralMode elevatorNeutralMode = NeutralMode.Brake;
+        public static final NeutralMode shitterMode = NeutralMode.Brake;
+        public static final NeutralMode supportMode = NeutralMode.Brake;
+        
+        public static final boolean elevatorInverted = false;
+        public static final boolean shitterInverted = false;
+        public static final boolean supportInverted = false;
 
         public static final double kP = 0.1;
         public static final double kI = 0;
@@ -254,39 +262,51 @@ public final class Constants {
 
     public static class CANID 
     {
+        //drive motors
         public static final int topDriveLeftCANID = 3; 
         public static final int topDriveRightCANID = 5; 
         public static final int bottomDriveLeftCANID = 2; 
         public static final int bottomDriveRightCANID = 7;
 
+        //turn motors
         public static final int topTurnLeftCANID = 4; 
         public static final int topTurnRightCANID = 6; 
         public static final int bottomTurnLeftCANID = 1;
         public static final int bottomTurnRightCANID = 8; 
 
+        //cancoder
         public static final int topTurnLeftCANCoderCANID = 16; 
         public static final int topTurnRightCANCoderCANID = 18; 
         public static final int bottomTurnLeftCANCoderCANID = 15; 
         public static final int bottomTurnRightCANCoderCANID = 17;
 
+        //climber motors
         public static final int leftClimberCANID = 22;
         public static final int rightClimberCANID = 23;
 
+        //shooter motors
         public static final int leftShooterCANID = 19;
         public static final int rightShooterCANID = 20;
 
-        public static final int intakeCANID = 11;
-        public static final int rollerCANID = 21;
+        //turret motor
+        public static final int turretCANID = 11;
 
+        //elevator motors
         public static final int leftelevatorCANID = 10;
         public static final int rightelevatorCANID = 9;
+        public static final int elevatorSupportCANID = 999;
 
-         public static final int turretCANID = 11;
-
+        //intake and roller motors
+        public static final int intakeCANID = 11;
+        public static final int rollerCANID = 21;
+        
+        
+        /* 
         public static final int[] topLeftCANID = {topDriveLeftCANID, topTurnLeftCANID, topTurnLeftCANCoderCANID};
         public static final int[] topRightCANID = {topDriveRightCANID, topTurnRightCANID, topTurnRightCANCoderCANID};
         public static final int[] bottomLeftCANID = {bottomDriveLeftCANID, bottomTurnLeftCANID, bottomTurnLeftCANCoderCANID};
         public static final int[] bottomRightCANID = {bottomDriveRightCANID, bottomTurnRightCANID, bottomTurnRightCANCoderCANID};
+        */
     }
 
     public static class AUTO
