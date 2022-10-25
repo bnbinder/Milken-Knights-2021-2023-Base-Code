@@ -5,6 +5,8 @@
 package frc.robot;
 
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -12,6 +14,7 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.CANID;
 import frc.robot.Constants.AUTO.DISTANGLE;
 
 /**
@@ -35,11 +38,13 @@ public class Robot extends TimedRobot {
   private String keyIn = "";
   private boolean accessible, in = false;
   private String bull = "30937C22";
+  private Compressor mCompressor = new Compressor(CANID.revphCANID, PneumaticsModuleType.REVPH);
 
 
   @Override
   public void robotInit() 
   {
+    mCompressor.enableDigital();
     try
     {
       arduino = new SerialPort(9600, "/dev/ttyACM0", SerialPort.Port.kUSB, 8, SerialPort.Parity.kNone, SerialPort.StopBits.kOne);
@@ -87,6 +92,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() 
   {
+    
     SmartDashboard.putNumber("distance total", Constants.AUTO.DISTANGLE.distance);
     SmartDashboard.putNumber("angle real", Constants.AUTO.DISTANGLE.angle);
     color.colorInit();
@@ -144,6 +150,7 @@ public class Robot extends TimedRobot {
   public void disabledInit()
   {
     supaKoopa.teleopDisabled();
+    mCompressor.disable();
     m_autonomousCommand = new SwrvTest();
   }
 

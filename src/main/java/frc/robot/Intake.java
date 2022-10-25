@@ -7,6 +7,9 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.Constants.CANID;
 import frc.robot.Constants.MKINTAKE;
 
@@ -14,10 +17,12 @@ import frc.robot.Constants.MKINTAKE;
 public class Intake {
     private Motor mMotor = Motor.getInstance();
     private TalonFX roller;
+    private Solenoid intake;
 
     private Intake()
     {
         roller = mMotor.motor(CANID.rollerCANID, MKINTAKE.rollerNeutralMode, 0, MKINTAKE.pidf, MKINTAKE.inverted);
+        intake = new Solenoid(PneumaticsModuleType.REVPH, CANID.intakeCANID);
     }
 
     public static Intake getInstance()
@@ -25,9 +30,24 @@ public class Intake {
         return InstanceHolder.mInstance;
     }
 
-    public void move(double setpoint)
+    public void rollerSet(double setpoint)
     {
         roller.set(ControlMode.PercentOutput, setpoint);
+    }
+
+    public void intakeSet(boolean state)
+    {
+        intake.set(state);
+    }
+
+    public void intakeToggle()
+    {
+        intake.toggle();
+    }
+
+    public boolean getIntakeState()
+    {
+        return intake.get();
     }
 
     private static class InstanceHolder

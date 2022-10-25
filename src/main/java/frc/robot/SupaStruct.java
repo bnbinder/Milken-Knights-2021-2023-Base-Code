@@ -6,8 +6,10 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.math.Drake;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants.CONTROLLERS.DriveInput;
 
 /** Add your docs here. */
 public class SupaStruct {
@@ -17,7 +19,7 @@ public class SupaStruct {
     private MkSwerveTrain train = MkSwerveTrain.getInstance();
     private Shooter shoot = Shooter.getInstance();
     private Intake intake = Intake.getInstance();
-    private boolean abutton, bbutton, xbutton, ybutton, pov, povToggled, itsreal = false;
+    private boolean resetNavx, resetDrive, xbutton, ybutton, pov, povToggled, itsreal = false;
    
    
     public static SupaStruct getInstance()
@@ -30,17 +32,18 @@ public class SupaStruct {
         train.updateSwerve();
         shoot.updateShooter();
 
-        fwd = (xbox.getRawAxis(1) - 0.1) / (1 - 0.1);
+        fwd = (xbox.getRawAxis(DriveInput.fwd) - 0.1) / (1 - 0.1);
         fwdSignum = Math.signum(fwd) * -1;
-        str = (xbox.getRawAxis(0) - 0.1) / (1 - 0.1);
+        str = (xbox.getRawAxis(DriveInput.str) - 0.1) / (1 - 0.1);
         strSignum = Math.signum(str) * -1;
-        rcw = (xbox.getRawAxis(5) - 0.1) / (1 - 0.1);
+        rcw = (xbox.getRawAxis(DriveInput.rcwY) - 0.1) / (1 - 0.1);
         
         rcwY = rcw;
-        rcwX =  (xbox.getRawAxis(4) - 0.1) / (1 - 0.1);
-        abutton = xbox.getAButton();
-        bbutton = xbox.getBButton();
-        xbutton = xbox.getXButton();
+        //Todo see if making this x breaks it
+        rcwX =  (xbox.getRawAxis(DriveInput.rcwX) - 0.1) / (1 - 0.1);
+        resetNavx = xbox.getRawButton(DriveInput.resetNavxButton);
+        resetDrive = xbox.getRawButton(DriveInput.resetDriveButton);
+        xbutton = xbox.getXButtonPressed();
         ybutton = xbox.getYButton();
         pov = xbox.getPOV() != -1;
 
@@ -64,13 +67,13 @@ public class SupaStruct {
 
        
 
-        if(abutton)
+        if(resetNavx)
         {
             navx.getInstance().reset();
             povValue = 0;
             inverseTanAngleOG = 0;
         }
-        if(bbutton)
+        if(resetDrive)
         {
             MkSwerveTrain.getInstance().vars.avgDistInches = 0;
             MkSwerveTrain.getInstance().startDrive();
@@ -92,7 +95,7 @@ public class SupaStruct {
             rcw = rcwX/5;
             povToggled = false;
         }       */
-        if(Math.abs(xbox.getRawAxis(5)) >= 0.1 || Math.abs(xbox.getRawAxis(4)) >= 0.1)
+        if(Math.abs(xbox.getRawAxis(DriveInput.rcwY)) >= 0.1 || Math.abs(xbox.getRawAxis(DriveInput.rcwX)) >= 0.1)
         {
             //rcw = train.moveToAngy((inverseTanAngleOG + 270) % 360);
             rcw = rcwX/5;
@@ -103,42 +106,66 @@ public class SupaStruct {
             rcw = train.moveToAngy((povValue+180)% 360);
         }
         
-        itsreal = false;
+        //this is useless, remove entire variable if you want
+
+
 
 //      else statements
-        if(/*!ybutton&&*/ !povToggled && /*!bbutton&&*/ Math.abs(xbox.getRawAxis(5)) < 0.1 && Math.abs(xbox.getRawAxis(4)) < 0.1)
+        if(/*!ybutton&&*/ !povToggled && /*!bbutton&&*/ Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1 && Math.abs(xbox.getRawAxis(DriveInput.rcwX)) < 0.1)
         {
             rcw = 0;
-            itsreal = true;
         }
-        if(Math.abs(xbox.getRawAxis(5)) < 0.1)
+
+        //only here for smartdashboard, doesnt affcet anything else if deleted
+        if(Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1)
         {
             rcwY = 0;
         }
-        if(Math.abs(xbox.getRawAxis(4)) < 0.1)
+        if(Math.abs(xbox.getRawAxis(DriveInput.rcwX)) < 0.1)
         {
             rcwX = 0;
         }
-        if(Math.abs(xbox.getRawAxis(1)) < 0.1)
+
+
+
+
+
+        if(Math.abs(xbox.getRawAxis(DriveInput.fwd)) < 0.1)
         {
             fwd = 0;
         }
-        if(Math.abs(xbox.getRawAxis(0)) < 0.1)
+        if(Math.abs(xbox.getRawAxis(DriveInput.str)) < 0.1)
         {
             str = 0;
         }
+
+
+
+
+
+
+
+
+
         
         if(Math.abs(xbox.getRawAxis(2)) > 0)
         {
-            intake.move(xbox.getRawAxis(2)/3);
+            intake.rollerSet(xbox.getRawAxis(2)/3);
         }
         else if(Math.abs(xbox.getRawAxis(3)) > 0)
         {
-            intake.move(-xbox.getRawAxis(3)/3);
+            intake.rollerSet(-xbox.getRawAxis(3)/3);
         }
         else
         {
-            intake.move(0);
+            intake.rollerSet(0);
+        }
+
+        if(xbutton)
+        {
+            System.out.println(!itsreal);
+            itsreal = !itsreal;
+            //intake.intakeSet(!intake.getIntakeState());
         }
 
 //      applying numbers
@@ -161,15 +188,14 @@ public class SupaStruct {
         SmartDashboard.putNumber("inverse tan angle drive", inverseTanAngleDrive);
         SmartDashboard.putNumber("rcwy", rcwY);
         SmartDashboard.putNumber("rcwx", rcwX);
-        SmartDashboard.putBoolean("itsreal", itsreal);
         SmartDashboard.putNumber("fwd", fwd);
         SmartDashboard.putNumber("str", str);
     }
 
     public void teleopDisabled()
     {
-        abutton = false;
-        bbutton = false;
+        resetNavx = false;
+        resetDrive = false;
         xbutton = false;
         ybutton = false;
         pov = false;

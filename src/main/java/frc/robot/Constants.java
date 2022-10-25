@@ -216,12 +216,11 @@ public final class Constants {
         {
             public static final int fwd = 1;
             public static final int str = 0;
-            public static final int rcw = 4;
-
-            public static final int zeroNavxButton = 3;
-            public static final int moveZeroButton = 1;
+            public static final int rcwX = 4;
+            public static final int rcwY = 5;
+            //1 a, 2 b, 3 x, 4 y
+            public static final int resetNavxButton = 1;
             public static final int resetDriveButton = 2;
-            public static final int zeroEncoderButton = 4;
         }
 
         public static class ShootInput 
@@ -292,14 +291,14 @@ public final class Constants {
         public static final int turretCANID = 999;
 
         //elevator motors
-        public static final int leftelevatorCANID = 10;
-        public static final int rightelevatorCANID = 9;
+        public static final int elevatorCANID = 999;
+        public static final int shitterCANID = 999;
         public static final int elevatorSupportCANID = 999;
 
         //intake and roller motors
-        public static final int intakeCANID = 11;
+        public static final int intakeCANID = 1;
         public static final int rollerCANID = 21;
-        
+        public static final int revphCANID = 22;
         
         /* 
         public static final int[] topLeftCANID = {topDriveLeftCANID, topTurnLeftCANID, topTurnLeftCANCoderCANID};
