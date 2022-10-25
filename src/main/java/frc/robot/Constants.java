@@ -280,7 +280,7 @@ public final class Constants {
         public static final int bottomTurnRightCANCoderCANID = 17;
 
         //climber motors
-        public static final int leftClimberCANID = 22;
+        public static final int leftClimberCANID = 24;
         public static final int rightClimberCANID = 23;
 
         //shooter motors
