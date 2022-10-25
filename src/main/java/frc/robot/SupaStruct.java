@@ -17,8 +17,8 @@ public class SupaStruct {
     private XboxController xbox = new XboxController(0);
     private double fwd, fwdSignum, str, strSignum, rcw, rcwX, rcwY, inverseTanAngleOG, inverseTanAngleDrive, povValue = 0;
     private MkSwerveTrain train = MkSwerveTrain.getInstance();
-    private Shooter shoot = Shooter.getInstance();
-    private Intake intake = Intake.getInstance();
+    //private Shooter shoot = Shooter.getInstance();
+    //private Intake intake = Intake.getInstance();
     private boolean resetNavx, resetDrive, xbutton, ybutton, pov, povToggled, itsreal = false;
    
    
@@ -30,7 +30,7 @@ public class SupaStruct {
     public void updateTele()
     {
         train.updateSwerve();
-        shoot.updateShooter();
+     //   shoot.updateShooter();
 
         fwd = (xbox.getRawAxis(DriveInput.fwd) - 0.1) / (1 - 0.1);
         fwdSignum = Math.signum(fwd) * -1;
@@ -146,7 +146,7 @@ public class SupaStruct {
 
 
 
-
+/*
         
         if(Math.abs(xbox.getRawAxis(2)) > 0)
         {
@@ -167,7 +167,7 @@ public class SupaStruct {
             itsreal = !itsreal;
             //intake.intakeSet(!intake.getIntakeState());
         }
-
+*/
 //      applying numbers
         if(fwd != 0 || str != 0 || rcw != 0)
         {//+,-,+

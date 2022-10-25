@@ -14,7 +14,7 @@ import frc.robot.Constants.MKSHOOTER;
 import frc.robot.Constants.MKTURRET;
 
 /** Add your docs here. */
-public class Shooter {
+public class Shooter {/*
     public variables vars;
     
     private TalonFX turret;
@@ -78,7 +78,7 @@ public class Shooter {
  * @param setpoint Native velocity setpoint in the {@link #setShooterNativeVelocity} function
  * @return Feedforward that should be added when setting a setpoint
  * @see {@link #setShooterNativeVeloctiy(setpoint)}
- */
+ *//*
     public double shooterFeedForward(double setpoint)
     {
         return MKSHOOTER.maxError * (Math.cos((Constants.kPi / 2) * (1+(setpoint / MKSHOOTER.maxNativeShooterVelocity))));
@@ -122,5 +122,5 @@ public class Shooter {
         public double leftShootError;
         public double rightShootError;
 
-    }
+    }*/
 }

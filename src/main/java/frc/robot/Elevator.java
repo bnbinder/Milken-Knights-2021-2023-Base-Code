@@ -11,7 +11,7 @@ import frc.robot.Constants.CANID;
 import frc.robot.Constants.MKELEVATOR;
 
 /** Add your docs here. */
-public class Elevator {
+public class Elevator {/*
     private Motor mMotor = Motor.getInstance();
     private TalonFX elevator;
     private TalonFX shitter;
@@ -42,5 +42,5 @@ public class Elevator {
         private static final Elevator mInstance = new Elevator();
     }
 
-
+*/
 }

@@ -14,7 +14,7 @@ import frc.robot.Constants.CANID;
 import frc.robot.Constants.MKINTAKE;
 
 /** Add your docs here. */
-public class Intake {
+public class Intake {/*
     private Motor mMotor = Motor.getInstance();
     private TalonFX roller;
     private Solenoid intake;
@@ -53,5 +53,5 @@ public class Intake {
     private static class InstanceHolder
     {
         private static final Intake mInstance = new Intake();
-    } 
+    } */
 }

@@ -5,7 +5,9 @@
 package frc.robot;
 
 
+import edu.wpi.first.hal.util.UncleanStatusException;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -38,14 +40,14 @@ public class Robot extends TimedRobot {
   private String keyIn = "";
   private boolean accessible, in = false;
   private String bull = "30937C22";
-  private Compressor mCompressor = new Compressor(CANID.revphCANID, PneumaticsModuleType.REVPH);
+  private Compressor mCompressor ;//= new Compressor(CANID.revphCANID, PneumaticsModuleType.REVPH);
 
 
   @Override
   public void robotInit() 
   {
         System.out.println("Robot enabled");
-  //  mCompressor.enableDigital();
+    mCompressor.enableDigital();
     /*
     try
     {
@@ -60,6 +62,11 @@ public class Robot extends TimedRobot {
       in = false;
     }
   */
+  try {
+    mCompressor = new Compressor(CANID.revphCANID, PneumaticsModuleType.REVPH);
+  } catch (UncleanStatusException ex) {
+    DriverStation.reportError("Error creating Solenoid", ex.getStackTrace());
+  }
     timer = new Timer();
     timer.start();
 
