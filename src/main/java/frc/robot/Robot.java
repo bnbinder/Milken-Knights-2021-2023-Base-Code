@@ -44,6 +44,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() 
   {
+        System.out.println("Robot enabled");
   //  mCompressor.enableDigital();
     /*
     try
@@ -93,7 +94,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() 
   {
-    
+        System.out.println("Robot Teleop Init");
     SmartDashboard.putNumber("distance total", Constants.AUTO.DISTANGLE.distance);
     SmartDashboard.putNumber("angle real", Constants.AUTO.DISTANGLE.angle);
     color.colorInit();
@@ -150,6 +151,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit()
   {
+        System.out.println("Robot disabled");
     supaKoopa.teleopDisabled();
     mCompressor.disable();
     m_autonomousCommand = new SwrvTest();
