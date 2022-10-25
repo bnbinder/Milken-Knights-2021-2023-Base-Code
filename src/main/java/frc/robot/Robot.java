@@ -44,7 +44,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() 
   {
-    mCompressor.enableDigital();
+  //  mCompressor.enableDigital();
+    /*
     try
     {
       arduino = new SerialPort(9600, "/dev/ttyACM0", SerialPort.Port.kUSB, 8, SerialPort.Parity.kNone, SerialPort.StopBits.kOne);
@@ -57,7 +58,7 @@ public class Robot extends TimedRobot {
       System.out.println("Failed to connect on usb port two, failed all usb ports. Is your Ardunio plugged in?");
       in = false;
     }
-  
+  */
     timer = new Timer();
     timer.start();
 

@@ -297,8 +297,9 @@ public final class Constants {
 
         //intake and roller motors
         public static final int intakeCANID = 1;
+     
         public static final int rollerCANID = 21;
-        public static final int revphCANID = 22;
+        public static final int revphCANID = 22; //MUST MAKE SURE IT IS ON RIO NOT CANIVORE 
         
         /* 
         public static final int[] topLeftCANID = {topDriveLeftCANID, topTurnLeftCANID, topTurnLeftCANCoderCANID};
