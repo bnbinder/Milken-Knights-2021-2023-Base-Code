@@ -614,6 +614,13 @@ return setpoint;
         etherAutoSwerve(vars.FWDauto, -vars.STRauto, RCWtemp, ControlMode.MotionMagic);
         SmartDashboard.putNumber("heading", heading);
         SmartDashboard.putNumber("side", side);
+
+
+        //totaldistance+(err^limit(0,1,(floor(dist/total-a))))
+        //a is threshold stuff if needed
+        //boolean the err so it only goes when distance is done, dont need to change angle or dist
+
+        
         //SmartDashboard.putNumber("thetaTurn", thetaTurn);
         //SmartDashboard.putNumber("avgDist", vars.avgDistInches);
         //SmartDashboard.putNumber("distA", vars.distanceA);
