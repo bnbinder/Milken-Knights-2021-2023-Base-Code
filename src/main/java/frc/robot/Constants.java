@@ -291,15 +291,15 @@ public final class Constants {
         public static final int turretCANID = 999;
 
         //elevator motors
-        public static final int elevatorCANID = 999;
-        public static final int shitterCANID = 999;
+        public static final int elevatorCANID = 9;
+        public static final int shitterCANID = 10;
         public static final int elevatorSupportCANID = 999;
 
         //intake and roller motors
         public static final int intakeCANID = 7;
      
         public static final int rollerCANID = 21;
-        public static final int revphCANID = 22; //MUST MAKE SURE IT IS ON RIO NOT CANIVORE 
+        public static final int revphCANID = 1; //MUST MAKE SURE IT IS ON RIO NOT CANIVORE 
         
         /* 
         public static final int[] topLeftCANID = {topDriveLeftCANID, topTurnLeftCANID, topTurnLeftCANCoderCANID};
