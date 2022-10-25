@@ -296,7 +296,7 @@ public final class Constants {
         public static final int elevatorSupportCANID = 999;
 
         //intake and roller motors
-        public static final int intakeCANID = 1;
+        public static final int intakeCANID = 7;
      
         public static final int rollerCANID = 21;
         public static final int revphCANID = 22; //MUST MAKE SURE IT IS ON RIO NOT CANIVORE 

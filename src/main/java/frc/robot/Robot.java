@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
   public void robotInit() 
   {
         System.out.println("Robot enabled");
-    mCompressor.enableDigital();
+ 
     /*
     try
     {
@@ -67,6 +67,7 @@ public class Robot extends TimedRobot {
   } catch (UncleanStatusException ex) {
     DriverStation.reportError("Error creating Solenoid", ex.getStackTrace());
   }
+  mCompressor.enableDigital();
     timer = new Timer();
     timer.start();
 
@@ -101,6 +102,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() 
   {
+    System.out.println(mCompressor.toString());
         System.out.println("Robot Teleop Init");
     SmartDashboard.putNumber("distance total", Constants.AUTO.DISTANGLE.distance);
     SmartDashboard.putNumber("angle real", Constants.AUTO.DISTANGLE.angle);
@@ -160,7 +162,7 @@ public class Robot extends TimedRobot {
   {
         System.out.println("Robot disabled");
     supaKoopa.teleopDisabled();
-    mCompressor.disable();
+    //mCompressor.disable();
     m_autonomousCommand = new SwrvTest();
   }
 
