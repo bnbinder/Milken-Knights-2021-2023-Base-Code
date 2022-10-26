@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.SensorVelocityMeasPeriod;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.CANID;
 import frc.robot.Constants.CLIMBER;
@@ -26,7 +27,6 @@ public class Climber {
     {
         telescopeArmLeft = mMotor.motor(CANID.leftClimberCANID, CLIMBER.leftClimbNeutralMode, 0, CLIMBER.pidf, CLIMBER.isLeftInverted);
         telescopeArmRight = mMotor.motor(CANID.rightClimberCANID, CLIMBER.rightClimbNeutralMode, 0, CLIMBER.pidf, !CLIMBER.isLeftInverted);
-
     }
 
     public static Climber getInstance()

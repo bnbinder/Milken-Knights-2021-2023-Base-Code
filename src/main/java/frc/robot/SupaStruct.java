@@ -7,6 +7,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.math.Drake;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.CONTROLLERS.DriveInput;
@@ -22,6 +23,7 @@ public class SupaStruct {
     private Intake intake = Intake.getInstance();
     private Climber Climb = Climber.getInstance();
     private Elevator elevator = Elevator.getInstance();
+    private ColorSensor color = ColorSensor.getInstance();
     private boolean resetNavx, resetDrive, xbutton, ybutton,rbbutton,lbbutton,abutton, rtrigger, pov, povToggled, itsreal = false;
     private Climber mClimb = Climber.getInstance();
    
@@ -32,8 +34,13 @@ public class SupaStruct {
 
     public void updateTele()
     {
+        //TODO seperate all smartdashboard update from main update in update function in all classes
         train.updateSwerve();
+        color.updateColor();
+        //ultra.updateUltra();
         mClimb.climberUpdate();
+        //ultra.ultraSmartDashboard();
+        color.colorSmartDashboard();
      //   shoot.updateShooter();
 
         fwd = (xbox.getRawAxis(DriveInput.fwd) - 0.1) / (1 - 0.1);
@@ -110,9 +117,9 @@ public class SupaStruct {
             rcw = 0;
         }
 
-         //////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         //  SD SWERVE OUTPUT
-        //////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         if(Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1)
         {
             rcwY = 0;
@@ -130,9 +137,9 @@ public class SupaStruct {
         {
             str = 0;
         }
-        //////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         //  ROLLER CONTROL
-        //////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         
         if(rbbutton)
         {
@@ -146,29 +153,29 @@ public class SupaStruct {
         {
             intake.rollerSet(0);
         }
-        //////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         //  INTAKE DEPLOY CONTROL
-        //////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         if(abutton)
         {
             System.out.println(!itsreal);
             itsreal = !itsreal;
             intake.intakeSet(!intake.getIntakeState());
         }
-         //////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         //  ELEVATOR AND SHITTER CONTROL
-        //////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         elevator.setElevator(ControlMode.PercentOutput,leftjoy);
         elevator.setShitter(ControlMode.PercentOutput,leftjoy);
 
 
-         //////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         //  CLIMBER CONTROL
-        //////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
 
-        //////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         //  SHOOTER CONTROL
-        //////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
 
 
 //     applying numbers

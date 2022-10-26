@@ -120,10 +120,6 @@ public class ColorSensor {
       colorString = "Blue";
     } else if (match.color == kRedTarget) {
       colorString = "Red";
-    } else if (match.color == kGreenTarget) {
-      colorString = "Green";
-    } else if (match.color == kYellowTarget) {
-      colorString = "Yellow";
     } else if (match.color == kFarBlueTarget) {
       colorString = "FarBlue";
     } else {
@@ -163,11 +159,7 @@ public class ColorSensor {
     SmartDashboard.putNumber("Confidence", match.confidence);
   }
 
-
-  public void test()
-  {
-   
-  }
+  
   private static class InstanceHolder
   {
       private static final ColorSensor mInstance = new ColorSensor();
