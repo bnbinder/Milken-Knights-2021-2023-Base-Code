@@ -196,17 +196,17 @@ private Motor mMotor = Motor.getInstance();
         anglereal = Constants.AUTO.DISTANGLE.angle;
         distancereal = Constants.AUTO.DISTANGLE.distance;
 
-        SmartDashboard.putNumber("degtopleft", vars.degTL);
+        //SmartDashboard.putNumber("degtopleft", vars.degTL);
         /*SmartDashboard.putNumber("distancetopright", vars.posInchTR);
         SmartDashboard.putNumber("distancetbotleft", vars.posInchBL);
-        SmartDashboard.putNumber("distancetbotright", vars.posInchBR);*/
+        SmartDashboard.putNumber("distancetbotright", vars.posInchBR);
         SmartDashboard.putNumber("calcangle teletop", ((360) + ((-anglereal/2)+((vars.avgDistInches/(distancereal))*(anglereal)))));
         SmartDashboard.putNumber("topdriveleft", MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorPosition()));
         SmartDashboard.putNumber("topdriveright", MathFormulas.nativeToInches(topDriveRight.getSelectedSensorPosition()));
         SmartDashboard.putNumber("botdriveleft", MathFormulas.nativeToInches(bottomDriveLeft.getSelectedSensorPosition()));
         SmartDashboard.putNumber("botdriveright", MathFormulas.nativeToInches(bottomDriveRight.getSelectedSensorPosition()));
         SmartDashboard.putNumber("avgdistinches", vars.avgDistInches);
-        SmartDashboard.putNumber("navx", vars.yaw);
+        SmartDashboard.putNumber("navx", vars.yaw);*/
 
         /*SmartDashboard.putNumber("TopLeft", tlCoder());
         SmartDashboard.putNumber("TopRight", trCoder());

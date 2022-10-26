@@ -19,6 +19,7 @@ public class SupaStruct {
     private MkSwerveTrain train = MkSwerveTrain.getInstance();
     private Shooter shoot = Shooter.getInstance();
     private Intake intake = Intake.getInstance();
+    private Elevator elevator = Elevator.getInstance();
     private boolean resetNavx, resetDrive, xbutton, ybutton, pov, povToggled, itsreal = false;
    
    
@@ -47,8 +48,6 @@ public class SupaStruct {
         ybutton = xbox.getYButton();
         pov = xbox.getPOV() != -1;
 
-        
-         
 //      i dont remember how i got this lol
         inverseTanAngleOG = ((((((Math.toDegrees(Math.atan(rcwY/rcwX))+360 )) + 
                             (MathFormulas.signumV4(rcwX)))%360) - 
@@ -59,14 +58,6 @@ public class SupaStruct {
                             (MathFormulas.signumV4(str)))%360) - 
                             MathFormulas.signumAngleEdition(str,fwd))+360)
                             %360;
-
-
-
-
-
-
-       
-
         if(resetNavx)
         {
             navx.getInstance().reset();
@@ -86,8 +77,6 @@ public class SupaStruct {
             povValue = xbox.getPOV();
             povToggled = true;
         }
-
-
         
 //      if statments
         /*if(ybutton)
@@ -107,9 +96,6 @@ public class SupaStruct {
         }
         
         //this is useless, remove entire variable if you want
-
-
-
 //      else statements
         if(/*!ybutton&&*/ !povToggled && /*!bbutton&&*/ Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1 && Math.abs(xbox.getRawAxis(DriveInput.rcwX)) < 0.1)
         {
@@ -126,10 +112,6 @@ public class SupaStruct {
             rcwX = 0;
         }
 
-
-
-
-
         if(Math.abs(xbox.getRawAxis(DriveInput.fwd)) < 0.1)
         {
             fwd = 0;
@@ -138,15 +120,7 @@ public class SupaStruct {
         {
             str = 0;
         }
-
-
-
-
-
-
-
-
-
+   
         
         if(Math.abs(xbox.getRawAxis(2)) > 0)
         {
