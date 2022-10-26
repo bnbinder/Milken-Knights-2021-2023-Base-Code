@@ -142,17 +142,20 @@ public class SupaStruct {
             intake.intakeSet(!intake.getIntakeState());
         }
 
-        if(xbox.getRawButton(8))
+        if(xbox.getRawButton(5))
         {
             elevator.setElevator(ControlMode.PercentOutput, 0.5);
+            elevator.setShitter(ControlMode.PercentOutput, 0.5);
         }
-        else if(xbox.getRawButton(9))
+        else if(xbox.getRawButton(6))
         {
-            elevator.setElevator(ControlMode.PercentOutput, 0.5);
+            elevator.setElevator(ControlMode.PercentOutput, -0.5);
+            elevator.setShitter(ControlMode.PercentOutput, -0.5);
         }
         else
         {
             elevator.setElevator(ControlMode.PercentOutput, 0);
+            elevator.setShitter(ControlMode.PercentOutput, 0);
         }
 
 //      applying numbers
