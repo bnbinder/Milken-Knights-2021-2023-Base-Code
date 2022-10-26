@@ -20,6 +20,7 @@ public class SupaStruct {
     private MkSwerveTrain train = MkSwerveTrain.getInstance();
     private Shooter shoot = Shooter.getInstance();
     private Intake intake = Intake.getInstance();
+    private Climber Climb = Climber.getInstance();
     private Elevator elevator = Elevator.getInstance();
     private boolean resetNavx, resetDrive, xbutton, ybutton,rbbutton,lbbutton,abutton, rtrigger, pov, povToggled, itsreal = false;
     private Climber mClimb = Climber.getInstance();
