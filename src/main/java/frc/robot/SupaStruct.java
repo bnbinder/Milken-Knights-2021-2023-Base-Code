@@ -136,11 +136,11 @@ public class SupaStruct {
         
         if(rbbutton)
         {
-            intake.rollerSet(.5);
+            intake.rollerSet(-.5);
         }
         else if(lbbutton)
         {
-            intake.rollerSet(-.5);
+            intake.rollerSet(.5);
         }
         else
         {
@@ -169,7 +169,7 @@ public class SupaStruct {
         //////////////////////////////////////////////////////////////////////
         //  SHOOTER CONTROL
         //////////////////////////////////////////////////////////////////////
-        if(rtrigger)
+
 
 //     applying numbers
         if(fwd != 0 || str != 0 || rcw != 0)
