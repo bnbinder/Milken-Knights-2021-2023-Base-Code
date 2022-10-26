@@ -15,12 +15,13 @@ import frc.robot.Constants.CONTROLLERS.DriveInput;
 public class SupaStruct {
     
     private XboxController xbox = new XboxController(0);
-    private double fwd, fwdSignum, str, strSignum, rcw, rcwX, rcwY, inverseTanAngleOG, inverseTanAngleDrive, povValue = 0;
+    private XboxController xboxOP = new XboxController(1);
+    private double fwd, fwdSignum, str, strSignum, leftjoy, rcw, rcwX, rcwY, inverseTanAngleOG, inverseTanAngleDrive, povValue = 0;
     private MkSwerveTrain train = MkSwerveTrain.getInstance();
     private Shooter shoot = Shooter.getInstance();
     private Intake intake = Intake.getInstance();
     private Elevator elevator = Elevator.getInstance();
-    private boolean resetNavx, resetDrive, xbutton, ybutton, pov, povToggled, itsreal = false;
+    private boolean resetNavx, resetDrive, xbutton, ybutton,rbbutton,lbbutton,abutton, rtrigger, pov, povToggled, itsreal = false;
     private Climber mClimb = Climber.getInstance();
    
     public static SupaStruct getInstance()
@@ -45,8 +46,13 @@ public class SupaStruct {
         rcwX =  (xbox.getRawAxis(DriveInput.rcwX) - 0.1) / (1 - 0.1);
         resetNavx = xbox.getRawButton(DriveInput.resetNavxButton);
         resetDrive = xbox.getRawButton(DriveInput.resetDriveButton);
-        xbutton = xbox.getXButtonPressed();
-        ybutton = xbox.getYButton();
+        xbutton = xboxOP.getXButtonPressed();
+        abutton = xboxOP.getAButtonPressed();
+        rbbutton = xboxOP.getRightBumper();
+        lbbutton = xboxOP.getLeftBumper();
+        rtrigger = Math.abs(xboxOP.getRawAxis(2)) > 0;
+        leftjoy = Math.abs(xboxOP.getRawAxis(1));
+        ybutton = xboxOP.getYButton();
         pov = xbox.getPOV() != -1;
 
 //      i dont remember how i got this lol
@@ -103,7 +109,9 @@ public class SupaStruct {
             rcw = 0;
         }
 
-        //only here for smartdashboard, doesnt affcet anything else if deleted
+         //////////////////////////////////////////////////////////////////////
+        //  SD SWERVE OUTPUT
+        //////////////////////////////////////////////////////////////////////
         if(Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1)
         {
             rcwY = 0;
@@ -121,45 +129,44 @@ public class SupaStruct {
         {
             str = 0;
         }
-   
+        //////////////////////////////////////////////////////////////////////
+        //  ROLLER CONTROL
+        //////////////////////////////////////////////////////////////////////
         
-        if(Math.abs(xbox.getRawAxis(2)) > 0)
+        if(rbbutton)
         {
-            intake.rollerSet(xbox.getRawAxis(2)/3);
+            intake.rollerSet(.5);
         }
-        else if(Math.abs(xbox.getRawAxis(3)) > 0)
+        else if(lbbutton)
         {
-            intake.rollerSet(-xbox.getRawAxis(3)/3);
+            intake.rollerSet(-.5);
         }
         else
         {
             intake.rollerSet(0);
         }
-
-        if(xbutton)
+        //////////////////////////////////////////////////////////////////////
+        //  INTAKE DEPLOY CONTROL
+        //////////////////////////////////////////////////////////////////////
+        if(abutton)
         {
             System.out.println(!itsreal);
             itsreal = !itsreal;
             intake.intakeSet(!intake.getIntakeState());
         }
+         //////////////////////////////////////////////////////////////////////
+        //  ELEVATOR AND SHITTER CONTROL
+        //////////////////////////////////////////////////////////////////////
+        elevator.setElevator(ControlMode.PercentOutput,leftjoy);
+        elevator.setShitter(ControlMode.PercentOutput,leftjoy);
 
-        if(xbox.getRawButton(5))
-        {
-            elevator.setElevator(ControlMode.PercentOutput, 0.5);
-            elevator.setShitter(ControlMode.PercentOutput, 0.5);
-        }
-        else if(xbox.getRawButton(6))
-        {
-            elevator.setElevator(ControlMode.PercentOutput, -0.5);
-            elevator.setShitter(ControlMode.PercentOutput, -0.5);
-        }
-        else
-        {
-            elevator.setElevator(ControlMode.PercentOutput, 0);
-            elevator.setShitter(ControlMode.PercentOutput, 0);
-        }
 
-//      applying numbers
+         //////////////////////////////////////////////////////////////////////
+        //  SHOOTER CONTROL
+        //////////////////////////////////////////////////////////////////////
+        if(rtrigger)
+
+//     applying numbers
         if(fwd != 0 || str != 0 || rcw != 0)
         {//+,-,+
             train.etherSwerve(fwd/3, -str/3, rcw, ControlMode.PercentOutput); //+,-,+
