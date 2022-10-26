@@ -101,9 +101,9 @@ public final class Constants {
         public static final double speedLimit = 5;
     }
 
-    public static class MKCLIMBER 
+    public static class CLIMBER 
     {
-        public static final double maxNativePosition = 290000;
+        public static final double maxNativePosition = 290000; 
         public static final double minNativePosition = 9000;
         public static final boolean isLeftInverted = false;
         public static final NeutralMode leftClimbNeutralMode = NeutralMode.Brake;

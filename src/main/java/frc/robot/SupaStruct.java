@@ -21,7 +21,7 @@ public class SupaStruct {
     private Intake intake = Intake.getInstance();
     private Elevator elevator = Elevator.getInstance();
     private boolean resetNavx, resetDrive, xbutton, ybutton, pov, povToggled, itsreal = false;
-   
+    private Climber mClimb = Climber.getInstance();
    
     public static SupaStruct getInstance()
     {
@@ -31,6 +31,7 @@ public class SupaStruct {
     public void updateTele()
     {
         train.updateSwerve();
+        mClimb.climberUpdate();
      //   shoot.updateShooter();
 
         fwd = (xbox.getRawAxis(DriveInput.fwd) - 0.1) / (1 - 0.1);
