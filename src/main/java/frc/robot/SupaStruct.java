@@ -169,17 +169,6 @@ public class SupaStruct {
         }
         
         
-        SmartDashboard.putNumber("doesthiswork", inverseTanAngleOG);
-        SmartDashboard.putNumber("rcwrobotperiod", rcw);
-        SmartDashboard.putBoolean("pov", pov);
-        SmartDashboard.putBoolean("povtoggled", povToggled);
-        SmartDashboard.putNumber("povvalue", povValue);
-        SmartDashboard.putNumber("inverseTanAngleOG with the 90", (inverseTanAngleOG + 270) % 360);
-        SmartDashboard.putNumber("inverse tan angle drive", inverseTanAngleDrive);
-        SmartDashboard.putNumber("rcwy", rcwY);
-        SmartDashboard.putNumber("rcwx", rcwX);
-        SmartDashboard.putNumber("fwd", fwd);
-        SmartDashboard.putNumber("str", str);
     }
 
     public void teleopDisabled()
