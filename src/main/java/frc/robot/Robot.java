@@ -134,19 +134,16 @@ public class Robot extends TimedRobot {
   
           keyIn = arduino.readString();
         
-        SmartDashboard.putString("string", keyIn);
         System.out.println(keyIn);
         timer.reset();
       }
 
-      SmartDashboard.putBoolean("acess", accessible);
-
+    
       if(keyIn.equals(bull))
       {
         accessible = true;
       }
 
-      SmartDashboard.putBoolean("your uin", true);
     }
 
     supaKoopa.updateTele();

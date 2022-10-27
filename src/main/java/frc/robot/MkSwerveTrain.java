@@ -346,7 +346,6 @@ private Motor mMotor = Motor.getInstance();
             vars.mod3[0] = Math.abs(vars.mod3[0]);
             vars.mod4[0] = Math.abs(vars.mod4[0]);
         }*/
-        SmartDashboard.putNumber("wa1", vars.mod1[1]);
         setModuleDrive(mode, vars.mod1[0], vars.mod2[0], vars.mod3[0], vars.mod4[0]);
         setModuleTurn(vars.mod1[1], vars.mod2[1], vars.mod3[1], vars.mod4[1]);
     }
@@ -431,7 +430,7 @@ private Motor mMotor = Motor.getInstance();
             vars.mod3[0] = Math.abs(vars.mod3[0]);
             vars.mod4[0] = Math.abs(vars.mod4[0]);
         }*/
-        //SmartDashboard.putNumber("wa1", vars.mod1[1]);
+    
         setModuleDrive(mode, vars.mod1[0], vars.mod2[0], vars.mod3[0], vars.mod4[0]);
         setModuleTurn(vars.mod1[1], vars.mod2[1], vars.mod3[1], vars.mod4[1]);
     }
