@@ -63,18 +63,14 @@ public class ColorSensor {
      return InstanceHolder.mInstance;
  }
 
-  public ColorSensor()
-  {
-
-  }
-
-  public void colorInit()
+  private ColorSensor()
   {
     m_colorMatcher.addColorMatch(kBlueTarget);
     m_colorMatcher.addColorMatch(kGreenTarget);
     m_colorMatcher.addColorMatch(kRedTarget);
     m_colorMatcher.addColorMatch(kYellowTarget);   
   }
+
 
   public Color getDetectedColor()
   {
@@ -91,6 +87,7 @@ public class ColorSensor {
     return detectedColor;
   }
     
+
   public double getIR()
   {
     /**
@@ -99,10 +96,18 @@ public class ColorSensor {
     return IR;
   }
 
+
   public int getProximity()
   {
     return proximity;
   }
+  
+
+  public String getColor()
+  {
+    return colorString;
+  }
+
 
   public void updateColor()
   {
