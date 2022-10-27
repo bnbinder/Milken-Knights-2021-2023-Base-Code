@@ -207,7 +207,7 @@ private Motor mMotor = Motor.getInstance();
         SmartDashboard.putNumber("botdriveright", MathFormulas.nativeToInches(bottomDriveRight.getSelectedSensorPosition()));
         SmartDashboard.putNumber("avgdistinches", vars.avgDistInches);
         SmartDashboard.putNumber("navx", vars.yaw);*/
-
+        SmartDashboard.putNumber("miles per hour", MathFormulas.nativePer100MsToMilesPerHour(topDriveLeft.getSelectedSensorVelocity()));
         /*SmartDashboard.putNumber("TopLeft", tlCoder());
         SmartDashboard.putNumber("TopRight", trCoder());
         SmartDashboard.putNumber("BottomLeft", blCoder());

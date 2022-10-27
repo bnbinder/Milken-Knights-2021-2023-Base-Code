@@ -174,6 +174,11 @@ public class MathFormulas {
     return (gimmeRots * 360) / (greerRatio * MKFALCON.oneEncoderRotation);
   }
 
+  public static double nativePer100MsToMilesPerHour(double gimmeRots)
+  {
+    return nativePer100MstoInchesPerSec(gimmeRots) * .05681818181818181818181818;
+  }
+
   /**
    * degrees to native units (Falcon)
    * @param gimmeDeg degrees
