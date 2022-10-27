@@ -181,7 +181,7 @@ public class SupaStruct {
 //     applying numbers
         if(fwd != 0 || str != 0 || rcw != 0)
         {//+,-,+
-            train.etherSwerve(fwd/3, -str/3, rcw, ControlMode.PercentOutput); //+,-,+
+            train.etherSwerve(fwd/2, -str/2, rcw, ControlMode.PercentOutput); //+,-,+
         }
         else
         {

@@ -153,11 +153,11 @@ public class ColorSensor {
 
   public void colorSmartDashboard()
   {
-    SmartDashboard.putNumber("Red", detectedColor.red);
-    SmartDashboard.putNumber("Green", detectedColor.green);
-    SmartDashboard.putNumber("Blue", detectedColor.blue);
+  //  SmartDashboard.putNumber("Red", detectedColor.red);
+    //SmartDashboard.putNumber("Green", detectedColor.green);
+    //SmartDashboard.putNumber("Blue", detectedColor.blue);
     SmartDashboard.putNumber("IR", IR);
-    SmartDashboard.putNumber("Proximity", proximity);
+   // SmartDashboard.putNumber("Proximity", proximity);
     SmartDashboard.putNumber("red", m_colorSensor.getRed());
     SmartDashboard.putString("Detected Color", colorString);
 
