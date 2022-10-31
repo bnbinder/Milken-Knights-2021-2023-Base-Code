@@ -24,7 +24,7 @@ public class SupaStruct {
     private Climber Climb = Climber.getInstance();
     private Elevator elevator = Elevator.getInstance();
     private ColorSensor color = ColorSensor.getInstance();
-    private boolean resetNavx, resetDrive, xbutton, ybutton,rbbutton,lbbutton,abutton, rtrigger, pov, povToggled, itsreal = false;
+    private boolean resetNavx, resetDrive, xbutton, ybutton,rbbutton,lbbutton,abutton, ltrigger, rtrigger,  pov, povToggled, itsreal = false;
     private Climber mClimb = Climber.getInstance();
    
     public static SupaStruct getInstance()
@@ -58,7 +58,8 @@ public class SupaStruct {
         abutton = xboxOP.getAButtonPressed();
         rbbutton = xboxOP.getRightBumper();
         lbbutton = xboxOP.getLeftBumper();
-        rtrigger = Math.abs(xboxOP.getRawAxis(2)) > 0;
+        ltrigger = Math.abs(xboxOP.getRawAxis(2)) > 0.1;
+        rtrigger = Math.abs(xboxOP.getRawAxis(3)) > 0.1;
         leftjoy = Math.abs(xboxOP.getRawAxis(1));
         ybutton = xboxOP.getYButton();
         pov = xbox.getPOV() != -1;
@@ -176,7 +177,15 @@ public class SupaStruct {
         //--------------------------------------------------------------------//
         //  SHOOTER CONTROL
         //--------------------------------------------------------------------//
-
+        if(ltrigger)
+        {
+            shoot.setShooter(ControlMode.PercentOutput, xboxOP.getLeftTriggerAxis()/1);
+            elevator.setElevator(ControlMode.PercentOutput,.3);
+        }
+        else
+        {
+            shoot.setShooter(ControlMode.PercentOutput, 0);
+        }
 
 //     applying numbers
         if(fwd != 0 || str != 0 || rcw != 0)

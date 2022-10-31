@@ -305,12 +305,12 @@ public final class Constants {
         public static final int turretCANID = 999;
 
         //hood motor
-        public static final int hoodCANID = 999;
+        public static final int hoodCANID = 22;
 
         //elevator motors
         public static final int elevatorCANID = 9;
         public static final int shitterCANID = 10;
-        public static final int elevatorSupportCANID = 999;
+        public static final int elevatorSupportCANID = 25;
 
         //intake and roller motors
         public static final int intakeCANID = 7;
