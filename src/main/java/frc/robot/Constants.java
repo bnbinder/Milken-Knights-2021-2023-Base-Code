@@ -198,10 +198,8 @@ public final class Constants {
         public static final NeutralMode elevatorNeutralMode = NeutralMode.Brake;
         public static final NeutralMode shitterMode = NeutralMode.Brake;
         public static final NeutralMode supportMode = NeutralMode.Brake;
-        public static final NeutralMode topelevator = NeutralMode.Brake;
         
         public static final boolean elevatorInverted = false;
-        public static final boolean topelevatorInverted = false;
         public static final boolean shitterInverted = false;
         public static final boolean supportInverted = false;
 
