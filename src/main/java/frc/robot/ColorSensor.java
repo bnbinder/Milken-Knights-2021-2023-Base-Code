@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.Constants.MKCOLOR;
 
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
@@ -128,7 +129,7 @@ public class ColorSensor {
     } else if (match.color == kFarBlueTarget) {
       colorString = "FarBlue";
     } else {
-      colorString = "Unknown";
+      colorString = MKCOLOR.unkown;
     }
 
 

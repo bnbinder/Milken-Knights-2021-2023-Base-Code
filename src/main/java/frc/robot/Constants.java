@@ -220,6 +220,11 @@ public final class Constants {
     {
         public static final double offset = 180;
     }
+    
+    public static class MKCOLOR
+    {
+        public static final String unkown = "Unkown";
+    }
 
     public static class CONTROLLERS 
     {

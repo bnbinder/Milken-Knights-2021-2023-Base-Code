@@ -13,6 +13,7 @@ import edu.wpi.first.math.Drake;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants.MKCOLOR;
 import frc.robot.Constants.CONTROLLERS.DriveInput;
 
 /** Add your docs here. */
@@ -108,6 +109,7 @@ public class SupaStruct {
             //rcw = train.moveToAngy((inverseTanAngleOG + 270) % 360);
             rcw = rcwX/5;
             povToggled = false;
+            //!povToggled is so moving the stick disabled the auto rotate pov function (like in video games, shooting a gun disables the ability to sprint)
         }
         else if(povToggled)
         {
@@ -174,13 +176,18 @@ public class SupaStruct {
 
         SmartDashboard.putString("team color", DriverStation.getAlliance().toString());
 
-        switch (color.getColor()) {
-            case DriverStation.getAlliance().toString():
-                elevator.setShitter(ControlMode.PercentOutput, 0);
-                break;
-              
-            default:
-                break;
+        if(color.getColor() == DriverStation.getAlliance().toString())
+        {
+            elevator.setShitter(ControlMode.PercentOutput, 0);
+        }
+        else if(color.getColor() == MKCOLOR.unkown)
+        {
+            elevator.setShitter(ControlMode.PercentOutput, 0);
+        }
+        else
+        {
+            elevator.setShitter(ControlMode.PercentOutput, 0.3);
+        }
        
        
     /*   
