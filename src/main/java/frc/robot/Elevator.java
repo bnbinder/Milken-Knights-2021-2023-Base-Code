@@ -42,5 +42,7 @@ public class Elevator {
         private static final Elevator mInstance = new Elevator();
     }
 
+    public void settopelevator(ControlMode percentoutput, double leftjoy) {
+    }
 
 }

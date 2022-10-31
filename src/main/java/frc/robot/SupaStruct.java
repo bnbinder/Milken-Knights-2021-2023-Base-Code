@@ -22,6 +22,7 @@ public class SupaStruct {
     private Shooter shoot = Shooter.getInstance();
     private Intake intake = Intake.getInstance();
     private Climber Climb = Climber.getInstance();
+    private Elevator topelevator = Elevator.getInstance();
     private Elevator elevator = Elevator.getInstance();
     private ColorSensor color = ColorSensor.getInstance();
     private boolean resetNavx, resetDrive, xbutton, ybutton,rbbutton,lbbutton,abutton, ltrigger, rtrigger,  pov, povToggled, itsreal = false;
@@ -167,6 +168,7 @@ public class SupaStruct {
         //  ELEVATOR AND SHITTER CONTROL
         //--------------------------------------------------------------------//
         elevator.setElevator(ControlMode.PercentOutput,leftjoy);
+        elevator.settopelevator(ControlMode.PercentOutput,leftjoy);
         elevator.setShitter(ControlMode.PercentOutput,leftjoy);
 
 
