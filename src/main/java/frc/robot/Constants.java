@@ -160,6 +160,20 @@ public final class Constants {
         public static final boolean inverted = false;
     }
 
+    public static class MKHOOD
+    {
+        public static final double kP = 0.0;
+        public static final double kI = 0.0;
+        public static final double kD = 0.0;
+
+        public static final NeutralMode mode = NeutralMode.Brake;
+        public static final boolean inverted = false;
+
+        public static final double minPosition = 0;
+        public static final double maxPosition = 0;
+
+    }
+
     public static class MKINTAKE 
     {
         public static final double maxIntakeNativePosition = 7350;
@@ -289,6 +303,9 @@ public final class Constants {
 
         //turret motor
         public static final int turretCANID = 999;
+
+        //hood motor
+        public static final int hoodCANID = 999;
 
         //elevator motors
         public static final int elevatorCANID = 9;
