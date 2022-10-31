@@ -39,20 +39,27 @@ public class SupaStruct {
     public void updateTele()
     {
         //TODO seperate all smartdashboard update from main update in update function in all classes
+        //--------------------------------------------------------------------//
+        //  UPDATES
+        //--------------------------------------------------------------------//
+
         train.updateSwerve();
         color.updateColor();
         //ultra.updateUltra();
         mClimb.climberUpdate();
         //ultra.ultraSmartDashboard();
         color.colorSmartDashboard();
-     //   shoot.updateShooter();
+        //shoot.updateShooter();
+
+        //--------------------------------------------------------------------//
+        //  VARIABLES
+        //--------------------------------------------------------------------//
 
         fwd = (xbox.getRawAxis(DriveInput.fwd) - 0.1) / (1 - 0.1);
         fwdSignum = Math.signum(fwd) * -1;
         str = (xbox.getRawAxis(DriveInput.str) - 0.1) / (1 - 0.1);
         strSignum = Math.signum(str) * -1;
         rcw = (xbox.getRawAxis(DriveInput.rcwY) - 0.1) / (1 - 0.1);
-        
         rcwY = rcw;
         //Todo see if making this x breaks it
         rcwX =  (xbox.getRawAxis(DriveInput.rcwX) - 0.1) / (1 - 0.1);
@@ -78,6 +85,11 @@ public class SupaStruct {
                             (MathFormulas.signumV4(str)))%360) - 
                             MathFormulas.signumAngleEdition(str,fwd))+360)
                             %360;
+        
+        //--------------------------------------------------------------------//
+        // BUTTONS
+        //--------------------------------------------------------------------//
+        
         if(resetNavx)
         {
             navx.getInstance().reset();
@@ -91,6 +103,11 @@ public class SupaStruct {
             //str = Math.cos(inverseTanAngleDrive* (Constants.kPi/180));
             //fwd = Math.sin(inverseTanAngleDrive* (Constants.kPi/180));
         }
+
+        //--------------------------------------------------------------------//
+        //  POV ROTATION
+        //--------------------------------------------------------------------//
+        
 //      for toggle so povValue doesnt equal -1 and toggle for povToggle
         if(pov)
         {
@@ -124,8 +141,9 @@ public class SupaStruct {
         }
 
         //--------------------------------------------------------------------//
-        //  SD SWERVE OUTPUT
+        //  
         //--------------------------------------------------------------------//
+        
         if(Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1)
         {
             rcwY = 0;
@@ -143,6 +161,7 @@ public class SupaStruct {
         {
             str = 0;
         }
+
         //--------------------------------------------------------------------//
         //  ROLLER CONTROL
         //--------------------------------------------------------------------//
@@ -159,22 +178,23 @@ public class SupaStruct {
         {
             intake.rollerSet(0);
         }
+
         //--------------------------------------------------------------------//
         //  INTAKE DEPLOY CONTROL
         //--------------------------------------------------------------------//
+        
         if(abutton)
         {
             System.out.println(!itsreal);
             itsreal = !itsreal;
             intake.intakeSet(!intake.getIntakeState());
         }
+
         //--------------------------------------------------------------------//
         //  ELEVATOR AND SHITTER CONTROL
         //--------------------------------------------------------------------//
         elevator.setElevator(ControlMode.PercentOutput,leftjoy);
         elevator.setShitter(ControlMode.PercentOutput,leftjoy);
-
-        SmartDashboard.putString("team color", DriverStation.getAlliance().toString());
 
         if(color.getColor() == DriverStation.getAlliance().toString())
         {
