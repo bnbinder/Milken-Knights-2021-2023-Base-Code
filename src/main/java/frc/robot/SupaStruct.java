@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import java.lang.ProcessBuilder.Redirect;
+import java.sql.Driver;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.math.Drake;
@@ -169,7 +172,28 @@ public class SupaStruct {
         elevator.setElevator(ControlMode.PercentOutput,leftjoy);
         elevator.setShitter(ControlMode.PercentOutput,leftjoy);
 
+        SmartDashboard.putString("team color", DriverStation.getAlliance().toString());
 
+        switch (color.getColor()) {
+            case DriverStation.getAlliance().toString():
+                elevator.setShitter(ControlMode.PercentOutput, 0);
+                break;
+              
+            default:
+                break;
+       
+       
+    /*   
+            }(DriverStation.getAlliance().toString()==color.getColor())
+        {
+            elevator.setShitter(ControlMode.PercentOutput, 0);
+        }
+        else if (DriverStation.getAlliance().toString()!=color.getColor())
+        {
+            elevator.setShitter(ControlMode.PercentOutput, 0.3);
+        }
+
+*/
         //--------------------------------------------------------------------//
         //  CLIMBER CONTROL
         //--------------------------------------------------------------------//
