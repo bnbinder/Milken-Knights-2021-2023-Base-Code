@@ -67,9 +67,9 @@ public class SupaStruct {
         resetNavx = xbox.getRawButton(DriveInput.resetNavxButton);
         resetDrive = xbox.getRawButton(DriveInput.resetDriveButton);
         xbutton = xboxOP.getXButtonPressed();
-        abutton = xboxOP.getAButtonPressed();
-        rbbutton = xboxOP.getRightBumper();
-        lbbutton = xboxOP.getLeftBumper();
+        abutton = xbox.getAButtonPressed();
+        rbbutton = xbox.getRightBumper();
+        lbbutton = xbox.getLeftBumper();
         ltrigger = Math.abs(xboxOP.getRawAxis(2)) > 0.1;
         rtrigger = Math.abs(xboxOP.getRawAxis(3)) > 0.1;
         leftjoy = Math.abs(xboxOP.getRawAxis(1));
