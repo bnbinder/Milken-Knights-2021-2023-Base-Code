@@ -9,6 +9,11 @@ import java.sql.Driver;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.CvSink;
+import edu.wpi.first.cscore.CvSource;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.math.Drake;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
@@ -182,7 +187,9 @@ public class SupaStruct {
         //--------------------------------------------------------------------//
         //  INTAKE DEPLOY CONTROL
         //--------------------------------------------------------------------//
-        
+
+
+
         if(abutton)
         {
             System.out.println(!itsreal);
@@ -243,8 +250,15 @@ public class SupaStruct {
         if(xbutton)
         {
             //shoot.setHoodPositionPercent(1000);
-            shoot.setHood(ControlMode.PercentOutput, 0.0001);
+            shoot.setHood(ControlMode.PercentOutput, 0.1);
+
         }
+        else
+        {
+        shoot.setHood(ControlMode.PercentOutput, 0);
+        }
+
+
 
 //     applying numbers
         if(fwd != 0 || str != 0 || rcw != 0)
@@ -274,4 +288,7 @@ public class SupaStruct {
     {
             private static final SupaStruct mInstance = new SupaStruct();
     } 
+
+
+
 }
