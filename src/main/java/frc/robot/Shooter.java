@@ -50,6 +50,7 @@ public class Shooter {
         vars.rightShootError = shootRight.getClosedLoopError();
         SmartDashboard.putNumber("leftSpeed", shootLeft.getSelectedSensorVelocity());
         SmartDashboard.putNumber("rightSpeed", shootRight.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("hood position", hood.getSelectedSensorPosition());
     }
 
 

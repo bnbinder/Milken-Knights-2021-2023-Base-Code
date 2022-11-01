@@ -232,7 +232,7 @@ public class SupaStruct {
         if(ltrigger)
         {
             //shoot.setShooter(ControlMode.PercentOutput, xboxOP.getLeftTriggerAxis()/1);
-            shoot.setShooter(ControlMode.Velocity, 5000);
+            shoot.setShooter(ControlMode.Velocity, 8000);
             elevator.setElevator(ControlMode.PercentOutput,.1);
         }
         else
