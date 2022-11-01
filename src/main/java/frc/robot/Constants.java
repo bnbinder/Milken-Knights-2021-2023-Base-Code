@@ -124,8 +124,8 @@ public final class Constants {
 
     public static class MKSHOOTER 
     {
-        public static final double maxNativeShooterVelocity = 18900;
-        public static final double maxError = 1580;
+        public static final double maxNativeShooterVelocity = 13000;
+        public static final double maxError = 0;
 
         public static final double lowGoalNativeVelocity = 0;
         public static final boolean isLeftInverted = false;
@@ -133,7 +133,7 @@ public final class Constants {
         public static final NeutralMode leftShootNeutralMode = NeutralMode.Coast;
         public static final NeutralMode rightShootNeutralMode = NeutralMode.Coast;
 
-        public static final double kP = 0.55;
+        public static final double kP = 0.0000001;
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kF = 0;
@@ -238,7 +238,7 @@ public final class Constants {
             public static final int rcwX = 4;
             public static final int rcwY = 5;
             //1 a, 2 b, 3 x, 4 y
-            public static final int resetNavxButton = 1;
+            public static final int resetNavxButton = 4;
             public static final int resetDriveButton = 2;
         }
 

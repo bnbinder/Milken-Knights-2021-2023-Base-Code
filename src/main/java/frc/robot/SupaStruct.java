@@ -49,7 +49,7 @@ public class SupaStruct {
         mClimb.climberUpdate();
         //ultra.ultraSmartDashboard();
         color.colorSmartDashboard();
-        //shoot.updateShooter();
+        shoot.updateShooter();
 
         //--------------------------------------------------------------------//
         //  VARIABLES
@@ -231,7 +231,8 @@ public class SupaStruct {
         //--------------------------------------------------------------------//
         if(ltrigger)
         {
-            shoot.setShooter(ControlMode.PercentOutput, xboxOP.getLeftTriggerAxis()/1);
+            //shoot.setShooter(ControlMode.PercentOutput, xboxOP.getLeftTriggerAxis()/1);
+            shoot.setShooter(ControlMode.Velocity, 5000);
             elevator.setElevator(ControlMode.PercentOutput,.1);
         }
         else
