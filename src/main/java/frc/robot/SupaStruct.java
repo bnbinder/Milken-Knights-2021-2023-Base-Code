@@ -65,7 +65,7 @@ public class SupaStruct {
         rcwX =  (xbox.getRawAxis(DriveInput.rcwX) - 0.1) / (1 - 0.1);
         resetNavx = xbox.getRawButton(DriveInput.resetNavxButton);
         resetDrive = xbox.getRawButton(DriveInput.resetDriveButton);
-        xbutton = xboxOP.getXButtonPressed();
+        xbutton = xboxOP.getXButton();
         abutton = xbox.getAButtonPressed();
         rbbutton = xbox.getRightBumper();
         lbbutton = xbox.getLeftBumper();
@@ -238,6 +238,12 @@ public class SupaStruct {
         else
         {
             shoot.setShooter(ControlMode.PercentOutput, 0);
+        }
+
+        if(xbutton)
+        {
+            //shoot.setHoodPositionPercent(1000);
+            shoot.setHood(ControlMode.PercentOutput, 0.0001);
         }
 
 //     applying numbers

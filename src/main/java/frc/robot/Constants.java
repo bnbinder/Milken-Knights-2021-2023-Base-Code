@@ -170,7 +170,7 @@ public final class Constants {
         public static final boolean inverted = false;
 
         public static final double minPosition = 0;
-        public static final double maxPosition = 0;
+        public static final double maxPosition = 5000;
 
     }
 
