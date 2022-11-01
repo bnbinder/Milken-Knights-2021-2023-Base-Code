@@ -198,7 +198,7 @@ public class SupaStruct {
 
         if(color.getColor() == DriverStation.getAlliance().toString())
         {
-            elevator.setShitter(ControlMode.PercentOutput, 0);
+            elevator.setShitter(ControlMode.PercentOutput, 0.3);
         }
         else if(color.getColor() == MKCOLOR.unkown)
         {
@@ -206,7 +206,7 @@ public class SupaStruct {
         }
         else
         {
-            elevator.setShitter(ControlMode.PercentOutput, 0.3);
+            elevator.setShitter(ControlMode.PercentOutput, -0.3);
         }
        
        
@@ -231,7 +231,7 @@ public class SupaStruct {
         if(ltrigger)
         {
             shoot.setShooter(ControlMode.PercentOutput, xboxOP.getLeftTriggerAxis()/1);
-            elevator.setElevator(ControlMode.PercentOutput,.3);
+            elevator.setElevator(ControlMode.PercentOutput,.1);
         }
         else
         {
