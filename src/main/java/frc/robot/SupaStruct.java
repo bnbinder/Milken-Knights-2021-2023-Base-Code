@@ -247,18 +247,7 @@ public class SupaStruct {
             shoot.setShooter(ControlMode.PercentOutput, 0);
         }
 
-        if(xbutton)
-        {
-            //shoot.setHoodPositionPercent(1000);
-            shoot.setHood(ControlMode.PercentOutput, 0.1);
-
-        }
-        else
-        {
-        shoot.setHood(ControlMode.PercentOutput, 0);
-        }
-
-
+        
 
 //     applying numbers
         if(fwd != 0 || str != 0 || rcw != 0)

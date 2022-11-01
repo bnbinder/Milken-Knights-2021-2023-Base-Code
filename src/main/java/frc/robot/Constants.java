@@ -162,7 +162,7 @@ public final class Constants {
 
     public static class MKHOOD
     {
-        public static final double kP = 0.0;
+        public static final double kP = 0.05;
         public static final double kI = 0.0;
         public static final double kD = 0.0;
 
@@ -170,7 +170,7 @@ public final class Constants {
         public static final boolean inverted = false;
 
         public static final double minPosition = 0;
-        public static final double maxPosition = 5000;
+        public static final double maxPosition = 4900;
 
     }
 
