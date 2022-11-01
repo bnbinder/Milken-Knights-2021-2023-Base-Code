@@ -199,6 +199,7 @@ public class SupaStruct {
         if(color.getColor() == DriverStation.getAlliance().toString())
         {
             elevator.setShitter(ControlMode.PercentOutput, 0.3);
+            elevator.setElevator(ControlMode.PercentOutput, .3);
         }
         else if(color.getColor() == MKCOLOR.unkown)
         {
