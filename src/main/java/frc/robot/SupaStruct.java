@@ -241,10 +241,12 @@ public class SupaStruct {
             //shoot.setShooter(ControlMode.PercentOutput, xboxOP.getLeftTriggerAxis()/1);
             shoot.setShooter(ControlMode.Velocity, 8000);
             elevator.setElevator(ControlMode.PercentOutput,.1);
+            shoot.setSupport(ControlMode.PercentOutput, .05);
         }
         else
         {
             shoot.setShooter(ControlMode.PercentOutput, 0);
+            shoot.setSupport(ControlMode.PercentOutput, .0);
         }
 
         
