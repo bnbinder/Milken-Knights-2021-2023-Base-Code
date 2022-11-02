@@ -32,10 +32,9 @@ public class ColorSensor {
    * are here as a basic example.
    */
   private final Color kBlueTarget = new Color(0.181396484375, 0.411865234375, 0.406982421875);
-  private final Color kFarBlueTarget = new Color(0.32666015625, 0.431884765625, 0.24169921875);
   private final Color kGreenTarget = new Color(0.197, 0.561, 0.240);
   private final Color kRedTarget = new Color(0.408203125, 0.39599609375, 0.196044921875);
-  private final Color kNothingTarget = new Color(0.326904296875, 0.45361328125, 0.2197265625);
+  private final Color kfield = new Color(0.326904296875, 0.45361328125, 0.2197265625);
 
 
   /**
@@ -69,7 +68,7 @@ public class ColorSensor {
     m_colorMatcher.addColorMatch(kBlueTarget);
     m_colorMatcher.addColorMatch(kGreenTarget);
     m_colorMatcher.addColorMatch(kRedTarget);
-    m_colorMatcher.addColorMatch(kNothingTarget);   
+    m_colorMatcher.addColorMatch(kfield);   
   }
 
 
@@ -126,8 +125,8 @@ public class ColorSensor {
       colorString = "Blue";
     } else if (match.color == kRedTarget) {
       colorString = "Red";
-    } else if (match.color == kFarBlueTarget) {
-      colorString = "FarBlue";
+    } else if (match.color == kfield) {
+      colorString = "none";
     } else {
       colorString = MKCOLOR.unkown;
     }
