@@ -22,7 +22,7 @@ public class Limelight {
     private final NetworkTableEntry pipeline = table.getEntry("pipeline");
     private boolean hasTarget;
     private double distance, visionYaw, visionPitch, RPM, hoodPos;
-}
+
 
 private Limelight() {
     table.getEntry("pipeline").setValue(MKLIME.pipeline);
@@ -74,3 +74,5 @@ private Limelight() {
 
     private static final Limelight mInstance = new Limelight();
   }
+}
+

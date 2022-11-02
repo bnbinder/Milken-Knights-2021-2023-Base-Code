@@ -33,8 +33,8 @@ public class ColorSensor {
    */
   private final Color kBlueTarget = new Color(0.181396484375, 0.411865234375, 0.406982421875);
   private final Color kGreenTarget = new Color(0.197, 0.561, 0.240);
-  private final Color kRedTarget = new Color(0.408203125, 0.39599609375, 0.196044921875);
-  private final Color kfield = new Color(0.326904296875, 0.45361328125, 0.2197265625);
+  private final Color kRedTarget = new Color(0.45654296875, 0.380859375, 0.162841796875);
+  //private final Color kfield = new Color(0.326904296875, 0.45361328125, 0.2197265625);
 
 
   /**
@@ -68,7 +68,7 @@ public class ColorSensor {
     m_colorMatcher.addColorMatch(kBlueTarget);
     m_colorMatcher.addColorMatch(kGreenTarget);
     m_colorMatcher.addColorMatch(kRedTarget);
-    m_colorMatcher.addColorMatch(kfield);   
+   // m_colorMatcher.addColorMatch(kfield);   
   }
 
 
@@ -125,9 +125,9 @@ public class ColorSensor {
       colorString = "Blue";
     } else if (match.color == kRedTarget) {
       colorString = "Red";
-    } else if (match.color == kfield) {
-      colorString = "none";
-    } else {
+    } //else if (match.color == kfield) {
+      //colorString = "none";
+     else {
       colorString = MKCOLOR.unkown;
     }
 
@@ -153,9 +153,9 @@ public class ColorSensor {
 
   public void colorSmartDashboard()
   {
-    //SmartDashboard.putNumber("Red", detectedColor.red);
-    //SmartDashboard.putNumber("Green", detectedColor.green);
-    //SmartDashboard.putNumber("Blue", detectedColor.blue);
+    SmartDashboard.putNumber("Red", detectedColor.red);
+    SmartDashboard.putNumber("Green", detectedColor.green);
+    SmartDashboard.putNumber("Blue", detectedColor.blue);
    // SmartDashboard.putNumber("IR", IR);
    // SmartDashboard.putNumber("Proximity", proximity);
     //SmartDashboard.putNumber("red", m_colorSensor.getRed());
