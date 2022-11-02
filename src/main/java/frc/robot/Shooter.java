@@ -30,6 +30,7 @@ public class Shooter {
     {
         vars = new variables();
         hood = mMotor.motor(CANID.hoodCANID, MKHOOD.mode, 0, Constants.nullPID, MKHOOD.inverted);
+        hood.setSensorPhase(true);
         elevatorSupport = mMotor.motor(CANID.elevatorSupportCANID, MKELEVATOR.supportMode, 0, Constants.nullPID, MKELEVATOR.supportInverted);
         shootRight = mMotor.motor(CANID.leftShooterCANID, MKSHOOTER.leftShootNeutralMode, 0, MKSHOOTER.pidf, MKSHOOTER.isLeftInverted);
         shootLeft = mMotor.motor(CANID.rightShooterCANID, MKSHOOTER.rightShootNeutralMode, 0, MKSHOOTER.pidf, !MKSHOOTER.isLeftInverted);
@@ -91,6 +92,11 @@ public class Shooter {
         //return ((SHOOT.maxError * setpoint) / SHOOT.maxVelo);
     }
 
+    public void setShooterCalc(double setpoint)
+    {
+        setShooter(ControlMode.Velocity, setpoint + shooterFeedForward(setpoint));
+    }
+
 
 
 
@@ -127,9 +133,19 @@ public class Shooter {
         //!     600 or 700 * (Math.cos(((Constants.kPi * 1.1 or 1) / (4000 * 2)) * setpoint));
     }
 
-    public void setHoodPositionPercent(double pos)
+    public void setHoodPositionPercentFF(double pos)
     {
         hood.set(ControlMode.PercentOutput, hoodPID.calculate(MathFormulas.limit(pos + hoodFeedForward(pos), 100, MKHOOD.maxPosition)));
+    }
+
+    public void setHoodPositionPercent(double pos)
+    {
+        hood.set(ControlMode.PercentOutput, hoodPID.calculate(MathFormulas.limit(pos, 100, MKHOOD.maxPosition)));
+    }
+    
+    public void zeroHood()
+    {
+        hood.setSelectedSensorPosition(0);
     }
 
     

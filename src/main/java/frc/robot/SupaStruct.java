@@ -70,7 +70,7 @@ public class SupaStruct {
         rcwX =  (xbox.getRawAxis(DriveInput.rcwX) - 0.1) / (1 - 0.1);
         resetNavx = xbox.getRawButton(DriveInput.resetNavxButton);
         resetDrive = xbox.getRawButton(DriveInput.resetDriveButton);
-        xbutton = xboxOP.getXButton();
+        xbutton = xbox.getXButton();
         abutton = xbox.getAButtonPressed();
         rbbutton = xbox.getRightBumper();
         lbbutton = xbox.getLeftBumper();
@@ -100,6 +100,7 @@ public class SupaStruct {
             navx.getInstance().reset();
             povValue = 0;
             inverseTanAngleOG = 0;
+            shoot.zeroHood();
         }
         if(resetDrive)
         {
@@ -244,6 +245,17 @@ public class SupaStruct {
         {
             shoot.setShooter(ControlMode.PercentOutput, 0);
             shoot.setSupport(ControlMode.PercentOutput, .0);
+        }
+
+
+
+        if(xbutton)
+        {
+            shoot.setHoodPositionPercent(100);
+        }
+        else
+        {
+            shoot.setHood(ControlMode.PercentOutput, 0);
         }
 
         
