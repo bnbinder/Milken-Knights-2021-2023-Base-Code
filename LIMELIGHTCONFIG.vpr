@@ -3,7 +3,7 @@ area_min:0
 area_similarity:6
 aspect_max:10.940163199999999
 aspect_min:0.37483219999999995
-black_level:8
+black_level:21
 blue_balance:1250
 calibration_type:0
 contour_grouping:0
@@ -26,7 +26,7 @@ erosion_steps:0
 exposure:2
 force_convex:1
 hue_max:179
-hue_min:55
+hue_min:57
 image_flip:0
 image_source:0
 img_to_show:0
@@ -39,7 +39,7 @@ red_balance:763
 roi_x:0
 roi_y:0
 sat_max:255
-sat_min:211
+sat_min:150
 send_corners:0
 send_raw_contours:0
 solve3d:0

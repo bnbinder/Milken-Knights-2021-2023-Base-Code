@@ -51,6 +51,7 @@ public class Shooter {
         SmartDashboard.putNumber("leftSpeed", shootLeft.getSelectedSensorVelocity());
         SmartDashboard.putNumber("rightSpeed", shootRight.getSelectedSensorVelocity());
         SmartDashboard.putNumber("hood position", hood.getSelectedSensorPosition());
+        
     }
 
 

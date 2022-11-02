@@ -103,7 +103,7 @@ public class Robot extends TimedRobot {
     System.out.println(mCompressor.toString());
         System.out.println("Robot Teleop Init");
     SmartDashboard.putNumber("distance total", Constants.AUTO.DISTANGLE.distance);
-    SmartDashboard.putNumber("angle real", Constants.AUTO.DISTANGLE.angle);
+    //SmartDashboard.putNumber("angle real", Constants.AUTO.DISTANGLE.angle);
     if (m_autonomousCommand != null) 
     {
       m_autonomousCommand.cancel();
