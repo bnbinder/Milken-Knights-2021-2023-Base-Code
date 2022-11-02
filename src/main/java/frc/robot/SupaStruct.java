@@ -32,6 +32,7 @@ public class SupaStruct {
     private Intake intake = Intake.getInstance();
     private Climber Climb = Climber.getInstance();
     private Elevator elevator = Elevator.getInstance();
+    private Limelight lime = Limelight.getInstance();
     private ColorSensor color = ColorSensor.getInstance();
     private boolean resetNavx, resetDrive, xbutton, ybutton,rbbutton,lbbutton,abutton, ltrigger, rtrigger,  pov, povToggled, itsreal = false;
     private Climber mClimb = Climber.getInstance();
@@ -52,9 +53,11 @@ public class SupaStruct {
         color.updateColor();
         //ultra.updateUltra();
         mClimb.climberUpdate();
+        shoot.updateShooter();
+        lime.updateSensors();
         //ultra.ultraSmartDashboard();
         color.colorSmartDashboard();
-        shoot.updateShooter();
+        lime.limeSmartDashboard();
 
         //--------------------------------------------------------------------//
         //  VARIABLES

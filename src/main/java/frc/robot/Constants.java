@@ -10,6 +10,8 @@ import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import frc.robot.interpolerpo.InterpolatingDouble;
+import frc.robot.interpolerpo.InterpolatingTreeMap;
 
 /** Add your docs here. */
 public final class Constants {
@@ -224,6 +226,69 @@ public final class Constants {
     public static class MKCOLOR
     {
         public static final String unkown = "Unkown";
+    }
+
+    public static class MKINTERPOLERPO
+    {
+        public static InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble> kRPMMap = new InterpolatingTreeMap<>();
+        public static InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble> kHoodMap = new InterpolatingTreeMap<>();
+
+    public static double[][] kDistanceRpmValues = {
+        {88.78, 2975.0}, // {Distance(Inches), RPM},
+        {101.85, 3150.0},
+        {106.9, 3180.0},
+        {111.55, 3200.0},
+        {114.3, 3250.0},
+        {118.0, 3320.0},
+        {125.3, 3370.0},
+        {135.3, 3425.0},
+        {140.3, 3480.0},
+        {145.3, 3505.0},
+        {150.3, 3525.0},
+        {173.0, 3565.0},
+        {180.0, 3585.0},
+        {196.3, 3600.0},
+        {200.0, 3650.0},
+        {205.0, 3700.0},
+        {220.0, 3725.0},
+        {252.0, 3800.0}};
+
+    public static double[][] kDistanceHoodValues = {
+        // {Distance(Inches), Hood},
+        {88.78, -2.52},
+        {101.85, -2.75},
+        {106.85, -3.00},
+        {113.55, -3.05},
+        {114.3, -3.1},
+        {120.3, -3.15},
+        {125.3, -3.25},
+        {135.3, -3.25},
+        {140.3, -3.25},
+        {145.3, -3.25},
+        {150.3, -3.25},
+        {173, -3.25},
+        {196, -3.25},
+        {205, -3.25},
+        {180, -3.25},
+        {200, -3.25}};
+
+    static {
+      for (double[] pair : kDistanceRpmValues) {
+        kRPMMap.put(new InterpolatingDouble(pair[0]), new InterpolatingDouble(pair[1]));
+      }
+      for (double[] pair : kDistanceHoodValues) {
+        kHoodMap.put(new InterpolatingDouble(pair[0]), new InterpolatingDouble(pair[1]));
+      }
+    }
+    }
+
+    public static class MKLIME
+    {
+        public static final int pipeline = 0;
+        public static final double limeHeightInches = 33.5;
+        public static final double goalHeightInches = 104;
+        public static final double limeAngle = 37;
+        public static final double shootTolerance = 3.5;
     }
 
     public static class CONTROLLERS 
