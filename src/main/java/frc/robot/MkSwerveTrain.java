@@ -460,7 +460,6 @@ private Motor mMotor = Motor.getInstance();
 
         // double feedforward = ((1.0) / (VISION.kMaxAimAngularVel)) * trap.calculate(Constants.kDt).velocity;
    //   SmartDashboard.putNumber("feedforward", feedforward); 
-        setpoint = MathFormulas.limitAbsolute(setpoint, 0.3);
         //SmartDashboard.putNumber("turnvelpcityprofile", setpointState.velocity);
         //SmartDashboard.putNumber("turnpositionprofile", setpointState.position);
 return setpoint;

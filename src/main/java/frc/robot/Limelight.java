@@ -8,6 +8,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants.MKBABY;
 import frc.robot.Constants.MKINTERPOLERPO;
 import frc.robot.Constants.MKLIME;
 import frc.robot.interpolerpo.InterpolatingDouble;
@@ -46,15 +47,12 @@ private Limelight() {
     Shooter.getInstance().setHoodPositionPercentFF(hoodPos);
     Shooter.getInstance().setShooterCalc(RPM);
   }
-/* 
-  public void turnToGoal()
+
+  public double etherLimeRCWValue()
   {
-    if(Math.abs(visionYaw) > 0.1)
-    {
-        return visionYaw
-    }
+    return (visionYaw/MKLIME.maxTX) / MKBABY.rcwBABY;
   }
-*/
+
   public boolean inRange() {
     return hasTarget && Math.abs(visionYaw) < MKLIME.shootTolerance;
   }

@@ -18,6 +18,7 @@ import edu.wpi.first.math.Drake;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants.MKBABY;
 import frc.robot.Constants.MKCOLOR;
 import frc.robot.Constants.CONTROLLERS.DriveInput;
 
@@ -133,7 +134,7 @@ public class SupaStruct {
         if(Math.abs(xbox.getRawAxis(DriveInput.rcwY)) >= 0.1 || Math.abs(xbox.getRawAxis(DriveInput.rcwX)) >= 0.1)
         {
             //rcw = train.moveToAngy((inverseTanAngleOG + 270) % 360);
-            rcw = rcwX/5;
+            rcw = rcwX;
             povToggled = false;
             //!povToggled is so moving the stick disabled the auto rotate pov function (like in video games, shooting a gun disables the ability to sprint)
         }
@@ -266,7 +267,7 @@ public class SupaStruct {
 //     applying numbers
         if(fwd != 0 || str != 0 || rcw != 0)
         {//+,-,+
-            train.etherSwerve(fwd/2, -str/2, rcw, ControlMode.PercentOutput); //+,-,+
+            train.etherSwerve(fwd/MKBABY.fwdBABY, -str/MKBABY.strBABY, rcw/MKBABY.rcwBABY, ControlMode.PercentOutput); //+,-,+
         }
         else
         {
