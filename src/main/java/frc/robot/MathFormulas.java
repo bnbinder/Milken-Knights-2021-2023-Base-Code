@@ -317,6 +317,16 @@ public class MathFormulas {
     }
   }
 
+  public static double negativeLimit(double value, double min, double max) {
+    if (Math.abs(value) > Math.abs(max)) {
+      return max;
+    } else if (Math.abs(value) < Math.abs(min)) {
+      return min;
+    } else {
+      return value;
+    }
+  }
+
   public static double deadband(double val, double deadband) {
     return (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
   }

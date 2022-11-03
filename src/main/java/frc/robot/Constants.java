@@ -164,7 +164,7 @@ public final class Constants {
 
     public static class MKHOOD
     {
-        public static final double kP = 0.001;
+        public static final double kP = 0.00001;
         public static final double kI = 0.0;
         public static final double kD = 0.0;
 

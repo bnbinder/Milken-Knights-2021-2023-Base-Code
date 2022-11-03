@@ -7,6 +7,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.CANID;
@@ -30,7 +31,6 @@ public class Shooter {
     {
         vars = new variables();
         hood = mMotor.motor(CANID.hoodCANID, MKHOOD.mode, 0, Constants.nullPID, MKHOOD.inverted);
-        hood.setSensorPhase(true);
         elevatorSupport = mMotor.motor(CANID.elevatorSupportCANID, MKELEVATOR.supportMode, 0, Constants.nullPID, MKELEVATOR.supportInverted);
         shootRight = mMotor.motor(CANID.leftShooterCANID, MKSHOOTER.leftShootNeutralMode, 0, MKSHOOTER.pidf, MKSHOOTER.isLeftInverted);
         shootLeft = mMotor.motor(CANID.rightShooterCANID, MKSHOOTER.rightShootNeutralMode, 0, MKSHOOTER.pidf, !MKSHOOTER.isLeftInverted);
@@ -52,7 +52,7 @@ public class Shooter {
         SmartDashboard.putNumber("leftSpeed", shootLeft.getSelectedSensorVelocity());
         SmartDashboard.putNumber("rightSpeed", shootRight.getSelectedSensorVelocity());
         SmartDashboard.putNumber("hood position", hood.getSelectedSensorPosition());
-        
+        SmartDashboard.putNumber("hood pid set", hoodPID.getSetpoint());
     }
 
 
@@ -121,7 +121,7 @@ public class Shooter {
 
     public double calcHood(double pos)
     {
-        return MathFormulas.limit(pos, MKHOOD.minPosition, MKHOOD.maxPosition);
+        return MathFormulas.negativeLimit(-pos, -MKHOOD.minPosition, -MKHOOD.maxPosition);
     }
 
     public double hoodFeedForward(double setpoint)
@@ -135,12 +135,14 @@ public class Shooter {
 
     public void setHoodPositionPercentFF(double pos)
     {
-        hood.set(ControlMode.PercentOutput, hoodPID.calculate(MathFormulas.limit(pos + hoodFeedForward(pos), 100, MKHOOD.maxPosition)));
+        hood.set(ControlMode.PercentOutput, hoodPID.calculate(MathFormulas.negativeLimit(-pos - hoodFeedForward(pos), -100, -MKHOOD.maxPosition)));
     }
 
     public void setHoodPositionPercent(double pos)
     {
-        hood.set(ControlMode.PercentOutput, hoodPID.calculate(MathFormulas.limit(pos, 100, MKHOOD.maxPosition)));
+        hood.set(ControlMode.PercentOutput, hoodPID.calculate(MathFormulas.negativeLimit(-pos, -100, -MKHOOD.maxPosition)));
+        SmartDashboard.putNumber("setpoint real", MathFormulas.negativeLimit(-pos, -100, -MKHOOD.maxPosition));
+        
     }
     
     public void zeroHood()

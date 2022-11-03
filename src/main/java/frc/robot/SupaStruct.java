@@ -16,6 +16,7 @@ import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.math.Drake;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.MKBABY;
@@ -35,8 +36,9 @@ public class SupaStruct {
     private Elevator elevator = Elevator.getInstance();
     private Limelight lime = Limelight.getInstance();
     private ColorSensor color = ColorSensor.getInstance();
-    private boolean resetNavx, elevatorOvveride, resetDrive, xbutton, ybutton,rbbutton,rbbutton2, lbbutton2, lbbutton,abutton, ltrigger, rtrigger,  pov, povToggled, itsreal = false;
+    private boolean resetNavx, elevatorOvveride, ballEnterOvverride, colorCheckStartTimer, resetDrive, xbutton, ybutton,rbbutton,rbbutton2, lbbutton2, lbbutton,abutton, ltrigger, rtrigger,  pov, povToggled, itsreal = false;
     private Climber mClimb = Climber.getInstance();
+    private Timer colorCheckTimer = new Timer();
    
     public static SupaStruct getInstance()
     {
@@ -152,27 +154,7 @@ public class SupaStruct {
             rcw = 0;
         }
 
-        //--------------------------------------------------------------------//
-        //  ELSE STATEMENTS
-        //--------------------------------------------------------------------//
         
-        if(Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1)
-        {
-            rcwY = 0;
-        }
-        if(Math.abs(xbox.getRawAxis(DriveInput.rcwX)) < 0.1)
-        {
-            rcwX = 0;
-        }
-
-        if(Math.abs(xbox.getRawAxis(DriveInput.fwd)) < 0.1)
-        {
-            fwd = 0;
-        }
-        if(Math.abs(xbox.getRawAxis(DriveInput.str)) < 0.1)
-        {
-            str = 0;
-        }
 
         //--------------------------------------------------------------------//
         //  ROLLER CONTROL
@@ -180,12 +162,13 @@ public class SupaStruct {
         
         if(rbbutton)
         {
-            intake.rollerSet(-.5);
-            elevator.setElevator(ControlMode.PercentOutput, 0.1);
+            intake.rollerSet(-.3);
+            elevator.setElevator(ControlMode.PercentOutput, -0.4);
         }
         else if(lbbutton)
         {
-            intake.rollerSet(.5);
+            intake.rollerSet(.3);
+            elevator.setElevator(ControlMode.PercentOutput, 0.4);
         }
         else
         {
@@ -205,46 +188,64 @@ public class SupaStruct {
         //--------------------------------------------------------------------//
         //  ELEVATOR AND SHITTER CONTROL
         //--------------------------------------------------------------------//
-        
+    if(!ballEnterOvverride)
+    {
         if(rbbutton2)
         { 
-            elevator.setElevator(ControlMode.PercentOutput,1);
-            elevator.setShitter(ControlMode.PercentOutput,-.4);
-            elevatorOvveride = true;
+            //elevatorOvveride = true;
+            elevator.setElevator(ControlMode.PercentOutput,.8);
+            //elevator.setShitter(ControlMode.PercentOutput,-.4);
         }
         else if(lbbutton2)
         {
-            elevator.setElevator(ControlMode.PercentOutput,-1);
-            elevator.setShitter(ControlMode.PercentOutput,.4);
-            elevatorOvveride = true;
+            //elevatorOvveride = true;
+            elevator.setElevator(ControlMode.PercentOutput,-.8);
+            //elevator.setShitter(ControlMode.PercentOutput,.4);
         }
         else
         {
-        elevator.setElevator(ControlMode.PercentOutput,0);
-            elevator.setShitter(ControlMode.PercentOutput,0);
-            elevatorOvveride = false;
+            //elevator.setShitter(ControlMode.PercentOutput,0);
+            //elevatorOvveride = false;
         }
+    }
 
     ////////////////////////////////////////////////////////////////////////////
 
-if(!elevatorOvveride)
-{
+//if(!elevatorOvveride)
+//{
         if(color.getColor() == DriverStation.getAlliance().toString())
         {
-            elevator.setShitter(ControlMode.PercentOutput, 0.15);
-            elevator.setElevator(ControlMode.PercentOutput, -0.15);
-            shoot.setSupport(ControlMode.PercentOutput, .05);
+            ballEnterOvverride = true;
+            if(!colorCheckStartTimer)
+            {
+                colorCheckTimer.start();
+                colorCheckStartTimer = true;
+            }
+            if(colorCheckTimer.get() > 0.4)
+            {
+                elevator.setShitter(ControlMode.PercentOutput, 0.2);
+                elevator.setElevator(ControlMode.PercentOutput, -0.2);
+                shoot.setSupport(ControlMode.PercentOutput, -.05);
+            }
         }
         else if(color.getColor() == MKCOLOR.unkown)
         {
             elevator.setShitter(ControlMode.PercentOutput, 0);
+        
+            colorCheckTimer.stop();
+            colorCheckStartTimer = false;
+            ballEnterOvverride = false;
         }
         else
         {
-            elevator.setShitter(ControlMode.PercentOutput, -0.15);
-            elevator.setElevator(ControlMode.PercentOutput, -.15);
+            ballEnterOvverride = true;
+            elevator.setShitter(ControlMode.PercentOutput, -0.2);
+            elevator.setElevator(ControlMode.PercentOutput, -.2);
+            shoot.setSupport(ControlMode.PercentOutput, .05);
+            colorCheckTimer.stop();
+            colorCheckStartTimer = false;
         }
-    }
+//    }
        
        
     /*   
@@ -283,13 +284,40 @@ if(!elevatorOvveride)
 
         if(xbutton)
         {
-            shoot.setHoodPositionPercent(100);
+            shoot.setHoodPositionPercent(101);
         }
         else
         {
             shoot.setHood(ControlMode.PercentOutput, 0);
         }
 
+
+        //--------------------------------------------------------------------//
+        //  ELSE STATEMENTS
+        //--------------------------------------------------------------------//
+        
+        if(Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1)
+        {
+            rcwY = 0;
+        }
+        if(Math.abs(xbox.getRawAxis(DriveInput.rcwX)) < 0.1)
+        {
+            rcwX = 0;
+        }
+
+        if(Math.abs(xbox.getRawAxis(DriveInput.fwd)) < 0.1)
+        {
+            fwd = 0;
+        }
+        if(Math.abs(xbox.getRawAxis(DriveInput.str)) < 0.1)
+        {
+            str = 0;
+        }
+
+        if(!rbbutton && !lbbutton && !rbbutton2 && !lbbutton2 && !elevatorOvveride)
+        {
+            elevator.setElevator(ControlMode.PercentOutput, 0);
+        }
         
 
 //     applying numbers
@@ -301,7 +329,8 @@ if(!elevatorOvveride)
         {
             train.stopEverything();
         }
-        
+        SmartDashboard.putBoolean("ballovverride", ballEnterOvverride);
+        SmartDashboard.putBoolean("elevatorovverride", elevatorOvveride);
         
     }
 
