@@ -44,7 +44,7 @@ private Limelight() {
   {
     RPM = MKINTERPOLERPO.kRPMMap.getInterpolated(new InterpolatingDouble(distance)).value;
     hoodPos = MKINTERPOLERPO.kHoodMap.getInterpolated(new InterpolatingDouble(distance)).value;
-    Shooter.getInstance().setHoodPositionPercentFF(hoodPos);
+    //Shooter.getInstance().setHoodPositionPercentFF(hoodPos);
     Shooter.getInstance().setShooterCalc(RPM);
   }
 

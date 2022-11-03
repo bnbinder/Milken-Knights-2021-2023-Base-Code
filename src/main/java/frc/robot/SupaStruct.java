@@ -151,7 +151,7 @@ public class SupaStruct {
         }
 
         //--------------------------------------------------------------------//
-        //  
+        //  ELSE STATEMENTS
         //--------------------------------------------------------------------//
         
         if(Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1)
@@ -241,7 +241,8 @@ public class SupaStruct {
         if(ltrigger)
         {
             //shoot.setShooter(ControlMode.PercentOutput, xboxOP.getLeftTriggerAxis()/1);
-            shoot.setShooter(ControlMode.Velocity, 8000);
+            //shoot.setShooter(ControlMode.Velocity, 8000);
+            lime.setShooterFinal();
             elevator.setElevator(ControlMode.PercentOutput,.1);
             shoot.setSupport(ControlMode.PercentOutput, .05);
         }
