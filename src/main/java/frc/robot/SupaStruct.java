@@ -163,12 +163,12 @@ public class SupaStruct {
         if(rbbutton)
         {
             intake.rollerSet(-.3);
-            elevator.setElevator(ControlMode.PercentOutput, -0.4);
+            elevator.setElevator(ControlMode.PercentOutput, -0.3);
         }
         else if(lbbutton)
         {
             intake.rollerSet(.3);
-            elevator.setElevator(ControlMode.PercentOutput, 0.4);
+            elevator.setElevator(ControlMode.PercentOutput, 0.3);
         }
         else
         {
@@ -193,13 +193,13 @@ public class SupaStruct {
         if(rbbutton2)
         { 
             //elevatorOvveride = true;
-            elevator.setElevator(ControlMode.PercentOutput,.8);
+            elevator.setElevator(ControlMode.PercentOutput,.5);
             //elevator.setShitter(ControlMode.PercentOutput,-.4);
         }
         else if(lbbutton2)
         {
             //elevatorOvveride = true;
-            elevator.setElevator(ControlMode.PercentOutput,-.8);
+            elevator.setElevator(ControlMode.PercentOutput,-.5);
             //elevator.setShitter(ControlMode.PercentOutput,.4);
         }
         else
@@ -221,7 +221,7 @@ public class SupaStruct {
                 colorCheckTimer.start();
                 colorCheckStartTimer = true;
             }
-            if(colorCheckTimer.get() > 0.6)
+            if(colorCheckTimer.get() > 0.8)
             {
                 elevator.setShitter(ControlMode.PercentOutput, 0.2);
                 elevator.setElevator(ControlMode.PercentOutput, -0.2);
