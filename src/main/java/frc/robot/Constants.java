@@ -169,7 +169,7 @@ public final class Constants {
         public static final double kD = 0.0;
 
         public static final NeutralMode mode = NeutralMode.Brake;
-        public static final boolean inverted = false;
+        public static final boolean inverted = true;
 
         public static final double minPosition = 0;
         public static final double maxPosition = 4900;
@@ -197,9 +197,9 @@ public final class Constants {
 
     public static class MKELEVATOR 
     {
-        public static final NeutralMode elevatorNeutralMode = NeutralMode.Brake;
-        public static final NeutralMode shitterMode = NeutralMode.Brake;
-        public static final NeutralMode supportMode = NeutralMode.Brake;
+        public static final NeutralMode elevatorNeutralMode = NeutralMode.Coast;
+        public static final NeutralMode shitterMode = NeutralMode.Coast;
+        public static final NeutralMode supportMode = NeutralMode.Coast;
         
         public static final boolean elevatorInverted = false;
         public static final boolean shitterInverted = false;

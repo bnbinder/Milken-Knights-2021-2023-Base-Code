@@ -35,7 +35,7 @@ public class SupaStruct {
     private Elevator elevator = Elevator.getInstance();
     private Limelight lime = Limelight.getInstance();
     private ColorSensor color = ColorSensor.getInstance();
-    private boolean resetNavx, resetDrive, xbutton, ybutton,rbbutton,lbbutton,abutton, ltrigger, rtrigger,  pov, povToggled, itsreal = false;
+    private boolean resetNavx, elevatorOvveride, resetDrive, xbutton, ybutton,rbbutton,rbbutton2, lbbutton2, lbbutton,abutton, ltrigger, rtrigger,  pov, povToggled, itsreal = false;
     private Climber mClimb = Climber.getInstance();
    
     public static SupaStruct getInstance()
@@ -77,7 +77,9 @@ public class SupaStruct {
         xbutton = xbox.getXButton();
         abutton = xbox.getAButtonPressed();
         rbbutton = xbox.getRightBumper();
+        rbbutton2 = xboxOP.getRightBumper();
         lbbutton = xbox.getLeftBumper();
+        lbbutton2 = xboxOP.getLeftBumper();
         ltrigger = Math.abs(xboxOP.getRawAxis(2)) > 0.1;
         rtrigger = Math.abs(xboxOP.getRawAxis(3)) > 0.1;
         leftjoy = Math.abs(xboxOP.getRawAxis(1));
@@ -179,6 +181,7 @@ public class SupaStruct {
         if(rbbutton)
         {
             intake.rollerSet(-.5);
+            elevator.setElevator(ControlMode.PercentOutput, 0.1);
         }
         else if(lbbutton)
         {
@@ -202,13 +205,35 @@ public class SupaStruct {
         //--------------------------------------------------------------------//
         //  ELEVATOR AND SHITTER CONTROL
         //--------------------------------------------------------------------//
-        elevator.setElevator(ControlMode.PercentOutput,leftjoy);
-        elevator.setShitter(ControlMode.PercentOutput,leftjoy);
+        
+        if(rbbutton2)
+        { 
+            elevator.setElevator(ControlMode.PercentOutput,1);
+            elevator.setShitter(ControlMode.PercentOutput,-.4);
+            elevatorOvveride = true;
+        }
+        else if(lbbutton2)
+        {
+            elevator.setElevator(ControlMode.PercentOutput,-1);
+            elevator.setShitter(ControlMode.PercentOutput,.4);
+            elevatorOvveride = true;
+        }
+        else
+        {
+        elevator.setElevator(ControlMode.PercentOutput,0);
+            elevator.setShitter(ControlMode.PercentOutput,0);
+            elevatorOvveride = false;
+        }
 
+    ////////////////////////////////////////////////////////////////////////////
+
+if(!elevatorOvveride)
+{
         if(color.getColor() == DriverStation.getAlliance().toString())
         {
-            elevator.setShitter(ControlMode.PercentOutput, 0.3);
-            elevator.setElevator(ControlMode.PercentOutput, .3);
+            elevator.setShitter(ControlMode.PercentOutput, 0.15);
+            elevator.setElevator(ControlMode.PercentOutput, -0.15);
+            shoot.setSupport(ControlMode.PercentOutput, .05);
         }
         else if(color.getColor() == MKCOLOR.unkown)
         {
@@ -216,8 +241,10 @@ public class SupaStruct {
         }
         else
         {
-            elevator.setShitter(ControlMode.PercentOutput, -0.3);
+            elevator.setShitter(ControlMode.PercentOutput, -0.15);
+            elevator.setElevator(ControlMode.PercentOutput, -.15);
         }
+    }
        
        
     /*   
@@ -243,8 +270,8 @@ public class SupaStruct {
             //shoot.setShooter(ControlMode.PercentOutput, xboxOP.getLeftTriggerAxis()/1);
             //shoot.setShooter(ControlMode.Velocity, 8000);
             lime.setShooterFinal();
-            elevator.setElevator(ControlMode.PercentOutput,.1);
-            shoot.setSupport(ControlMode.PercentOutput, .05);
+            elevator.setElevator(ControlMode.PercentOutput,-.1);
+            shoot.setSupport(ControlMode.PercentOutput, .15);
         }
         else
         {
