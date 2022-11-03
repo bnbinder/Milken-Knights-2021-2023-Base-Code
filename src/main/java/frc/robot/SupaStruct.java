@@ -221,7 +221,7 @@ public class SupaStruct {
                 colorCheckTimer.start();
                 colorCheckStartTimer = true;
             }
-            if(colorCheckTimer.get() > 0.4)
+            if(colorCheckTimer.get() > 0.6)
             {
                 elevator.setShitter(ControlMode.PercentOutput, 0.2);
                 elevator.setElevator(ControlMode.PercentOutput, -0.2);
