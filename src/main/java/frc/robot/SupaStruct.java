@@ -119,10 +119,12 @@ public class SupaStruct {
         
         if(resetNavx)
         {
-            navx.getInstance().reset();
+            /*navx.getInstance().reset();
             povValue = 0;
             inverseTanAngleOG = 0;
-            shoot.zeroHood();
+            shoot.zeroHood();*/
+            lime.autoRotate();
+            SmartDashboard.putBoolean("fuckyou", resetNavx);
         }
         if(resetDrive)
         {
@@ -257,6 +259,7 @@ public class SupaStruct {
             elevator.setElevator(ControlMode.PercentOutput, -.2);
             shoot.setSupport(ControlMode.PercentOutput, .05);
             colorCheckTimer.stop();
+            colorCheckTimer.reset();
             colorCheckStartTimer = false;
         }
 //    }
@@ -280,6 +283,7 @@ public class SupaStruct {
         //--------------------------------------------------------------------//
         //  SHOOTER CONTROL
         //--------------------------------------------------------------------//
+        SmartDashboard.putNumber("timeeeeeeee", shootTimer.get());
         if(ltrigger)
         {
             //shoot.setShooter(ControlMode.PercentOutput, xboxOP.getLeftTriggerAxis()/1);
@@ -291,16 +295,17 @@ public class SupaStruct {
                 shootTimerFirst = true;
             }
 
-            shoot.setShooter(ControlMode.Velocity, SHOOOO - shoot.shooterFeedForward(SHOOOO));
+            shoot.setShooter(ControlMode.Velocity, Math.abs(SHOOOO - shoot.shooterFeedForward(SHOOOO)));
             
             elevator.setElevator(ControlMode.PercentOutput,-.1);
-            if(shootTimer.get() > 1.5)
+            if(shootTimer.get() > 3)
             {
-            if(shoot.vars.avgShootSpeedNative > SHOOOO-150)
+            if(shoot.vars.avgShootSpeedNative > SHOOOO-76)
             {
             shoot.setSupport(ControlMode.PercentOutput, .15);
             elevator.setElevator(ControlMode.PercentOutput,-.1);
             elevator.setShitter(ControlMode.PercentOutput,.1);
+            SmartDashboard.putBoolean("fuck", true);
             }
         }
             
@@ -311,8 +316,9 @@ public class SupaStruct {
             shoot.setShooter(ControlMode.PercentOutput, 0);
             shoot.setSupport(ControlMode.PercentOutput, .0);
             shootTimer.stop();
+            shootTimer.reset();
             shootTimerFirst = false;
-
+            SmartDashboard.putBoolean("fuck", false);
         }
 
 
@@ -362,12 +368,14 @@ public class SupaStruct {
         
 
 //     applying numbers
-        if(fwd != 0 || str != 0 || rcw != 0)
+        if(!resetNavx && fwd != 0 || str != 0 || rcw != 0)
         {//+,-,+
             train.etherSwerve(fwd/MKBABY.fwdBABY, -str/MKBABY.strBABY, rcw/MKBABY.rcwBABY, ControlMode.PercentOutput); //+,-,+
+          
         }
         else
         {
+            SmartDashboard.putBoolean("fuckyou", resetNavx);
             train.stopEverything();
         }
         SmartDashboard.putBoolean("ballovverride", ballEnterOvverride);

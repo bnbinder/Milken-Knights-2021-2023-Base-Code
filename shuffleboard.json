@@ -88,7 +88,7 @@
               "_title": "rightSpeed"
             }
           },
-          "9,1": {
+          "5,5": {
             "size": [
               1,
               1
@@ -102,7 +102,7 @@
           "3,0": {
             "size": [
               6,
-              5
+              4
             ],
             "content": {
               "_type": "Camera Stream",
@@ -162,7 +162,7 @@
               "_title": "rcw"
             }
           },
-          "2,2": {
+          "8,4": {
             "size": [
               1,
               1
@@ -252,6 +252,113 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/setpoint real",
               "_title": "setpoint real"
+            }
+          },
+          "2,5": {
+            "size": [
+              3,
+              1
+            ],
+            "content": {
+              "_type": "Number Slider",
+              "_source0": "network_table:///SmartDashboard/hoodPosSet",
+              "_title": "hoodPosSet",
+              "Slider Settings/Min": 100.0,
+              "Slider Settings/Max": 5000.0,
+              "Slider Settings/Block increment": 0.0625,
+              "Visuals/Display value": true
+            }
+          },
+          "1,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/percentoutputvalauueueue",
+              "_title": "percentoutputvalauueueue"
+            }
+          },
+          "2,4": {
+            "size": [
+              4,
+              1
+            ],
+            "content": {
+              "_type": "Number Slider",
+              "_source0": "network_table:///SmartDashboard/SHOOOO",
+              "_title": "SHOOOO",
+              "Slider Settings/Min": -13000.0,
+              "Slider Settings/Max": 13000.0,
+              "Slider Settings/Block increment": 0.0625,
+              "Visuals/Display value": true
+            }
+          },
+          "9,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/possssssss",
+              "_title": "possssssss"
+            }
+          },
+          "10,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/shooterlsidieer",
+              "_title": "shooterlsidieer"
+            }
+          },
+          "0,5": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/fffff subtracto numero uno",
+              "_title": "fffff subtracto numero uno"
+            }
+          },
+          "6,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/ffshoot",
+              "_title": "ffshoot"
+            }
+          },
+          "9,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/fffffff",
+              "_title": "fffffff"
+            }
+          },
+          "2,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/hood percent",
+              "_title": "hood percent"
             }
           }
         }

@@ -692,6 +692,43 @@ return setpoint;
         return rc == ErrorCode.OK ? 0 : 1;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void setMotionMagic(double dist, double angle)
+    {
+        startDrive();
+        vars.magicDistance = dist;
+        vars.magicAngle = angle;
+    }
+
+    public void updateMotionMagic()
+    {
+        setModuleDrive(ControlMode.MotionMagic, vars.magicDistance, vars.magicDistance, vars.magicDistance, vars.magicDistance);
+        setModuleTurn(vars.magicAngle, vars.magicAngle, vars.magicAngle, vars.magicAngle);
+    }
+
+    public boolean isMotionMagicDone()
+    {
+        double err = vars.magicDistance - vars.avgDistInches;
+        return Math.abs(err) < 0.5 && Math.abs(vars.avgVelInches) < 0.1;
+    }
+
     /**Mode of the ether auto's path*/
     public enum ETHERAUTO
     {
@@ -723,6 +760,9 @@ return setpoint;
         public double STRauto;
         public double FWDauto;
         public double totalDistance;
+
+        public double magicDistance;
+        public double magicAngle;
 
         public double temp;
         public double yaw;

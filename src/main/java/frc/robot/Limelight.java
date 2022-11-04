@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -50,7 +52,8 @@ private Limelight() {
 
   public double etherLimeRCWValue()
   {
-    return (visionYaw/MKLIME.maxTX) / MKBABY.rcwBABY;
+    SmartDashboard.putNumber("visionyayayay", MathFormulas.limit(visionYaw/MKLIME.maxTX, -5,5));
+    return MathFormulas.limit(visionYaw/MKLIME.maxTX, -5,5) / MKBABY.rcwBABY;
   }
 
   public boolean inRange() {
@@ -60,6 +63,11 @@ private Limelight() {
   public double calcDistance(double pitch)
   {
     return (MKLIME.goalHeightInches - MKLIME.limeHeightInches) / (Math.tan(Math.toRadians(MKLIME.limeAngle + pitch)));
+  }
+
+  public void autoRotate()
+  {
+    MkSwerveTrain.getInstance().etherSwerve(0, 0, etherLimeRCWValue(), ControlMode.PercentOutput);
   }
 
   public void limeSmartDashboard()

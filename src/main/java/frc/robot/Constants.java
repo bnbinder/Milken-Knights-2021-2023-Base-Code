@@ -291,14 +291,14 @@ public final class Constants {
         public static final double goalHeightInches = 104;
         public static final double limeAngle = 32;
         public static final double shootTolerance = 3.5;
-        public static final double maxTX = 0;
+        public static final double maxTX = 25;
     }
 
     public static class MKBABY
     {
-        public static final double fwdBABY = 3;
-        public static final double strBABY = 3;
-        public static final double rcwBABY = 3;
+        public static final double fwdBABY = 1.5;
+        public static final double strBABY = 1.5;
+        public static final double rcwBABY = 1.5;
     }
 
     public static class CONTROLLERS 
