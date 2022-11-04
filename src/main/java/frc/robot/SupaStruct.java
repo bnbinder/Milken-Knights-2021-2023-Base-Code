@@ -119,12 +119,12 @@ public class SupaStruct {
         
         if(resetNavx)
         {
-            /*navx.getInstance().reset();
+            navx.getInstance().reset();
             povValue = 0;
             inverseTanAngleOG = 0;
-            shoot.zeroHood();*/
-            lime.autoRotate();
-            SmartDashboard.putBoolean("ResetNavx", resetNavx);
+           // shoot.zeroHood();
+           // rcw = lime.etherLimeRCWValue();
+
         }
         if(resetDrive)
         {
@@ -165,7 +165,7 @@ public class SupaStruct {
         
         //this is useless, remove entire variable if you want
 //      else statements
-        if(/*!ybutton&&*/ !povToggled && /*!bbutton&&*/ Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1 && Math.abs(xbox.getRawAxis(DriveInput.rcwX)) < 0.1)
+        if(!ltrigger &&/*!ybutton&&*/ !povToggled && /*!bbutton&&*/ Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1 && Math.abs(xbox.getRawAxis(DriveInput.rcwX)) < 0.1)
         {
             rcw = 0;
         }
@@ -296,7 +296,7 @@ public class SupaStruct {
             }
 
             shoot.setShooter(ControlMode.Velocity, Math.abs(SHOOOO - shoot.shooterFeedForward(SHOOOO)));
-            
+            rcw = lime.etherLimeRCWValue();
             elevator.setElevator(ControlMode.PercentOutput,-.1);
             if(shootTimer.get() > 3)
             {
@@ -368,18 +368,18 @@ public class SupaStruct {
         
 
 //     applying numbers
-        if(!resetNavx && fwd != 0 || str != 0 || rcw != 0)
+        if((fwd != 0 || str != 0 || rcw != 0))
         {//+,-,+
             train.etherSwerve(fwd/MKBABY.fwdBABY, -str/MKBABY.strBABY, rcw/MKBABY.rcwBABY, ControlMode.PercentOutput); //+,-,+
           
         }
         else
         {
-            SmartDashboard.putBoolean("ResetNavx", resetNavx);
+            //SmartDashboard.putBoolean("ResetNavx", resetNavx);
             train.stopEverything();
         }
-        SmartDashboard.putBoolean("ballovverride", ballEnterOvverride);
-        SmartDashboard.putBoolean("elevatorovverride", elevatorOvveride);
+        //SmartDashboard.putBoolean("ballovverride", ballEnterOvverride);
+        //SmartDashboard.putBoolean("elevatorovverride", elevatorOvveride);
         
     }
 
