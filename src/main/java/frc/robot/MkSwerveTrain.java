@@ -287,7 +287,7 @@ private Motor mMotor = Motor.getInstance();
         FWD = vars.temp;
         //SmartDashboard.putNumber("header pid", (Math.toDegrees(Math.atan2(FWD, STR))));
         //RCW = moveToAngy((((((( Math.toDegrees(Math.atan(RCWY/RCWX))+360 ))+ (MathFormulas.signumV4(RCWX)))%360) - MathFormulas.signumAngleEdition(RCWX,RCWY))+360)%360);
-        SmartDashboard.putNumber("rcw", RCW);
+        //SmartDashboard.putNumber("rcw", RCW);
 
         //SmartDashboard.putNumber("frd", FWD);
         //SmartDashboard.putNumber("str", STR);

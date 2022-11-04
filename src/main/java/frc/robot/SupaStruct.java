@@ -52,7 +52,7 @@ public class SupaStruct {
     public void initTele()
     {
         SmartDashboard.putNumber("hoodPosSet", 0);
-        SmartDashboard.putNumber("percentoutputvalauueueue", 0);
+        //SmartDashboard.putNumber("percentoutputvalauueueue", 0);
         SmartDashboard.putNumber("SHOOOO", 0);
     }
 
@@ -322,14 +322,13 @@ public class SupaStruct {
         }
 
 
-        SmartDashboard.putNumber("possssssss", hoodPosSet);
+        SmartDashboard.putNumber("HoodPos", hoodPosSet);
         SmartDashboard.putNumber("shooterlsidieer", SHOOOO);
         SmartDashboard.putNumber("fffff subtracto numero uno", hoodPosSet+shoot.hoodposiitongettt());
         SmartDashboard.putNumber("ffshoot", shoot.shooterFeedForward(SHOOOO) - SHOOOO);
         if(xbutton)
         {
             SmartDashboard.putNumber("fffffff", shoot.hoodFeedForward(hoodPosSet));
-            //SmartDashboard.putNumber("possssssss", hoodPosSet = SmartDashboard.getNumber("hoodPosSet", 0));
             //shoot.setHoodPositionPercent(3000);
             shoot.setHoodPositionPercent(hoodPosSet + 160);
         }
