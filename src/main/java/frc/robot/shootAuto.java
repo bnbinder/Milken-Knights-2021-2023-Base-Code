@@ -8,9 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class shootAuto extends CommandBase {
   /** Creates a new shootAuto. */
-  private double rpm;
-  public shootAuto(double rpm) {
-    this.rpm = rpm;
+  public shootAuto() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -20,7 +18,10 @@ public class shootAuto extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    Limelight.getInstance().autoRotate();
+    Limelight.getInstance().setShooterFinal();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
