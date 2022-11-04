@@ -52,8 +52,8 @@ private Limelight() {
 
   public double etherLimeRCWValue()
   {
-    SmartDashboard.putNumber("visionyayayay", MathFormulas.limit(visionYaw/MKLIME.maxTX, -5,5));
-    return MathFormulas.limit(visionYaw/MKLIME.maxTX, -5,5) / MKBABY.rcwBABY;
+    SmartDashboard.putNumber("visionyayayay", MathFormulas.limit(visionYaw/MKLIME.maxTX, -.5,.5));
+    return MathFormulas.limit(visionYaw/MKLIME.maxTX, -.5,.5) / MKBABY.rcwBABY;
   }
 
   public boolean inRange() {
