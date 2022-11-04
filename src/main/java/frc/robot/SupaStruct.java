@@ -124,7 +124,7 @@ public class SupaStruct {
             inverseTanAngleOG = 0;
             shoot.zeroHood();*/
             lime.autoRotate();
-            SmartDashboard.putBoolean("fuckyou", resetNavx);
+            SmartDashboard.putBoolean("ResetNavx", resetNavx);
         }
         if(resetDrive)
         {
@@ -305,7 +305,7 @@ public class SupaStruct {
             shoot.setSupport(ControlMode.PercentOutput, .15);
             elevator.setElevator(ControlMode.PercentOutput,-.1);
             elevator.setShitter(ControlMode.PercentOutput,.1);
-            SmartDashboard.putBoolean("fuck", true);
+            SmartDashboard.putBoolean("ShooterSpeed", true);
             }
         }
             
@@ -318,7 +318,7 @@ public class SupaStruct {
             shootTimer.stop();
             shootTimer.reset();
             shootTimerFirst = false;
-            SmartDashboard.putBoolean("fuck", false);
+            SmartDashboard.putBoolean("ShooterSpeed", false);
         }
 
 
@@ -375,7 +375,7 @@ public class SupaStruct {
         }
         else
         {
-            SmartDashboard.putBoolean("fuckyou", resetNavx);
+            SmartDashboard.putBoolean("ResetNavx", resetNavx);
             train.stopEverything();
         }
         SmartDashboard.putBoolean("ballovverride", ballEnterOvverride);
