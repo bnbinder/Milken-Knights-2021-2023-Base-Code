@@ -127,7 +127,7 @@ public final class Constants {
     public static class MKSHOOTER 
     {
         public static final double maxNativeShooterVelocity = 13000;
-        public static final double maxError = 0;
+        public static final double maxError = 2800;
 
         public static final double lowGoalNativeVelocity = 0;
         public static final boolean isLeftInverted = false;
@@ -147,6 +147,8 @@ public final class Constants {
         public static final double kS = 0;
         public static final double kA = 0;
         public static final double kV = 0;
+
+        public static final double greerRatio = 36/22;
     }
 
     public static class MKTURRET
@@ -164,15 +166,15 @@ public final class Constants {
 
     public static class MKHOOD
     {
-        public static final double kP = 0.00001;
+        public static final double kP = 0.0003;
         public static final double kI = 0.0;
-        public static final double kD = 0.0;
+        public static final double kD = 0.00;
 
         public static final NeutralMode mode = NeutralMode.Brake;
         public static final boolean inverted = true;
 
-        public static final double minPosition = 0;
-        public static final double maxPosition = 4900;
+        public static final double minPosition = 156;
+        public static final double maxPosition = 4000;
 
     }
 
@@ -287,7 +289,7 @@ public final class Constants {
         public static final int pipeline = 0;
         public static final double limeHeightInches = 33.5;
         public static final double goalHeightInches = 104;
-        public static final double limeAngle = 37;
+        public static final double limeAngle = 32;
         public static final double shootTolerance = 3.5;
         public static final double maxTX = 0;
     }

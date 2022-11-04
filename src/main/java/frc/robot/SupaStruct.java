@@ -6,6 +6,7 @@ package frc.robot;
 
 import java.lang.ProcessBuilder.Redirect;
 import java.sql.Driver;
+import java.util.Map;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
@@ -18,6 +19,8 @@ import edu.wpi.first.math.Drake;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.MKBABY;
 import frc.robot.Constants.MKCOLOR;
@@ -28,7 +31,7 @@ public class SupaStruct {
     
     private XboxController xbox = new XboxController(0);
     private XboxController xboxOP = new XboxController(1);
-    private double fwd, fwdSignum, str, strSignum, leftjoy, rcw, rcwX, rcwY, inverseTanAngleOG, inverseTanAngleDrive, povValue = 0;
+    private double fwd, fwdSignum, str, strSignum, leftjoy, rcw, rcwX, rcwY, inverseTanAngleOG, inverseTanAngleDrive, povValue, hoodPosSet, hoooooodvaaaalluuueee, SHOOOO = 0;
     private MkSwerveTrain train = MkSwerveTrain.getInstance();
     private Shooter shoot = Shooter.getInstance();
     private Intake intake = Intake.getInstance();
@@ -36,13 +39,21 @@ public class SupaStruct {
     private Elevator elevator = Elevator.getInstance();
     private Limelight lime = Limelight.getInstance();
     private ColorSensor color = ColorSensor.getInstance();
-    private boolean resetNavx, elevatorOvveride, ballEnterOvverride, colorCheckStartTimer, resetDrive, xbutton, ybutton,rbbutton,rbbutton2, lbbutton2, lbbutton,abutton, ltrigger, rtrigger,  pov, povToggled, itsreal = false;
+    private boolean resetNavx, shootTimerFirst, elevatorOvveride, ballEnterOvverride, colorCheckStartTimer, resetDrive, xbutton, ybutton,rbbutton,rbbutton2, lbbutton2, lbbutton,abutton, ltrigger, rtrigger,  pov, povToggled, itsreal = false;
     private Climber mClimb = Climber.getInstance();
     private Timer colorCheckTimer = new Timer();
+    private Timer shootTimer = new Timer();
    
     public static SupaStruct getInstance()
     {
         return InstanceHolder.mInstance;
+    }
+
+    public void initTele()
+    {
+        SmartDashboard.putNumber("hoodPosSet", 0);
+        SmartDashboard.putNumber("percentoutputvalauueueue", 0);
+        SmartDashboard.putNumber("SHOOOO", 0);
     }
 
     public void updateTele()
@@ -88,6 +99,9 @@ public class SupaStruct {
         ybutton = xboxOP.getYButton();
         pov = xbox.getPOV() != -1;
 
+        hoodPosSet = SmartDashboard.getNumber("hoodPosSet", 0);
+        //hoooooodvaaaalluuueee = SmartDashboard.getNumber("percentoutputvalauueueue", 0);
+        SHOOOO = SmartDashboard.getNumber("SHOOOO", 0);
 //      i dont remember how i got this lol
         inverseTanAngleOG = ((((((Math.toDegrees(Math.atan(rcwY/rcwX))+360 )) + 
                             (MathFormulas.signumV4(rcwX)))%360) - 
@@ -193,18 +207,18 @@ public class SupaStruct {
         if(rbbutton2)
         { 
             //elevatorOvveride = true;
-            elevator.setElevator(ControlMode.PercentOutput,.5);
-            //elevator.setShitter(ControlMode.PercentOutput,-.4);
+            elevator.setElevator(ControlMode.PercentOutput,.3);
+            elevator.setShitter(ControlMode.PercentOutput,-.3);
         }
         else if(lbbutton2)
         {
             //elevatorOvveride = true;
-            elevator.setElevator(ControlMode.PercentOutput,-.5);
-            //elevator.setShitter(ControlMode.PercentOutput,.4);
+            elevator.setElevator(ControlMode.PercentOutput,-.3);
+            elevator.setShitter(ControlMode.PercentOutput,.3);
         }
         else
         {
-            //elevator.setShitter(ControlMode.PercentOutput,0);
+            elevator.setShitter(ControlMode.PercentOutput,0);
             //elevatorOvveride = false;
         }
     }
@@ -270,21 +284,48 @@ public class SupaStruct {
         {
             //shoot.setShooter(ControlMode.PercentOutput, xboxOP.getLeftTriggerAxis()/1);
             //shoot.setShooter(ControlMode.Velocity, 8000);
-            lime.setShooterFinal();
+            //lime.setShooterFinal();
+            if(!shootTimerFirst)
+            {
+                shootTimer.start();
+                shootTimerFirst = true;
+            }
+
+            shoot.setShooter(ControlMode.Velocity, SHOOOO - shoot.shooterFeedForward(SHOOOO));
+            
             elevator.setElevator(ControlMode.PercentOutput,-.1);
+            if(shootTimer.get() > 1.5)
+            {
+            if(shoot.vars.avgShootSpeedNative > SHOOOO-150)
+            {
             shoot.setSupport(ControlMode.PercentOutput, .15);
+            elevator.setElevator(ControlMode.PercentOutput,-.1);
+            elevator.setShitter(ControlMode.PercentOutput,.1);
+            }
+        }
+            
+
         }
         else
         {
             shoot.setShooter(ControlMode.PercentOutput, 0);
             shoot.setSupport(ControlMode.PercentOutput, .0);
+            shootTimer.stop();
+            shootTimerFirst = false;
+
         }
 
 
-
+        SmartDashboard.putNumber("possssssss", hoodPosSet);
+        SmartDashboard.putNumber("shooterlsidieer", SHOOOO);
+        SmartDashboard.putNumber("fffff subtracto numero uno", hoodPosSet+shoot.hoodposiitongettt());
+        SmartDashboard.putNumber("ffshoot", shoot.shooterFeedForward(SHOOOO) - SHOOOO);
         if(xbutton)
         {
-            shoot.setHoodPositionPercent(101);
+            SmartDashboard.putNumber("fffffff", shoot.hoodFeedForward(hoodPosSet));
+            //SmartDashboard.putNumber("possssssss", hoodPosSet = SmartDashboard.getNumber("hoodPosSet", 0));
+            //shoot.setHoodPositionPercent(3000);
+            shoot.setHoodPositionPercent(hoodPosSet + 160);
         }
         else
         {

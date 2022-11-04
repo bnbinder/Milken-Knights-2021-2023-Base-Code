@@ -133,15 +133,21 @@ public class Shooter {
         //!     600 or 700 * (Math.cos(((Constants.kPi * 1.1 or 1) / (4000 * 2)) * setpoint));
     }
 
+    public double hoodposiitongettt()
+    {
+        return hood.getSelectedSensorPosition();
+    }
+
     public void setHoodPositionPercentFF(double pos)
     {
-        hood.set(ControlMode.PercentOutput, hoodPID.calculate(MathFormulas.negativeLimit(-pos - hoodFeedForward(pos), -100, -MKHOOD.maxPosition)));
+        hood.set(ControlMode.PercentOutput, hoodPID.calculate(hood.getSelectedSensorPosition(), MathFormulas.negativeLimit(-pos - hoodFeedForward(pos), -100, -MKHOOD.maxPosition)));
     }
 
     public void setHoodPositionPercent(double pos)
     {
-        hood.set(ControlMode.PercentOutput, hoodPID.calculate(MathFormulas.negativeLimit(-pos, -100, -MKHOOD.maxPosition)));
+        hood.set(ControlMode.PercentOutput, MathFormulas.limit(hoodPID.calculate(hood.getSelectedSensorPosition(), -pos),-0.13,0.13));
         SmartDashboard.putNumber("setpoint real", MathFormulas.negativeLimit(-pos, -100, -MKHOOD.maxPosition));
+        SmartDashboard.putNumber("hood percent", MathFormulas.limit(hoodPID.calculate(hood.getSelectedSensorPosition(), -pos),-0.13,0.13));
         
     }
     
