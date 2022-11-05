@@ -230,38 +230,8 @@ public final class Constants {
         public static final String unkown = "Unkown";
     }
 
-    public static class MKINTERPOLERPO
-    {
-        public static InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble> kRPMMap = new InterpolatingTreeMap<>();
-        public static InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble> kHoodMap = new InterpolatingTreeMap<>();
-
-    public static double[][] kDistanceRpmValues = {
-        {88.78, 2975.0}, // {Distance(Inches), RPM},
-        {101.85, 3150.0},
-        {106.9, 3180.0},
-        {111.55, 3200.0},
-        {114.3, 3250.0},
-        {118.0, 3320.0},
-        {252.0, 3800.0}};
-
-    public static double[][] kDistanceHoodValues = {
-        // {Distance(Inches), Hood},
-        {88.78, -2.52},
-        {101.85, -2.75},
-        {106.85, -3.00},
-        {113.55, -3.05},
-        {114.3, -3.1},
-        {200, -3.25}};
-
-    static {
-      for (double[] pair : kDistanceRpmValues) {
-        kRPMMap.put(new InterpolatingDouble(pair[0]), new InterpolatingDouble(pair[1]));
-      }
-      for (double[] pair : kDistanceHoodValues) {
-        kHoodMap.put(new InterpolatingDouble(pair[0]), new InterpolatingDouble(pair[1]));
-      }
-    }
-    }
+    
+    
 
     public static class MKLIME
     {

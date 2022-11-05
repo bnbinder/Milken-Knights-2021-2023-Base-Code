@@ -17,4 +17,4 @@
      - Everyone whos code I used but forgot to cite - idk
      - Limelight vpr file - done by Jack
      - Chief Delphi and the FRC Discord - being awesome and swagalicious
-     - Interpolerpo Code - 254 2020 interpolation code
+     - InterpoLerpo Code - Google Sheets

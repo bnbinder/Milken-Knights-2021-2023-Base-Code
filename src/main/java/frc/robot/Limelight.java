@@ -25,6 +25,7 @@ public class Limelight {
     private final NetworkTableEntry pipeline = table.getEntry("pipeline");
     private boolean hasTarget;
     private double distance, visionYaw, visionPitch, RPM, hoodPos;
+    private InterpoLerpo interp = InterpoLerpo.getInstance();
 
 
 private Limelight() {
@@ -42,10 +43,10 @@ private Limelight() {
     hasTarget = tv.getDouble(0.0) != 0.0f; //If tv returns 0, no valid target
   }
 
-  public void setShooterFinal()
+  public void setShooterFinal(double inches)
   {
-    RPM = MKINTERPOLERPO.kRPMMap.getInterpolated(new InterpolatingDouble(distance)).value;
-    hoodPos = MKINTERPOLERPO.kHoodMap.getInterpolated(new InterpolatingDouble(distance)).value;
+    RPM = interp.shooterInterpoLerpo(inches);
+    hoodPos = interp.hoodInterpoLerpo(inches);
     //Shooter.getInstance().setHoodPositionPercentFF(hoodPos);
     Shooter.getInstance().setShooterCalc(RPM);
     Shooter.getInstance().setHoodPositionPercent(hoodPos+160);
