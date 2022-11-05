@@ -275,9 +275,9 @@ public final class Constants {
 
     public static class MKBABY
     {
-        public static final double fwdBABY = 1.5;
-        public static final double strBABY = 1.5;
-        public static final double rcwBABY = 1.5;
+        public static final double fwdBABY = 2;
+        public static final double strBABY = 2;
+        public static final double rcwBABY = 2;
     }
 
     public static class CONTROLLERS 
@@ -351,8 +351,8 @@ public final class Constants {
         public static final int bottomTurnRightCANCoderCANID = 17;
 
         //climber motors
-        public static final int leftClimberCANID = 24;
-        public static final int rightClimberCANID = 23;
+        public static final int leftClimberCANID = 30;
+        public static final int rightClimberCANID = 31;
 
         //shooter motors
         public static final int leftShooterCANID = 19;

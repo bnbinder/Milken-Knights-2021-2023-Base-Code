@@ -48,6 +48,7 @@ private Limelight() {
     hoodPos = MKINTERPOLERPO.kHoodMap.getInterpolated(new InterpolatingDouble(distance)).value;
     //Shooter.getInstance().setHoodPositionPercentFF(hoodPos);
     Shooter.getInstance().setShooterCalc(RPM);
+    Shooter.getInstance().setHoodPositionPercent(hoodPos+160);
   }
 
   public double etherLimeRCWValue()
