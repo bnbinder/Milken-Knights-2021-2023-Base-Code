@@ -22,8 +22,11 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants.CLIMBER;
+import frc.robot.Constants.CONTROLLERS;
 import frc.robot.Constants.MKBABY;
 import frc.robot.Constants.MKCOLOR;
+import frc.robot.Constants.CONTROLLERS.ClimbInput;
 import frc.robot.Constants.CONTROLLERS.DriveInput;
 
 /** Add your docs here. */
@@ -43,6 +46,13 @@ public class SupaStruct {
     private Climber mClimb = Climber.getInstance();
     private Timer colorCheckTimer = new Timer();
     private Timer shootTimer = new Timer();
+
+    
+    private boolean leftGoingUp = false;
+    private boolean rightGoingUp = false;
+    private boolean toggleClimbPressed = false;
+    private boolean toggleLeftClimbOn = false;
+   private boolean toggleRightClimbOn = false;
    
     public static SupaStruct getInstance()
     {
@@ -62,7 +72,7 @@ public class SupaStruct {
         //--------------------------------------------------------------------//
         //  UPDATES
         //--------------------------------------------------------------------//
-
+        mClimb.climberUpdate();
         train.updateSwerve();
         color.updateColor();
         //ultra.updateUltra();
@@ -240,7 +250,7 @@ public class SupaStruct {
             if(colorCheckTimer.get() > 0.8)
             {
                 elevator.setShitter(ControlMode.PercentOutput, 0.2);
-                elevator.setElevator(ControlMode.PercentOutput, -0.2);
+                elevator.setElevator(ControlMode.PercentOutput, -0.4);
                 shoot.setSupport(ControlMode.PercentOutput, -.05);
             }
         }
@@ -256,7 +266,7 @@ public class SupaStruct {
         {
             ballEnterOvverride = true;
             elevator.setShitter(ControlMode.PercentOutput, -0.2);
-            elevator.setElevator(ControlMode.PercentOutput, -.2);
+            elevator.setElevator(ControlMode.PercentOutput, -.4);
             shoot.setSupport(ControlMode.PercentOutput, .05);
             colorCheckTimer.stop();
             colorCheckTimer.reset();
@@ -279,7 +289,95 @@ public class SupaStruct {
         //--------------------------------------------------------------------//
         //  CLIMBER CONTROL
         //--------------------------------------------------------------------//
+        
+        
+        
+        
+        
+        
+        
+        if(xboxOP.getRawButton(ClimbInput.upClimbButton))
+        {
+          mClimb.telescopePercent(1, 1);
+        }
+        else if(xboxOP.getRawButton(ClimbInput.downClimbButton))
+        {
+          mClimb.telescopePercent(-1, -1);
+        }
+        
+        
+       
+        
+        if(!mClimb.isLeftAbove() && !leftGoingUp)
+        {
+          toggleLeftClimbOn = false;
+          //mClimb.zeroLeftClimb();
+        }
+        
+        if(!mClimb.isRightAbove() && !rightGoingUp)
+        {
+          toggleRightClimbOn = false;
+          //mClimb.zeroRightClimb();
+        }
+        
+        if(!mClimb.isLeftBelow() && leftGoingUp)
+        {
+          toggleLeftClimbOn = false;
+        }
+        
+        if(!mClimb.isRightBelow() && rightGoingUp)
+        {
+          toggleRightClimbOn = false;
+        }
+        
+        
+        if((!mClimb.isLeftAbove() && !leftGoingUp) && (!mClimb.isRightAbove() && !rightGoingUp)) 
+        {
+          leftGoingUp = true;
+          rightGoingUp = true;
+        }
+        
+        if((!mClimb.isLeftBelow() && leftGoingUp) && (!mClimb.isRightBelow() && rightGoingUp))
+        {
+          leftGoingUp = false;
+          rightGoingUp = false;
+        }
+        
+        if(
+        (!xboxOP.getRawButton(ClimbInput.downClimbButton)) &&
+        (!xboxOP.getRawButton(ClimbInput.upClimbButton)) &&
+        !(toggleLeftClimbOn))
+        {
+          mClimb.telescopePercentLeft(0);
+        }
+        
+        if(
+        (!xboxOP.getRawButton(ClimbInput.downClimbButton)) &&
+        (!xboxOP.getRawButton(ClimbInput.upClimbButton)) &&
+        !(toggleRightClimbOn))
+        {
+          mClimb.telescopePercentRight(0);
+        }
+        
+        if(
+        (!xboxOP.getRawButton(ClimbInput.downClimbButton)) &&
+        (!xboxOP.getRawButton(ClimbInput.upClimbButton)))
+        {
+          toggleLeftClimbOn = false;
+          toggleRightClimbOn = false;
+        }
+        
+        
+        
+        
+       
+        
 
+
+
+
+
+//TODO climber could be simple but we copy paste cuz we late loooool        
         //--------------------------------------------------------------------//
         //  SHOOTER CONTROL
         //--------------------------------------------------------------------//
@@ -392,6 +490,8 @@ public class SupaStruct {
         povToggled = false;
         itsreal = false;
     }
+
+   
 
     private static class InstanceHolder
     {

@@ -304,12 +304,10 @@ public final class Constants {
 
         public static class ClimbInput 
         {
-            public static final int leftClimbUpPOV = 180;
-            public static final int leftClimbDownPOV = 0;
-            public static final int rightClimbUpPOV = 270;
-            public static final int rightClimbDownPOV = 90;
-            public static final int climbAxis = 5;
-            public static final int autoClimbButton = 7;
+            
+
+            public static final int upClimbButton = 3;
+            public static final int downClimbButton = 2;
         }
 
         public static class ElevatorInput 
