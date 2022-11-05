@@ -19,7 +19,7 @@ public class InterpoLerpo
 
     public double hoodInterpoLerpo(double inches)
     {
-        return 748+(-12*inches)+(0.282*(Math.pow(2,inches)));
+        return 748+(-12*inches)+(0.282*(Math.pow(inches,2)));
     }
 
     public double shooterInterpoLerpo(double inches)
