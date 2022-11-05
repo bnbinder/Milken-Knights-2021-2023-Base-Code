@@ -11,9 +11,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.MKBABY;
-import frc.robot.Constants.MKINTERPOLERPO;
 import frc.robot.Constants.MKLIME;
-import frc.robot.interpolerpo.InterpolatingDouble;
 
 /** Add your docs here. */
 public class Limelight {
@@ -43,10 +41,10 @@ private Limelight() {
     hasTarget = tv.getDouble(0.0) != 0.0f; //If tv returns 0, no valid target
   }
 
-  public void setShooterFinal(double inches)
+  public void setShooterFinal()
   {
-    RPM = interp.shooterInterpoLerpo(inches);
-    hoodPos = interp.hoodInterpoLerpo(inches);
+    RPM = interp.shooterInterpoLerpo(distance);
+    hoodPos = interp.hoodInterpoLerpo(distance);
     //Shooter.getInstance().setHoodPositionPercentFF(hoodPos);
     Shooter.getInstance().setShooterCalc(RPM);
     Shooter.getInstance().setHoodPositionPercent(hoodPos+160);
