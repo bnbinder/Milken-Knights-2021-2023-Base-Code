@@ -47,7 +47,8 @@ private Limelight() {
     hoodPos = interp.hoodInterpoLerpo(distance);
     //Shooter.getInstance().setHoodPositionPercentFF(hoodPos);
     Shooter.getInstance().setShooterCalc(RPM);
-    Shooter.getInstance().setHoodPositionPercent(hoodPos+160);
+    SmartDashboard.putNumber("hoodvalauto", hoodPos);
+    //Shooter.getInstance().setHoodPositionPercent(hoodPos+160);
   }
 
   public double etherLimeRCWValue()
@@ -73,6 +74,11 @@ private Limelight() {
   public void limeSmartDashboard()
   {
     SmartDashboard.putNumber("distance to gowl", distance);
+  }
+
+  public double getDistance()
+  {
+    return distance;
   }
 
 

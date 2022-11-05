@@ -274,7 +274,7 @@ public final class Constants {
         public static class ClimbInput 
         {
             
-
+            public static final int zeroClimb = 8;
             public static final int upClimbButton = 3;
             public static final int downClimbButton = 2;
         }
@@ -282,6 +282,7 @@ public final class Constants {
         public static class ElevatorInput 
         {
             public static final int elevatorAxis = 1;
+            public static final int supportForward = 7;
         }
 
         public static class IntakeInput

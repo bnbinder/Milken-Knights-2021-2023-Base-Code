@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class MotionMagicAuto extends CommandBase {
@@ -35,6 +36,7 @@ public class MotionMagicAuto extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    SmartDashboard.putBoolean("idone", MkSwerveTrain.getInstance().isMotionMagicDone());
     return MkSwerveTrain.getInstance().isMotionMagicDone();
   }
 }

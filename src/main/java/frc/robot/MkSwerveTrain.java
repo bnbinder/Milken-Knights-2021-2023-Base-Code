@@ -14,6 +14,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.CANID;
 import frc.robot.Constants.MKCANCODER;
+import frc.robot.Constants.MKDRIVE;
 import frc.robot.Constants.MKTRAIN;
 import frc.robot.Constants.MKTURN;
 
@@ -222,6 +223,16 @@ private Motor mMotor = Motor.getInstance();
         vars.posInchTR = MathFormulas.nativeToInches(topDriveRight.getSelectedSensorPosition());
         vars.posInchBL = MathFormulas.nativeToInches(bottomDriveLeft.getSelectedSensorPosition());
         vars.posInchBR = MathFormulas.nativeToInches(bottomDriveRight.getSelectedSensorPosition());
+SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
+        vars.velNativeTL = topDriveLeft.getSelectedSensorVelocity();
+        vars.velNativeTR = topDriveRight.getSelectedSensorVelocity();
+        vars.velNativeBL = bottomDriveLeft.getSelectedSensorVelocity();
+        vars.velNativeBR = bottomDriveRight.getSelectedSensorVelocity();
+
+        vars.velInchTL = MathFormulas.nativePer100MstoInchesPerSec(vars.velNativeTL);
+        vars.velInchTR = MathFormulas.nativePer100MstoInchesPerSec(vars.velNativeTR);
+        vars.velInchBL = MathFormulas.nativePer100MstoInchesPerSec(vars.velNativeBL);
+        vars.velInchBR = MathFormulas.nativePer100MstoInchesPerSec(vars.velNativeBR);
 
         vars.degTL = tlDeg();
         vars.degTR = trDeg();
@@ -230,8 +241,8 @@ private Motor mMotor = Motor.getInstance();
 
 
         vars.avgDistInches = (Math.abs(vars.posInchTL) + Math.abs(vars.posInchTR) + Math.abs(vars.posInchBL) + Math.abs(vars.posInchBR)) /4.0;
-     //vars.avgVelInches = (vars.velInch[0] + vars.velInch[1] + vars.velInch[2] + vars.velInch[3]) / 4.0;
-       // vars.avgVelNative = (vars.velNative[0] + vars.velNative[1] + vars.velNative[2] + vars.velNative[3]) / 4.0;
+        vars.avgVelInches = (vars.velInchTL + vars.velInchTR + vars.velInchBL + vars.velInchBR) / 4.0;
+        vars.avgVelNative = (vars.velNativeTL + vars.velNativeTR + vars.velNativeBL + vars.velNativeBR) / 4.0;
         vars.avgDeg = (vars.degTL + vars.degTR + vars.degBL + vars.degBR) / 4.0;
         //TODO maybe abs values if some are negative and some are positive?
     }
@@ -713,8 +724,21 @@ return setpoint;
     public void setMotionMagic(double dist, double angle)
     {
         startDrive();
-        vars.magicDistance = dist;
         vars.magicAngle = angle;
+        vars.magicDistance = MathFormulas.inchesToNative(dist);
+        topDriveLeft.configMotionAcceleration(MKDRIVE.maxNativeAcceleration);
+        topDriveLeft.configMotionCruiseVelocity(MKDRIVE.maxNativeVelocity);
+
+        topDriveRight.configMotionAcceleration(MKDRIVE.maxNativeAcceleration);
+        topDriveRight.configMotionCruiseVelocity(MKDRIVE.maxNativeVelocity);
+
+        bottomDriveLeft.configMotionAcceleration(MKDRIVE.maxNativeAcceleration);
+        bottomDriveLeft.configMotionCruiseVelocity(MKDRIVE.maxNativeVelocity);
+
+        bottomDriveRight.configMotionAcceleration(MKDRIVE.maxNativeAcceleration);
+        bottomDriveRight.configMotionCruiseVelocity(MKDRIVE.maxNativeVelocity);
+
+
     }
 
     public void updateMotionMagic()
@@ -762,6 +786,7 @@ return setpoint;
         public double totalDistance;
 
         public double magicDistance;
+        public double magicDistanceNative;
         public double magicAngle;
 
         public double temp;

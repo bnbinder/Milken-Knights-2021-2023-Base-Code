@@ -28,6 +28,8 @@ import frc.robot.Constants.MKBABY;
 import frc.robot.Constants.MKCOLOR;
 import frc.robot.Constants.CONTROLLERS.ClimbInput;
 import frc.robot.Constants.CONTROLLERS.DriveInput;
+import frc.robot.Constants.CONTROLLERS.ElevatorInput;
+import frc.robot.Constants.CONTROLLERS.ShootInput;
 
 /** Add your docs here. */
 public class SupaStruct {
@@ -293,7 +295,11 @@ public class SupaStruct {
         //--------------------------------------------------------------------//
         
         
-        
+        if(xbox.getRawButton(ClimbInput.zeroClimb))
+        {
+            mClimb.zeroLeftClimb();
+            mClimb.zeroRightClimb();
+        }
         
         
         
@@ -355,18 +361,18 @@ public class SupaStruct {
             elevator.setElevator(ControlMode.PercentOutput,.6);
             if(supportTimer.get() < 1)
             {
-                shoot.setSupport(ControlMode.PercentOutput, -.2);
+                //shoot.setSupport(ControlMode.PercentOutput, -.2);
             }
             else
             {
-                shoot.setShooter(ControlMode.Velocity, Math.abs(SHOOOO - shoot.shooterFeedForward(SHOOOO)));
+                lime.setShooterFinal();
             }
             if(shootTimer.get() > 3)
             {
-            if(shoot.vars.avgShootSpeedNative > SHOOOO-100)
+            if(shoot.vars.avgShootSpeedNative > InterpoLerpo.getInstance().shooterInterpoLerpo(lime.getDistance())-100)
             {
             //shoot.setShooter(ControlMode.Velocity, Math.abs(SHOOOO - shoot.shooterFeedForward(SHOOOO)));
-            shoot.setSupport(ControlMode.PercentOutput, .15);
+            //shoot.setSupport(ControlMode.PercentOutput, .15);
             elevator.setElevator(ControlMode.PercentOutput,-.1);
             elevator.setShitter(ControlMode.PercentOutput,.1);
             SmartDashboard.putBoolean("ShooterSpeed", true);
@@ -378,7 +384,7 @@ public class SupaStruct {
         else
         {
             shoot.setShooter(ControlMode.PercentOutput, 0);
-            shoot.setSupport(ControlMode.PercentOutput, .0);
+            //shoot.setSupport(ControlMode.PercentOutput, .0);
             shootTimer.stop();
             shootTimer.reset();
             shootTimerFirst = false;
@@ -388,13 +394,13 @@ public class SupaStruct {
             SmartDashboard.putBoolean("ShooterSpeed", false);
         }
 
-        if(xbox.getRawButton(7))
+        if(xbox.getRawButton(ElevatorInput.supportForward))
         {
-            shoot.setHoodPositionPercent(hoodPosSet + 160);
+            shoot.setSupport(ControlMode.PercentOutput, .15);
         }
         else
         {
-            shoot.setHood(ControlMode.PercentOutput, 0);
+            shoot.setSupport(ControlMode.PercentOutput, 0);
         }
 
 
