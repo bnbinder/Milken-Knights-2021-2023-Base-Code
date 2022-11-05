@@ -297,83 +297,31 @@ public class SupaStruct {
         
         
         
-        
-        if(xboxOP.getRawButton(ClimbInput.upClimbButton))
+        if(mClimb.isLeftAbove() && xbox.getRawButton(ClimbInput.upClimbButton))
         {
-          mClimb.telescopePercent(1, 1);
+            mClimb.telescopePercentLeft(0.5);
         }
-        else if(xboxOP.getRawButton(ClimbInput.downClimbButton))
+        else if(mClimb.isLeftBelow() && xbox.getRawButton(ClimbInput.downClimbButton))
         {
-          mClimb.telescopePercent(-1, -1);
+            mClimb.telescopePercentLeft(-0.5);
         }
-        
-        
-       
-        
-        if(!mClimb.isLeftAbove() && !leftGoingUp)
+        else
         {
-          toggleLeftClimbOn = false;
-          //mClimb.zeroLeftClimb();
+            mClimb.telescopePercentLeft(0);
         }
-        
-        if(!mClimb.isRightAbove() && !rightGoingUp)
+
+        if(mClimb.isRightAbove() && xbox.getRawButton(ClimbInput.upClimbButton))
         {
-          toggleRightClimbOn = false;
-          //mClimb.zeroRightClimb();
+            mClimb.telescopePercentRight(0.5);
         }
-        
-        if(!mClimb.isLeftBelow() && leftGoingUp)
+        else if(mClimb.isRightBelow() && xbox.getRawButton(ClimbInput.downClimbButton))
         {
-          toggleLeftClimbOn = false;
+            mClimb.telescopePercentRight(-0.5);
         }
-        
-        if(!mClimb.isRightBelow() && rightGoingUp)
+        else
         {
-          toggleRightClimbOn = false;
+            mClimb.telescopePercentRight(0);
         }
-        
-        
-        if((!mClimb.isLeftAbove() && !leftGoingUp) && (!mClimb.isRightAbove() && !rightGoingUp)) 
-        {
-          leftGoingUp = true;
-          rightGoingUp = true;
-        }
-        
-        if((!mClimb.isLeftBelow() && leftGoingUp) && (!mClimb.isRightBelow() && rightGoingUp))
-        {
-          leftGoingUp = false;
-          rightGoingUp = false;
-        }
-        
-        if(
-        (!xboxOP.getRawButton(ClimbInput.downClimbButton)) &&
-        (!xboxOP.getRawButton(ClimbInput.upClimbButton)) &&
-        !(toggleLeftClimbOn))
-        {
-          mClimb.telescopePercentLeft(0);
-        }
-        
-        if(
-        (!xboxOP.getRawButton(ClimbInput.downClimbButton)) &&
-        (!xboxOP.getRawButton(ClimbInput.upClimbButton)) &&
-        !(toggleRightClimbOn))
-        {
-          mClimb.telescopePercentRight(0);
-        }
-        
-        if(
-        (!xboxOP.getRawButton(ClimbInput.downClimbButton)) &&
-        (!xboxOP.getRawButton(ClimbInput.upClimbButton)))
-        {
-          toggleLeftClimbOn = false;
-          toggleRightClimbOn = false;
-        }
-        
-        
-        
-        
-       
-        
 
 
 
