@@ -45,7 +45,7 @@ private Limelight() {
   {
     RPM = interp.shooterInterpoLerpo(distance);
     hoodPos = interp.hoodInterpoLerpo(distance);
-    //Shooter.getInstance().setHoodPositionPercentFF(hoodPos);
+    
     Shooter.getInstance().setShooterCalc(RPM);
     SmartDashboard.putNumber("hoodvalauto", hoodPos);
     //Shooter.getInstance().setHoodPositionPercent(hoodPos+160);

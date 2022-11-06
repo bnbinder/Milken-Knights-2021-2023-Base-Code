@@ -1,7 +1,8 @@
-if turn motor upside down from original, invert it from original
+set offset to 0, turn motor ccw, set offset
 
-when driving wheels forward, see where it moves towards the front. that is where it should be zeroed (if moving backwards, dont place it there)
+if it doesnt work, set offset back to zero, turn motor cw, set offset,
 
-thats your zero
+if works, redeploy code and test if it works, then turn robot on and 
+off and re deploy to test if it works
 
 DONT INVERT CANCODER OR DRIVING WHEEL UNLESS NOTHING WORKS
