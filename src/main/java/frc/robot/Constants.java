@@ -105,7 +105,7 @@ public final class Constants {
     public static class CLIMBER 
     {
         public static final double maxNativePosition = 290000; 
-        public static final double minNativePosition = 9000;
+        public static final double minNativePosition = 7000;
         public static final boolean isLeftInverted = false;
         public static final NeutralMode leftClimbNeutralMode = NeutralMode.Brake;
         public static final NeutralMode rightClimbNeutralMode = NeutralMode.Brake;

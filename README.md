@@ -6,6 +6,7 @@
      - Team 6624 - best path code and 180 awarness code
      - Team 1684 - 180 awarness code
      - Ether - swerve drive  
+     - Stator and Supply Current Limits - Jonathan Dao
 - ### SWERVE AUTONOMOUS:
      - Team 3244 - basic auto structure and pidf config
      - Team 7166 - organization of auto and they had a similar auto

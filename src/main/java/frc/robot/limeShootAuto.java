@@ -49,10 +49,10 @@ public class limeShootAuto extends CommandBase {
             //lime.setShooterFinal();
             //shoot.setShooter(ControlMode.Velocity, Math.abs(SHOOOO - shoot.shooterFeedForward(SHOOOO)));
             MkSwerveTrain.getInstance().etherSwerve(0, 0, lime.etherLimeRCWValue(), ControlMode.PercentOutput);
-            elevator.setElevator(ControlMode.PercentOutput,.6);
+            elevator.setElevator(ControlMode.PercentOutput,-.6);
             if(supportTimer.get() < 1)
             {
-                shoot.setSupport(ControlMode.PercentOutput, -.2);
+                shoot.setSupport(ControlMode.PercentOutput, .2);
             }
             else
             {
@@ -63,9 +63,9 @@ public class limeShootAuto extends CommandBase {
             if(shoot.vars.avgShootSpeedNative > InterpoLerpo.getInstance().shooterInterpoLerpo(lime.getDistance()))
             {
             //shoot.setShooter(ControlMode.Velocity, Math.abs(SHOOOO - shoot.shooterFeedForward(SHOOOO)));
-            shoot.setSupport(ControlMode.PercentOutput, .15);
-            elevator.setElevator(ControlMode.PercentOutput,-.1);
-            elevator.setShitter(ControlMode.PercentOutput,.1);
+            shoot.setSupport(ControlMode.PercentOutput, -.15);
+            elevator.setElevator(ControlMode.PercentOutput,.1);
+            elevator.setShitter(ControlMode.PercentOutput,-.1);
             SmartDashboard.putBoolean("ShooterSpeed", true);
             }
         }

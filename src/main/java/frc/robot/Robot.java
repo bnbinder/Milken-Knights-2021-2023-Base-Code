@@ -37,11 +37,11 @@ public class Robot extends TimedRobot {
   private ColorSensor color = ColorSensor.getInstance();
   private SupaStruct supaKoopa = SupaStruct.getInstance();
   private UltraSensor ultra = UltraSensor.getInstance();
-  private SerialPort arduino;
+  //private SerialPort arduino;
   private Timer timer;
-  private String keyIn = "";
-  private boolean accessible, in = false;
-  private String bull = "30937C22";
+  //private String keyIn = "";
+  //private boolean accessible, in = false;
+  //private String bull = "30937C22";
   private Compressor mCompressor ;//= new Compressor(CANID.revphCANID, PneumaticsModuleType.REVPH);
 
 
@@ -50,7 +50,7 @@ public class Robot extends TimedRobot {
   {
         System.out.println("Robot enabled");
 
-    try
+    /*try
     {
       arduino = new SerialPort(9600, "/dev/ttyACM0", SerialPort.Port.kUSB, 8, SerialPort.Parity.kNone, SerialPort.StopBits.kOne);
       //arduino = new SerialPort(9600, SerialPort.Port.kUSB);
@@ -61,7 +61,7 @@ public class Robot extends TimedRobot {
     {
       System.out.println("Failed to connect on usb port two, failed all usb ports. Is your Ardunio plugged in?");
       in = false;
-    }
+    }*/
   
   try {
     mCompressor = new Compressor(CANID.revphCANID, PneumaticsModuleType.REVPH);
@@ -115,8 +115,8 @@ public class Robot extends TimedRobot {
     }
     train.startTrain();
     navx.getInstance().reset();
-    accessible = false;
-    keyIn = "";
+    //accessible = false;
+    //keyIn = "";
   }
   
   @Override
@@ -130,7 +130,7 @@ public class Robot extends TimedRobot {
       keyIn = keyIn.substring(0,12);
     }
     */
-    if(in)
+    /*if(in)
     {
       if(timer.get() > 2)
       {
@@ -145,9 +145,9 @@ public class Robot extends TimedRobot {
       if(keyIn.equals(bull))
       {
         accessible = true;
-      }
+      }*/
 
-    }
+    //}
 
     supaKoopa.updateTele();
   }
@@ -172,9 +172,9 @@ public class Robot extends TimedRobot {
   {
     train.startTrain();
     train.stopEverything();
-    SmartDashboard.putNumber("anglglgl", DISTANGLE.angle);
-    SmartDashboard.putNumber("distttt", DISTANGLE.distance);
-    SmartDashboard.putNumber("radi", MathFormulas.calculateCircleRadius(50, 10));
+    //SmartDashboard.putNumber("anglglgl", DISTANGLE.angle);
+    //SmartDashboard.putNumber("distttt", DISTANGLE.distance);
+    //SmartDashboard.putNumber("radi", MathFormulas.calculateCircleRadius(50, 10));
   }
 
   @Override

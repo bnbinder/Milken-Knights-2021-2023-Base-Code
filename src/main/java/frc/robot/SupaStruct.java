@@ -152,11 +152,11 @@ public class SupaStruct {
         //--------------------------------------------------------------------//
         
 //      for toggle so povValue doesnt equal -1 and toggle for povToggle
-        if(pov)
+        /*if(pov)
         {
             povValue = xbox.getPOV();
             povToggled = true;
-        }
+        }*/
         
 //      if statments
         /*if(ybutton)
@@ -171,14 +171,14 @@ public class SupaStruct {
             povToggled = false;
             //!povToggled is so moving the stick disabled the auto rotate pov function (like in video games, shooting a gun disables the ability to sprint)
         }
-        else if(povToggled)
+       /* else if(povToggled)
         {
             rcw = train.moveToAngy((povValue+180)% 360);
-        }
+        }*/
         
         //this is useless, remove entire variable if you want
 //      else statements
-        if(!ltrigger &&/*!ybutton&&*/ !povToggled && /*!bbutton&&*/ Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1 && Math.abs(xbox.getRawAxis(DriveInput.rcwX)) < 0.1)
+        if(!ltrigger &&/*!ybutton&&*/ /*!povToggled &&*/ /*!bbutton&&*/ Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1 && Math.abs(xbox.getRawAxis(DriveInput.rcwX)) < 0.1)
         {
             rcw = 0;
         }
@@ -233,8 +233,8 @@ public class SupaStruct {
         }*/
         else
         {
-            elevator.setShitter(ControlMode.PercentOutput,0);
-            elevator.setElevator(ControlMode.PercentOutput,0);
+            //elevator.setShitter(ControlMode.PercentOutput,0);
+            //elevator.setElevator(ControlMode.PercentOutput,0);
             //elevatorOvveride = false;
         }
     }
@@ -260,7 +260,7 @@ public class SupaStruct {
         }
         else if(color.getColor() == MKCOLOR.unkown)
         {
-            elevator.setShitter(ControlMode.PercentOutput, 0);
+            //elevator.setShitter(ControlMode.PercentOutput, 0);
         
             colorCheckTimer.stop();
             colorCheckStartTimer = false;
@@ -302,12 +302,15 @@ public class SupaStruct {
         }
         
         
-        
-        if(mClimb.isLeftAbove() && xbox.getRawButton(ClimbInput.upClimbButton))
+        if(xbox.getPOV() == 90)
+        {
+            mClimb.telescopePercentLeft(-0.5);
+        }
+        else if(mClimb.isLeftBelow() && xbox.getRawButton(ClimbInput.upClimbButton))
         {
             mClimb.telescopePercentLeft(0.5);
         }
-        else if(mClimb.isLeftBelow() && xbox.getRawButton(ClimbInput.downClimbButton))
+        else if(mClimb.isLeftAbove() && xbox.getRawButton(ClimbInput.downClimbButton))
         {
             mClimb.telescopePercentLeft(-0.5);
         }
@@ -316,11 +319,15 @@ public class SupaStruct {
             mClimb.telescopePercentLeft(0);
         }
 
-        if(mClimb.isRightAbove() && xbox.getRawButton(ClimbInput.upClimbButton))
+        if(xbox.getPOV() == 90)
+        {
+            mClimb.telescopePercentRight(-0.5);
+        }
+        else if(mClimb.isRightBelow() && xbox.getRawButton(ClimbInput.upClimbButton))
         {
             mClimb.telescopePercentRight(0.5);
         }
-        else if(mClimb.isRightBelow() && xbox.getRawButton(ClimbInput.downClimbButton))
+        else if(mClimb.isRightAbove() && xbox.getRawButton(ClimbInput.downClimbButton))
         {
             mClimb.telescopePercentRight(-0.5);
         }
@@ -358,7 +365,7 @@ public class SupaStruct {
             //lime.setShooterFinal();
             //shoot.setShooter(ControlMode.Velocity, Math.abs(SHOOOO - shoot.shooterFeedForward(SHOOOO)));
             rcw = lime.etherLimeRCWValue();
-            elevator.setElevator(ControlMode.PercentOutput,.6);
+            elevator.setElevator(ControlMode.PercentOutput,-.6);
             if(supportTimer.get() < 1)
             {
                 //shoot.setSupport(ControlMode.PercentOutput, -.2);
@@ -373,7 +380,7 @@ public class SupaStruct {
             {
             //shoot.setShooter(ControlMode.Velocity, Math.abs(SHOOOO - shoot.shooterFeedForward(SHOOOO)));
             //shoot.setSupport(ControlMode.PercentOutput, .15);
-            elevator.setElevator(ControlMode.PercentOutput,-.1);
+            elevator.setElevator(ControlMode.PercentOutput,.6);
             elevator.setShitter(ControlMode.PercentOutput,.1);
             SmartDashboard.putBoolean("ShooterSpeed", true);
             }
@@ -445,6 +452,12 @@ public class SupaStruct {
         if(!rbbutton && !lbbutton && !rtrigger && !elevatorOvveride)
         {
             elevator.setElevator(ControlMode.PercentOutput, 0);
+            
+        }
+
+        if(!rtrigger && color.getColor() == MKCOLOR.unkown && !ltrigger)
+        {
+            elevator.setShitter(ControlMode.PercentOutput, 0);
         }
         
 
