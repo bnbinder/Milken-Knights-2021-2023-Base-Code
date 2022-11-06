@@ -50,9 +50,9 @@ public class Motor {
         turn.enableVoltageCompensation(true);
         turn.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, MKFALCON.statusOneMeas);
         turn.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, MKFALCON.statusTwoMeas);
-        //turn.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 35,60, 0.1));
+        turn.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 35,60, 0.1));
         //true, const currlimit, peak limit, how many sec
-        //turn.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 35, 60, 0.1));
+        turn.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 35, 60, 0.1));
 
         return turn;
     }
@@ -77,8 +77,8 @@ public class Motor {
         drive.configMotionCruiseVelocity(MKDRIVE.maxNativeVelocity);
         drive.configMotionAcceleration(MKDRIVE.maxNativeAcceleration);
         drive.configMotionSCurveStrength(MKDRIVE.scurve);
-        //drive.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 35,60, 0.1));
-        //drive.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 35, 60, 0.1));
+        drive.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 35,60, 0.1));
+        drive.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 35, 60, 0.1));
 
         return drive;
     }
