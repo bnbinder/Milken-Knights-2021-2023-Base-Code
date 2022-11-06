@@ -302,34 +302,26 @@ public class SupaStruct {
         }
         
         
-        if(xbox.getPOV() == 90)
+        if(xbox.getRawButton(2))
         {
             mClimb.telescopePercentLeft(-0.5);
         }
-        else if(mClimb.isLeftBelow() && xbox.getRawButton(ClimbInput.upClimbButton))
+        else if(xbox.getRawButton(ClimbInput.upClimbButton))
         {
             mClimb.telescopePercentLeft(0.5);
-        }
-        else if(mClimb.isLeftAbove() && xbox.getRawButton(ClimbInput.downClimbButton))
-        {
-            mClimb.telescopePercentLeft(-0.5);
         }
         else
         {
             mClimb.telescopePercentLeft(0);
         }
 
-        if(xbox.getPOV() == 90)
+        if(xbox.getRawButton(2))
         {
             mClimb.telescopePercentRight(-0.5);
         }
-        else if(mClimb.isRightBelow() && xbox.getRawButton(ClimbInput.upClimbButton))
+        else if(xbox.getRawButton(ClimbInput.upClimbButton))
         {
             mClimb.telescopePercentRight(0.5);
-        }
-        else if(mClimb.isRightAbove() && xbox.getRawButton(ClimbInput.downClimbButton))
-        {
-            mClimb.telescopePercentRight(-0.5);
         }
         else
         {

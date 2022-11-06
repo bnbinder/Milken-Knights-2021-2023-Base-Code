@@ -213,11 +213,11 @@ private Motor mMotor = Motor.getInstance();
         SmartDashboard.putNumber("TopRight", trCoder());
         SmartDashboard.putNumber("BottomLeft", blCoder());
         SmartDashboard.putNumber("BottomRight", brCoder());
-
-        SmartDashboard.putNumber("tldeg", tlDeg());
-        SmartDashboard.putNumber("trdeg", trDeg());
+*/
+        //SmartDashboard.putNumber("tldeg", tlDeg());
+        //SmartDashboard.putNumber("trdeg", trDeg());
         SmartDashboard.putNumber("bldeg", blDeg());
-        SmartDashboard.putNumber("brdeg", brDeg());*/
+        SmartDashboard.putNumber("blcider", blCoder());
 
         vars.posInchTL = MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorPosition());
         vars.posInchTR = MathFormulas.nativeToInches(topDriveRight.getSelectedSensorPosition());
