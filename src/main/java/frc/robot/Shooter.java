@@ -94,7 +94,7 @@ public class Shooter {
 
     public void setShooterCalc(double setpoint)
     {
-        setShooter(ControlMode.Velocity, setpoint + shooterFeedForward(setpoint));
+        setShooter(ControlMode.Velocity, setpoint - shooterFeedForward(setpoint));
     }
 
 

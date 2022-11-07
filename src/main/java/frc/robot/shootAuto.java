@@ -49,29 +49,85 @@ public class shootAuto extends CommandBase {
     // shoot.shooterFeedForward(SHOOOO)));
     // MkSwerveTrain.getInstance().etherSwerve(0, 0, lime.etherLimeRCWValue(),
     // ControlMode.PercentOutput);
-    elevator.setElevator(ControlMode.PercentOutput, -.6);
+    //elevator.setElevator(ControlMode.PercentOutput, -.6);
+    //elevator.setShitter(ControlMode.PercentOutput, -.2);
     if (supportTimer.get() < 1) 
     {
-      shoot.setSupport(ControlMode.PercentOutput, .2);
+      shoot.setSupport(ControlMode.PercentOutput, -.2);
     } 
     
     else 
     {
-      Shooter.getInstance().setShooterCalc(4500);
-      Shooter.getInstance().setHoodPositionPercent(4500 + 160);
+      shoot.setSupport(ControlMode.PercentOutput, 0);
+      Shooter.getInstance().setShooterCalc(4400);
+      //Shooter.getInstance().setHoodPositionPercent(0 );
     }
     if (shootTimer.get() > 3) 
     {
-      if (shoot.vars.avgShootSpeedNative > 4400) 
+      if (shoot.vars.avgShootSpeedNative > 4300) 
       {
         // shoot.setShooter(ControlMode.Velocity, Math.abs(SHOOOO -
         // shoot.shooterFeedForward(SHOOOO)));
-        shoot.setSupport(ControlMode.PercentOutput, -.15);
-        elevator.setElevator(ControlMode.PercentOutput, .1);
-        elevator.setShitter(ControlMode.PercentOutput, -.1);
+        shoot.setSupport(ControlMode.PercentOutput, .15);
+        elevator.setElevator(ControlMode.PercentOutput, -.2);
+        elevator.setShitter(ControlMode.PercentOutput, .1);
         SmartDashboard.putBoolean("ShooterSpeed", true);
       }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //shoot.setShooter(ControlMode.PercentOutput, xboxOP.getLeftTriggerAxis()/1);
+            //shoot.setShooter(ControlMode.Velocity, 8000);
+            //lime.setShooterFinal();
+            /*
+            if(!shootTimerFirst)
+            {
+                shootTimer.start();
+                shootTimerFirst = true;
+            }
+            if(!supportTimerFirst)
+            {
+                supportTimer.start();
+                supportTimerFirst = true;
+            }
+
+            //shoot.setShooter(ControlMode.Velocity, Math.abs(SHOOOO - shoot.shooterFeedForward(SHOOOO)));
+            //lime.setShooterFinal();
+            //shoot.setShooter(ControlMode.Velocity, Math.abs(SHOOOO - shoot.shooterFeedForward(SHOOOO)));
+            MkSwerveTrain.getInstance().etherSwerve(0, 0, lime.etherLimeRCWValue(), ControlMode.PercentOutput);
+            elevator.setElevator(ControlMode.PercentOutput,-.6);
+            if(supportTimer.get() < 1)
+            {
+                shoot.setSupport(ControlMode.PercentOutput, .2);
+            }
+            else
+            {
+                lime.setShooterFinal();
+            }
+            if(shootTimer.get() > 3)
+            {
+            if(shoot.vars.avgShootSpeedNative > InterpoLerpo.getInstance().shooterInterpoLerpo(lime.getDistance()))
+            {
+            //shoot.setShooter(ControlMode.Velocity, Math.abs(SHOOOO - shoot.shooterFeedForward(SHOOOO)));
+            shoot.setSupport(ControlMode.PercentOutput, -.15);
+            elevator.setElevator(ControlMode.PercentOutput,.1);
+            elevator.setShitter(ControlMode.PercentOutput,-.1);
+            SmartDashboard.putBoolean("ShooterSpeed", true);
+            }
+        }
+            
+*/
   }
 
   // Called once the command ends or is interrupted.
@@ -79,6 +135,16 @@ public class shootAuto extends CommandBase {
   public void end(boolean interrupted) {
     Shooter.getInstance().setShooter(ControlMode.PercentOutput, 0);
     Shooter.getInstance().setHood(ControlMode.PercentOutput, 0);
+    shoot.setShooter(ControlMode.PercentOutput, 0);
+    shoot.setSupport(ControlMode.PercentOutput, .0);
+    elevator.setElevator(ControlMode.PercentOutput, 0);
+    elevator.setShitter(ControlMode.PercentOutput, 0);
+    shootTimer.stop();
+    shootTimer.reset();
+    shootTimerFirst = false;
+    supportTimer.stop();
+    supportTimer.reset();
+    supportTimerFirst = false;
   }
 
   // Returns true when the command should end.

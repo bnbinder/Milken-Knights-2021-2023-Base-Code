@@ -77,8 +77,12 @@ public class limeShootAuto extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    Shooter.getInstance().setShooter(ControlMode.PercentOutput, 0);
+    Shooter.getInstance().setHood(ControlMode.PercentOutput, 0);
     shoot.setShooter(ControlMode.PercentOutput, 0);
     shoot.setSupport(ControlMode.PercentOutput, .0);
+    elevator.setElevator(ControlMode.PercentOutput, 0);
+    elevator.setShitter(ControlMode.PercentOutput, 0);
     shootTimer.stop();
     shootTimer.reset();
     shootTimerFirst = false;

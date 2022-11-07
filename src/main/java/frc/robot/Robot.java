@@ -98,6 +98,7 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() 
   {
     train.updateSwerve();
+    Shooter.getInstance().updateShooter();
   }
 
   @Override

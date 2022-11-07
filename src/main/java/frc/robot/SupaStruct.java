@@ -4,32 +4,17 @@
 
 package frc.robot;
 
-import java.lang.ProcessBuilder.Redirect;
-import java.sql.Driver;
-import java.util.Map;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.CvSink;
-import edu.wpi.first.cscore.CvSource;
-import edu.wpi.first.cscore.UsbCamera;
-import edu.wpi.first.cscore.VideoMode.PixelFormat;
-import edu.wpi.first.math.Drake;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants.CLIMBER;
-import frc.robot.Constants.CONTROLLERS;
 import frc.robot.Constants.MKBABY;
 import frc.robot.Constants.MKCOLOR;
 import frc.robot.Constants.CONTROLLERS.ClimbInput;
 import frc.robot.Constants.CONTROLLERS.DriveInput;
 import frc.robot.Constants.CONTROLLERS.ElevatorInput;
-import frc.robot.Constants.CONTROLLERS.ShootInput;
 
 /** Add your docs here. */
 public class SupaStruct {
