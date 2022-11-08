@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
   //private String keyIn = "";
   //private boolean accessible, in = false;
   //private String bull = "30937C22";
-  private Compressor mCompressor ;//= new Compressor(CANID.revphCANID, PneumaticsModuleType.REVPH);
+  //private Compressor mCompressor ;//= new Compressor(CANID.revphCANID, PneumaticsModuleType.REVPH);
 
 
   @Override
@@ -64,11 +64,11 @@ public class Robot extends TimedRobot {
     }*/
   
   try {
-    mCompressor = new Compressor(CANID.revphCANID, PneumaticsModuleType.REVPH);
+    //mCompressor = new Compressor(CANID.revphCANID, PneumaticsModuleType.REVPH);
   } catch (UncleanStatusException ex) {
     DriverStation.reportError("Error creating Solenoid", ex.getStackTrace());
   }
-  mCompressor.enableDigital();
+  //mCompressor.enableDigital();
     timer = new Timer();
     timer.start();
 
@@ -106,7 +106,7 @@ public class Robot extends TimedRobot {
   {
     supaKoopa.initTele();
     
-    System.out.println(mCompressor.toString());
+    //System.out.println(mCompressor.toString());
         System.out.println("Robot Teleop Init");
     SmartDashboard.putNumber("distance total", Constants.AUTO.DISTANGLE.distance);
     //SmartDashboard.putNumber("angle real", Constants.AUTO.DISTANGLE.angle);
@@ -171,6 +171,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() 
   {
+    //mCompressor.disable();
     train.startTrain();
     train.stopEverything();
     //SmartDashboard.putNumber("anglglgl", DISTANGLE.angle);

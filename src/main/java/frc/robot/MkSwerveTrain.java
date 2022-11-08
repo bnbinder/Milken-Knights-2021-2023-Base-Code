@@ -207,8 +207,8 @@ private Motor mMotor = Motor.getInstance();
         SmartDashboard.putNumber("botdriveleft", MathFormulas.nativeToInches(bottomDriveLeft.getSelectedSensorPosition()));
         SmartDashboard.putNumber("botdriveright", MathFormulas.nativeToInches(bottomDriveRight.getSelectedSensorPosition()));
         SmartDashboard.putNumber("avgdistinches", vars.avgDistInches);
-        SmartDashboard.putNumber("navx", vars.yaw);*/
-        SmartDashboard.putNumber("MPH", MathFormulas.nativePer100MsToMilesPerHour(Math.abs(topDriveLeft.getSelectedSensorVelocity())));
+        */SmartDashboard.putNumber("navx", vars.yaw);
+        //SmartDashboard.putNumber("MPH", MathFormulas.nativePer100MsToMilesPerHour(Math.abs(topDriveLeft.getSelectedSensorVelocity())));
         /*SmartDashboard.putNumber("TopLeft", tlCoder());
         SmartDashboard.putNumber("TopRight", trCoder());
         SmartDashboard.putNumber("BottomLeft", blCoder());
@@ -216,8 +216,8 @@ private Motor mMotor = Motor.getInstance();
 */
         //SmartDashboard.putNumber("tldeg", tlDeg());
         //SmartDashboard.putNumber("trdeg", trDeg());
-        SmartDashboard.putNumber("bldeg", blDeg());
-        SmartDashboard.putNumber("blcider", blCoder());
+        SmartDashboard.putNumber("brdeg", brDeg());
+        SmartDashboard.putNumber("brcider", brCoder());
 
         vars.posInchTL = MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorPosition());
         vars.posInchTR = MathFormulas.nativeToInches(topDriveRight.getSelectedSensorPosition());

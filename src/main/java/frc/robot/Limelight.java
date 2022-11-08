@@ -28,6 +28,7 @@ public class Limelight {
 
 private Limelight() {
     table.getEntry("pipeline").setValue(MKLIME.pipeline);
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
   }
 
   public static Limelight getInstance() {
