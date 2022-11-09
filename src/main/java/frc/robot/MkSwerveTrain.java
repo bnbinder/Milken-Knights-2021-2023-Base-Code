@@ -377,6 +377,7 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
         {
             RCW = headerStraighter(Math.toDegrees(Math.atan2(FWD, STR)));
         }*/
+
         vars.yaw = 0;
         vars.temp = FWD * Math.cos(Math.toRadians(vars.yaw)) + STR * Math.sin(Math.toRadians(vars.yaw));
         STR = -FWD * Math.sin(Math.toRadians(vars.yaw)) + STR * Math.cos(Math.toRadians(vars.yaw));
@@ -417,10 +418,10 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
             
             if(mode == ControlMode.MotionMagic)
             {
-                vars.mod1[0] = Math.signum(vars.mod1[0]) * vars.autoDist;
-                vars.mod2[0] = Math.signum(vars.mod2[0]) * vars.autoDist;
-                vars.mod3[0] = Math.signum(vars.mod3[0]) * vars.autoDist;
-                vars.mod4[0] = Math.signum(vars.mod4[0]) * vars.autoDist;
+                vars.mod1[0] = Math.signum(vars.mod1[0]) * vars.autoDist + vars.errInterpoLerpo;
+                vars.mod2[0] = Math.signum(vars.mod2[0]) * vars.autoDist + vars.errInterpoLerpo;
+                vars.mod3[0] = Math.signum(vars.mod3[0]) * vars.autoDist + vars.errInterpoLerpo;
+                vars.mod4[0] = Math.signum(vars.mod4[0]) * vars.autoDist + vars.errInterpoLerpo;
             }
           /*  vars.mod1[1] = MathFormulas.setAutoDirection(topLeftModule.getTurnDeg(), vars.mod1[1]);
             vars.mod2[1] = MathFormulas.setAutoDirection(topRightModule.getTurnDeg(), vars.mod2[1]);
@@ -577,6 +578,7 @@ return setpoint;
         vars.totalDistance = totalDistance;
         vars.avgDistInches = 0;
         vars.distanceA = distanceA;
+        vars.errInterpoLerpo = InterpoLerpo.getInstance().autoInterpoLErpo(totalDistance);
     }
 
     /**
@@ -853,6 +855,8 @@ return setpoint;
     public double autoDirectionBR;
 
     public double yawTemp;
+
+    public double errInterpoLerpo;
 
     }
 }

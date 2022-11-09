@@ -27,6 +27,11 @@ public class InterpoLerpo
         return (10.5*inches) + 4668;
     }
 
+    public double autoInterpoLErpo(double distance)
+    {
+        return 0;
+    }
+
     private static class InstanceHolder 
     {
         private static final InterpoLerpo mInstance = new InterpoLerpo();
