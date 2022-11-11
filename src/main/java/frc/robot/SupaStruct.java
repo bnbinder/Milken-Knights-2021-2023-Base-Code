@@ -21,7 +21,7 @@ public class SupaStruct {
     
     private XboxController xbox = new XboxController(0);
     private XboxController xboxOP = new XboxController(1);
-    private double fwd, fwdSignum, str, strSignum, leftjoy, rcw, rcwX, rcwY, inverseTanAngleOG, inverseTanAngleDrive, povValue, hoodPosSet, hoooooodvaaaalluuueee, SHOOOO = 0;
+    private double fwd, fwdSignum, str, strSignum, leftjoy, rcw, rcwX, rcwY, inverseTanAngleOG, inverseTanAngleDrive, povValue, hoodPosSet, hoooooodvaaaalluuueee, SHOOOO, navxRotate = 0;
     private MkSwerveTrain train = MkSwerveTrain.getInstance();
     private Shooter shoot = Shooter.getInstance();
     private Intake intake = Intake.getInstance();
@@ -29,7 +29,7 @@ public class SupaStruct {
     private Elevator elevator = Elevator.getInstance();
     private Limelight lime = Limelight.getInstance();
     private ColorSensor color = ColorSensor.getInstance();
-    private boolean resetNavx, shootTimerFirst, supportTimerFirst, elevatorOvveride, ballEnterOvverride, colorCheckStartTimer, resetDrive, xbutton, ybutton,rbbutton,rbbutton2, lbbutton2, lbbutton,abutton, ltrigger, rtrigger,  pov, povToggled, itsreal = false;
+    private boolean resetNavx, shootTimerFirst, supportTimerFirst, elevatorOvveride, ballEnterOvverride, colorCheckStartTimer, resetDrive, xbutton, ybutton,rbbutton,rbbutton2, lbbutton2, lbbutton,abutton, ltrigger, rtrigger,  pov, /*povToggled,*/ itsreal = false;
     private Climber mClimb = Climber.getInstance();
     private Timer colorCheckTimer = new Timer();
     private Timer shootTimer = new Timer();
@@ -49,9 +49,11 @@ public class SupaStruct {
 
     public void initTele()
     {
+        navxRotate = navx.getInstance().getNavxYaw();
         SmartDashboard.putNumber("hoodPosSet", 0);
         //SmartDashboard.putNumber("percentoutputvalauueueue", 0);
         SmartDashboard.putNumber("SHOOOO", 0);
+
     }
 
     public void updateTele()
@@ -149,12 +151,20 @@ public class SupaStruct {
             rcw = rcwX/5;
             povToggled = false;
         }       */
-        if(Math.abs(xbox.getRawAxis(DriveInput.rcwY)) >= 0.1 || Math.abs(xbox.getRawAxis(DriveInput.rcwX)) >= 0.1)
+        if(/*Math.abs(xbox.getRawAxis(DriveInput.rcwY)) >= 0.1 ||*/ Math.abs(xbox.getRawAxis(DriveInput.rcwX)) >= 0.1)
         {
             //rcw = train.moveToAngy((inverseTanAngleOG + 270) % 360);
             rcw = rcwX;
-            povToggled = false;
+            //povToggled = false;
             //!povToggled is so moving the stick disabled the auto rotate pov function (like in video games, shooting a gun disables the ability to sprint)
+        }
+        if(rcwX >= 0.1)
+        {
+            navxRotate = navx.getInstance().getNavxYaw();
+        }
+        else if(!ltrigger) //(rcwX <= 0.5 && !ltrigger)
+        {
+            rcw = train.moveToAngy(navxRotate);
         }
        /* else if(povToggled)
         {
@@ -162,13 +172,13 @@ public class SupaStruct {
         }*/
         
         //this is useless, remove entire variable if you want
-//      else statements
-        if(!ltrigger &&/*!ybutton&&*/ /*!povToggled &&*/ /*!bbutton&&*/ Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1 && Math.abs(xbox.getRawAxis(DriveInput.rcwX)) < 0.1)
+//      else statements (should be at bottom but what the heck ill do it next season)
+        if(!ltrigger /*&& !ybutton&&*/ /*!povToggled &&*/ /*!bbutton&&*/ /*Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1 && Math.abs(xbox.getRawAxis(DriveInput.rcwX)) < 0.1*/)
         {
             rcw = 0;
         }
 
-        
+        //no rcw<0.1 = rcw = 0 because they want rcw running constantly for heading correction for navx, only ovverride is shooter for now
 
         //--------------------------------------------------------------------//
         //  ROLLER CONTROL
@@ -461,7 +471,7 @@ public class SupaStruct {
         xbutton = false;
         ybutton = false;
         pov = false;
-        povToggled = false;
+        //povToggled = false;
         itsreal = false;
     }
 
