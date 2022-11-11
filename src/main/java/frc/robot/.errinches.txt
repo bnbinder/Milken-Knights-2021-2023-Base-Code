@@ -8,5 +8,8 @@ measurments(err)
 a = distanceA, b = lengthB, err = err from wanted point
 a(in), b(in) = err(in)
 
-80, 40 = 15
-
+with shooter and shitz
+80, 40 = 
+80, 30 = 21
+80, 20 = 13
+80, 10 = 10

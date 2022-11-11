@@ -47,7 +47,7 @@ public final class Constants {
 
         public static final boolean inverted = false;
 
-        public static final int scurve = 6;
+        public static final int scurve = 8;
 
         public static final double greerRatio = 6.75;
 
@@ -362,7 +362,7 @@ public final class Constants {
                 +, +, -, -
             */
             public static final double distanceA = 80;
-            public static final double lengthB = 40;///2;
+            public static final double lengthB = 30;///2;
 
             public static final int sidePos = 1;
             public static final int sideCon = -1;

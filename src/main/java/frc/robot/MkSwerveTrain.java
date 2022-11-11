@@ -201,13 +201,13 @@ private Motor mMotor = Motor.getInstance();
         /*SmartDashboard.putNumber("distancetopright", vars.posInchTR);
         SmartDashboard.putNumber("distancetbotleft", vars.posInchBL);
         SmartDashboard.putNumber("distancetbotright", vars.posInchBR);
-        SmartDashboard.putNumber("calcangle teletop", ((360) + ((-anglereal/2)+((vars.avgDistInches/(distancereal))*(anglereal)))));
+        SmartDashboard.putNumber("calcangle teletop", ((360) + ((-anglereal/2)+((vars.avgDistInches/(distancereal))*(anglereal)))));*/
         SmartDashboard.putNumber("topdriveleft", MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorPosition()));
         SmartDashboard.putNumber("topdriveright", MathFormulas.nativeToInches(topDriveRight.getSelectedSensorPosition()));
         SmartDashboard.putNumber("botdriveleft", MathFormulas.nativeToInches(bottomDriveLeft.getSelectedSensorPosition()));
         SmartDashboard.putNumber("botdriveright", MathFormulas.nativeToInches(bottomDriveRight.getSelectedSensorPosition()));
         SmartDashboard.putNumber("avgdistinches", vars.avgDistInches);
-        */SmartDashboard.putNumber("navx", vars.yaw);
+        SmartDashboard.putNumber("navx", vars.yaw);
         //SmartDashboard.putNumber("MPH", MathFormulas.nativePer100MsToMilesPerHour(Math.abs(topDriveLeft.getSelectedSensorVelocity())));
         /*SmartDashboard.putNumber("TopLeft", tlCoder());
         SmartDashboard.putNumber("TopRight", trCoder());
@@ -443,7 +443,7 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
             vars.mod4[0] = Math.abs(vars.mod4[0]);
         }*/
     
-        setModuleDrive(mode, vars.mod1[0], vars.mod2[0], vars.mod3[0], vars.mod4[0]);
+        setModuleDrive(mode, vars.mod1[0]/5, vars.mod2[0]/5, vars.mod3[0]/5, vars.mod4[0]/5);
         setModuleTurn(vars.mod1[1], vars.mod2[1], vars.mod3[1], vars.mod4[1]);
     }
 
@@ -576,6 +576,7 @@ return setpoint;
         //startDrive();
         vars.autoDist = MathFormulas.inchesToNative(totalDistance);
         vars.totalDistance = totalDistance;
+        SmartDashboard.putNumber("totaldistancccee", vars.totalDistance);
         vars.avgDistInches = 0;
         vars.distanceA = distanceA;
         vars.errInterpoLerpo = InterpoLerpo.getInstance().autoInterpoLErpo(totalDistance);
@@ -622,7 +623,7 @@ return setpoint;
         double calcangle = ((heading) + (((-thetaTurn/2)+((vars.avgDistInches/(vars.totalDistance))*(thetaTurn)))));
         vars.FWDauto = -1* Math.cos(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         vars.STRauto = Math.sin(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
-        etherAutoSwerve(vars.FWDauto, -vars.STRauto, RCWtemp, ControlMode.MotionMagic);
+        etherAutoSwerve(vars.FWDauto, -vars.STRauto, RCWtemp, ControlMode.PercentOutput);
         SmartDashboard.putNumber("heading", heading);
         SmartDashboard.putNumber("side", side);
 
