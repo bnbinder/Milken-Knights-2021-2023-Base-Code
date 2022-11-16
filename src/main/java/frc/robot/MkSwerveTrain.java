@@ -311,11 +311,11 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
         vars.mod2[1] = Math.atan2(vars.B,vars.C)*180/Constants.kPi;
         vars.mod1[1] = Math.atan2(vars.B,vars.D)*180/Constants.kPi;
         vars.mod3[1] = Math.atan2(vars.A,vars.D)*180/Constants.kPi;
-        vars.mod4[1] = Math.atan2(vars.A,vars.C)*180/Constants.kPi; 
+        vars.mod4[1] = Math.atan2(vars.A,vars.C)*180/Constants.kPi;
 
-        vars.mod2[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.C, 2)));      
-        vars.mod1[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.D, 2))); 
-        vars.mod3[0] = Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.D, 2)));           
+        vars.mod2[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.C, 2)));
+        vars.mod1[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.D, 2)));
+        vars.mod3[0] = Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.D, 2)));
         vars.mod4[0] = Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.C, 2)));
         
             vars.max=vars.mod1[0]; if(vars.mod2[0]>vars.max)vars.max=vars.mod2[0]; if(vars.mod3[0]>vars.max)vars.max=vars.mod3[0]; if(vars.mod4[0]>vars.max)vars.max=vars.mod4[0];
@@ -382,12 +382,15 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
         vars.C = FWD - RCW*(MKTRAIN.W/MKTRAIN.R);
         vars.D = FWD + RCW*(MKTRAIN.W/MKTRAIN.R);
 
-        vars.mod2Test = (Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.C, 2)))) * MathFormulas.nativePer100MstoInchesPerSec(RCW) topDriveRight.getSelectedSensorVelocity();      
-        vars.mod1Test = (Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.D, 2)))) * topDriveLeft.getSelectedSensorVelocity(); 
-        vars.mod3Test = (Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.D, 2)))) * bottomDriveLeft.getSelectedSensorVelocity();           
-        vars.mod4Test = (Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.C, 2)))) * bottomDriveRight.getSelectedSensorVelocity();
+        vars.mod2Test = (Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.C, 2)))) * MathFormulas.nativeToInches(topDriveRight.getSelectedSensorVelocity() / 5);
+        vars.mod1Test = (Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.D, 2)))) * MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorVelocity() / 5);
+        vars.mod3Test = (Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.D, 2)))) * MathFormulas.nativeToInches(bottomDriveLeft.getSelectedSensorVelocity() / 5);
+        vars.mod4Test = (Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.C, 2)))) * MathFormulas.nativeToInches(bottomDriveRight.getSelectedSensorVelocity() / 5);
 
-        SmartDashboard.putNumber("mod1test", RCW)
+        SmartDashboard.putNumber("mod1Test", vars.mod1Test);
+        SmartDashboard.putNumber("mod2Test", vars.mod2Test);
+        SmartDashboard.putNumber("mod3Test", vars.mod3Test);
+        SmartDashboard.putNumber("mod4Test", vars.mod4Test);
     }
 
 
@@ -426,9 +429,9 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
         vars.mod3[1] = Math.atan2(vars.A,vars.D)*180/Constants.kPi;
         vars.mod4[1] = Math.atan2(vars.A,vars.C)*180/Constants.kPi; 
 
-        vars.mod2[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.C, 2)));      
-        vars.mod1[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.D, 2))); 
-        vars.mod3[0] = Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.D, 2)));           
+        vars.mod2[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.C, 2)));
+        vars.mod1[0] = Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.D, 2)));
+        vars.mod3[0] = Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.D, 2)));
         vars.mod4[0] = Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.C, 2)));
         
             vars.max=vars.mod1[0]; if(vars.mod2[0]>vars.max)vars.max=vars.mod2[0]; if(vars.mod3[0]>vars.max)vars.max=vars.mod3[0]; if(vars.mod4[0]>vars.max)vars.max=vars.mod4[0];
