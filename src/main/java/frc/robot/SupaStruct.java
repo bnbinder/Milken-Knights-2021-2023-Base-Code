@@ -41,6 +41,11 @@ public class SupaStruct {
     private boolean toggleClimbPressed = false;
     private boolean toggleLeftClimbOn = false;
    private boolean toggleRightClimbOn = false;
+
+
+   private Timer turntesttimer = new Timer();
+   private Timer turntesttimertwo = new Timer();
+   private double count = 0;
    
     public static SupaStruct getInstance()
     {
@@ -473,9 +478,52 @@ public class SupaStruct {
         pov = false;
         //povToggled = false;
         itsreal = false;
+        turntesttimer.stop();
+        turntesttimer.reset();
     }
 
-   
+   public void initTest()
+   {
+    turntesttimer.stop();
+    turntesttimer.reset();
+    turntesttimertwo.stop();
+    turntesttimertwo.reset();
+    train.startTrain();
+   }
+
+    public void updateTest()
+    {
+        double fwd = 0;
+        double rcw = 0;
+        if(xbox.getAButtonPressed())
+        {
+            turntesttimer.start();
+        }
+        if(turntesttimer.get() > 0.00000000000000001 && turntesttimer.get() < 7)
+        {
+            fwd = 0.5;
+        }
+        if(xbox.getRawAxis(4) > 0.1 && (turntesttimer.get() > 0.00000000000000001 && turntesttimer.get() < 7))
+        {
+            rcw = 0.5;
+            count++;
+        }
+
+        if(fwd == 0.5 || rcw == 0.5)
+        {
+            train.etherSwerve(fwd, 0, rcw, ControlMode.PercentOutput);
+        }
+        else
+        {
+            train.stopEverything();
+        }
+        SmartDashboard.putNumber("count", count);
+
+        
+        
+
+      
+    }
 
     private static class InstanceHolder
     {

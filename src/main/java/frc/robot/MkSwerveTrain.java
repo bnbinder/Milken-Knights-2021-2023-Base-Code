@@ -370,6 +370,34 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
 
 
 
+    public void etherRCWFinder(double FWD, double STR, double RCW)
+    {
+        vars.yaw = navx.getInstance().getNavxYaw();
+        vars.temp = FWD * Math.cos(Math.toRadians(vars.yaw)) + STR * Math.sin(Math.toRadians(vars.yaw));
+        STR = -FWD * Math.sin(Math.toRadians(vars.yaw)) + STR * Math.cos(Math.toRadians(vars.yaw));
+        FWD = vars.temp;
+
+        vars.A = STR - RCW*(MKTRAIN.L/MKTRAIN.R);
+        vars.B = STR + RCW*(MKTRAIN.L/MKTRAIN.R);
+        vars.C = FWD - RCW*(MKTRAIN.W/MKTRAIN.R);
+        vars.D = FWD + RCW*(MKTRAIN.W/MKTRAIN.R);
+
+        vars.mod2Test = (Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.C, 2)))) * MathFormulas.nativePer100MstoInchesPerSec(RCW) topDriveRight.getSelectedSensorVelocity();      
+        vars.mod1Test = (Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.D, 2)))) * topDriveLeft.getSelectedSensorVelocity(); 
+        vars.mod3Test = (Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.D, 2)))) * bottomDriveLeft.getSelectedSensorVelocity();           
+        vars.mod4Test = (Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.C, 2)))) * bottomDriveRight.getSelectedSensorVelocity();
+
+        SmartDashboard.putNumber("mod1test", RCW)
+    }
+
+
+
+
+
+
+
+
+
 
     public void etherAutoSwerve(double FWD, double STR, double RCW, ControlMode mode)
     {
@@ -803,6 +831,11 @@ return setpoint;
         public double[] mod3;
         public double[] mod4;
         public double max;
+
+        public double mod1Test;
+        public double mod2Test;
+        public double mod3Test;
+        public double mod4Test;
 
         /**Distance variable for driving in autonomous*/
         public double straightDistance;

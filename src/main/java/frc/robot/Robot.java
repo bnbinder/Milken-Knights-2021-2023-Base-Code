@@ -171,9 +171,8 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() 
   {
+    supaKoopa.initTest();
     //mCompressor.disable();
-    train.startTrain();
-    train.stopEverything();
     //SmartDashboard.putNumber("anglglgl", DISTANGLE.angle);
     //SmartDashboard.putNumber("distttt", DISTANGLE.distance);
     //SmartDashboard.putNumber("radi", MathFormulas.calculateCircleRadius(50, 10));
@@ -182,7 +181,8 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() 
   {
-
+    train.updateSwerve();
+    supaKoopa.updateTest();
   }
 
   
