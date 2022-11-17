@@ -382,15 +382,26 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
         vars.C = FWD - RCW*(MKTRAIN.W/MKTRAIN.R);
         vars.D = FWD + RCW*(MKTRAIN.W/MKTRAIN.R);
 
-        vars.mod2Test = (Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.C, 2)))) * MathFormulas.nativeToInches(topDriveRight.getSelectedSensorVelocity() / 5);
-        vars.mod1Test = (Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.D, 2)))) * MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorVelocity() / 5);
-        vars.mod3Test = (Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.D, 2)))) * MathFormulas.nativeToInches(bottomDriveLeft.getSelectedSensorVelocity() / 5);
-        vars.mod4Test = (Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.C, 2)))) * MathFormulas.nativeToInches(bottomDriveRight.getSelectedSensorVelocity() / 5);
+        vars.mod2Test = (Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.C, 2))));
+        vars.mod1Test = (Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.D, 2))));
+        vars.mod3Test = (Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.D, 2))));
+        vars.mod4Test = (Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.C, 2))));
+
+        vars.max=vars.mod1Test; if(vars.mod2Test>vars.max)vars.max=vars.mod2Test; if(vars.mod3Test>vars.max)vars.max=vars.mod3Test; if(vars.mod4Test>vars.max)vars.max=vars.mod4Test;
+        if(vars.max>1){vars.mod1Test/=vars.max; vars.mod2Test/=vars.max; vars.mod3Test/=vars.max; vars.mod4Test/=vars.max;}
+
+        vars.mod2Test = MathFormulas.nativeToInches(topDriveRight.getSelectedSensorVelocity() / 5);
+        vars.mod1Test = MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorVelocity() / 5);
+        vars.mod3Test = MathFormulas.nativeToInches(bottomDriveLeft.getSelectedSensorVelocity() / 5);
+        vars.mod4Test = MathFormulas.nativeToInches(bottomDriveRight.getSelectedSensorVelocity() / 5);
+
+        vars.avgDistTest = vars.avgDistTest + ((Math.abs(vars.mod1Test) + Math.abs(vars.mod2Test) + Math.abs(vars.mod3Test) + Math.abs(vars.mod4Test)) / 4.0);
 
         SmartDashboard.putNumber("mod1Test", vars.mod1Test);
         SmartDashboard.putNumber("mod2Test", vars.mod2Test);
         SmartDashboard.putNumber("mod3Test", vars.mod3Test);
         SmartDashboard.putNumber("mod4Test", vars.mod4Test);
+        SmartDashboard.putNumber("avgDistTest", vars.avgDistTest);
     }
 
 
@@ -839,6 +850,7 @@ return setpoint;
         public double mod2Test;
         public double mod3Test;
         public double mod4Test;
+        public double avgDistTest;
 
         /**Distance variable for driving in autonomous*/
         public double straightDistance;

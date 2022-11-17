@@ -508,10 +508,11 @@ public class SupaStruct {
             rcw = 0.5;
             count++;
         }
-
+        
         if(fwd == 0.5 || rcw == 0.5)
         {
             train.etherSwerve(fwd, 0, rcw, ControlMode.PercentOutput);
+            train.etherRCWFinder(fwd, 0, rcw);
         }
         else
         {
