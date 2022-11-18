@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants.AUTO;
 import frc.robot.Constants.MKBABY;
 import frc.robot.Constants.MKCOLOR;
 import frc.robot.Constants.CONTROLLERS.ClimbInput;
@@ -484,13 +485,14 @@ public class SupaStruct {
 
    public void initTest()
    {
+    train.vars.avgDistTest = 0;
     turntesttimer.stop();
     turntesttimer.reset();
     turntesttimertwo.stop();
     turntesttimertwo.reset();
     train.startTrain();
    }
-
+//measured over predicted * predicted
     public void updateTest()
     {
         double fwd = 0;
@@ -499,11 +501,11 @@ public class SupaStruct {
         {
             turntesttimer.start();
         }
-        if(turntesttimer.get() > 0.00000000000000001 && turntesttimer.get() < 7)
+        if(turntesttimer.get() > 0.00000000000000001 && turntesttimer.get() < 5)
         {
             fwd = 0.5;
         }
-        if(xbox.getRawAxis(4) > 0.1 && (turntesttimer.get() > 0.00000000000000001 && turntesttimer.get() < 7))
+        if(xbox.getRawAxis(4) > 0.1 && (turntesttimer.get() > 0.00000000000000001 && turntesttimer.get() < 5))
         {
             rcw = 0.5;
             count++;
@@ -512,7 +514,7 @@ public class SupaStruct {
         if(fwd == 0.5 || rcw == 0.5)
         {
             train.etherSwerve(fwd, 0, rcw, ControlMode.PercentOutput);
-            train.etherRCWFinder(fwd, 0, rcw);
+            train.etherRCWFinder(fwd, 0, 0);
         }
         else
         {
@@ -520,9 +522,11 @@ public class SupaStruct {
         }
         SmartDashboard.putNumber("count", count);
 
+        SmartDashboard.putNumber("delta", train.vars.avgDistTest * AUTO.measToPredictRatio);
         
-        
-
+        /*
+         
+         */
       
     }
 

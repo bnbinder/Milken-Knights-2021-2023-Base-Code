@@ -12,6 +12,7 @@ import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants.AUTO;
 import frc.robot.Constants.CANID;
 import frc.robot.Constants.MKCANCODER;
 import frc.robot.Constants.MKDRIVE;
@@ -192,6 +193,7 @@ private Motor mMotor = Motor.getInstance();
 
     public void updateSwerve()
     {
+        DeltaAirlines.getInstance().updateDeltaTime();
         //SmartDashboard.putNumber("anglet", vars.deg[0]);
         //SmartDashboard.putNumber("distancet", vars.posInch[0]);
         anglereal = Constants.AUTO.DISTANGLE.angle;
@@ -372,6 +374,8 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
 
     public void etherRCWFinder(double FWD, double STR, double RCW)
     {
+
+        vars.dt = DeltaAirlines.getInstance().getDT();
         vars.yaw = navx.getInstance().getNavxYaw();
         vars.temp = FWD * Math.cos(Math.toRadians(vars.yaw)) + STR * Math.sin(Math.toRadians(vars.yaw));
         STR = -FWD * Math.sin(Math.toRadians(vars.yaw)) + STR * Math.cos(Math.toRadians(vars.yaw));
@@ -390,10 +394,10 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
         vars.max=vars.mod1Test; if(vars.mod2Test>vars.max)vars.max=vars.mod2Test; if(vars.mod3Test>vars.max)vars.max=vars.mod3Test; if(vars.mod4Test>vars.max)vars.max=vars.mod4Test;
         if(vars.max>1){vars.mod1Test/=vars.max; vars.mod2Test/=vars.max; vars.mod3Test/=vars.max; vars.mod4Test/=vars.max;}
 
-        vars.mod2Test = MathFormulas.nativeToInches(topDriveRight.getSelectedSensorVelocity() / 5);
-        vars.mod1Test = MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorVelocity() / 5);
-        vars.mod3Test = MathFormulas.nativeToInches(bottomDriveLeft.getSelectedSensorVelocity() / 5);
-        vars.mod4Test = MathFormulas.nativeToInches(bottomDriveRight.getSelectedSensorVelocity() / 5);
+        vars.mod2Test = MathFormulas.nativeToInches(((MKDRIVE.maxNativeVelocity * vars.mod2Test) / 100) * vars.dt);
+        vars.mod1Test = MathFormulas.nativeToInches(((MKDRIVE.maxNativeVelocity * vars.mod1Test) / 100) * vars.dt);
+        vars.mod3Test = MathFormulas.nativeToInches(((MKDRIVE.maxNativeVelocity * vars.mod3Test) / 100) * vars.dt);
+        vars.mod4Test = MathFormulas.nativeToInches(((MKDRIVE.maxNativeVelocity * vars.mod4Test) / 100) * vars.dt);
 
         vars.avgDistTest = vars.avgDistTest + ((Math.abs(vars.mod1Test) + Math.abs(vars.mod2Test) + Math.abs(vars.mod3Test) + Math.abs(vars.mod4Test)) / 4.0);
 
@@ -660,9 +664,9 @@ return setpoint;
     public void etherAutoUpdate(double thetaTurn, double heading, int side)
     {
                                             //numbers fall short of high by 3ish inches and short of length by 4ish inches
-        double RCWtemp = 0; //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
+        double RCWtemp = 0.1; //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
                                                                             //minus subtracotr
-        double calcangle = ((heading) + (((-thetaTurn/2)+((vars.avgDistInches/(vars.totalDistance))*(thetaTurn)))));
+        double calcangle = ((heading) + (((-thetaTurn/2)+(((vars.avgDistTest * AUTO.measToPredictRatio)/(vars.totalDistance))*(thetaTurn)))));
         vars.FWDauto = -1* Math.cos(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         vars.STRauto = Math.sin(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         etherAutoSwerve(vars.FWDauto, -vars.STRauto, RCWtemp, ControlMode.PercentOutput);
@@ -851,6 +855,8 @@ return setpoint;
         public double mod3Test;
         public double mod4Test;
         public double avgDistTest;
+
+        public double dt;
 
         /**Distance variable for driving in autonomous*/
         public double straightDistance;
