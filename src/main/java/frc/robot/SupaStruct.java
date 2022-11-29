@@ -31,6 +31,7 @@ public class SupaStruct {
     private Limelight lime = Limelight.getInstance();
     private ColorSensor color = ColorSensor.getInstance();
     private boolean resetNavx, shootTimerFirst, supportTimerFirst, elevatorOvveride, ballEnterOvverride, colorCheckStartTimer, resetDrive, xbutton, ybutton,rbbutton,rbbutton2, lbbutton2, lbbutton,abutton, ltrigger, rtrigger,  pov, /*povToggled,*/ itsreal = false;
+    private boolean isRCWrunningWithNavx = false; 
     private Climber mClimb = Climber.getInstance();
     private Timer colorCheckTimer = new Timer();
     private Timer shootTimer = new Timer();
@@ -164,11 +165,11 @@ public class SupaStruct {
             //povToggled = false;
             //!povToggled is so moving the stick disabled the auto rotate pov function (like in video games, shooting a gun disables the ability to sprint)
         }
-        if(rcwX >= 0.1)
+        if(Math.abs(rcwX) >= 0.1)
         {
             navxRotate = navx.getInstance().getNavxYaw();
         }
-        else if(!ltrigger) //(rcwX <= 0.5 && !ltrigger)
+        else if(!ltrigger && isRCWrunningWithNavx) //(rcwX <= 0.5 && !ltrigger)
         {
             rcw = train.moveToAngy(navxRotate);
         }
@@ -179,7 +180,7 @@ public class SupaStruct {
         
         //this is useless, remove entire variable if you want
 //      else statements (should be at bottom but what the heck ill do it next season)
-        if(!ltrigger /*&& !ybutton&&*/ /*!povToggled &&*/ /*!bbutton&&*/ /*Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1 && Math.abs(xbox.getRawAxis(DriveInput.rcwX)) < 0.1*/)
+        if(!ltrigger && /*&& !ybutton&&*/ /*!povToggled &&*/ /*!bbutton&&*/ Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1 && Math.abs(xbox.getRawAxis(DriveInput.rcwX)) < 0.1)
         {
             rcw = 0;
         }
