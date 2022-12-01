@@ -85,6 +85,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() 
   {
+    train.vars.avgDistTest=0;
     m_autonomousCommand = new SwrvTest();
     train.startTrain();
     navx.getInstance().reset();

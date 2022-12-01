@@ -376,8 +376,8 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
     {
 
         vars.dt = DeltaAirlines.getInstance().getDT();
-        vars.yaw = navx.getInstance().getNavxYaw();
-        vars.temp = FWD * Math.cos(Math.toRadians(vars.yaw)) + STR * Math.sin(Math.toRadians(vars.yaw));
+        vars.yaw = 0;//navx.getInstance().getNavxYaw();
+        //vars.temp = FWD * Math.cos(Math.toRadians(vars.yaw)) + STR * Math.sin(Math.toRadians(vars.yaw));
         STR = -FWD * Math.sin(Math.toRadians(vars.yaw)) + STR * Math.cos(Math.toRadians(vars.yaw));
         FWD = vars.temp;
 
@@ -391,8 +391,8 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
         vars.mod3Test = (Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.D, 2))));
         vars.mod4Test = (Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.C, 2))));
 
-        vars.max=vars.mod1Test; if(vars.mod2Test>vars.max)vars.max=vars.mod2Test; if(vars.mod3Test>vars.max)vars.max=vars.mod3Test; if(vars.mod4Test>vars.max)vars.max=vars.mod4Test;
-        if(vars.max>1){vars.mod1Test/=vars.max; vars.mod2Test/=vars.max; vars.mod3Test/=vars.max; vars.mod4Test/=vars.max;}
+        vars.maxTest=vars.mod1Test; if(vars.mod2Test>vars.maxTest)vars.maxTest=vars.mod2Test; if(vars.mod3Test>vars.maxTest)vars.maxTest=vars.mod3Test; if(vars.mod4Test>vars.maxTest)vars.maxTest=vars.mod4Test;
+        if(vars.maxTest>1){vars.mod1Test/=vars.maxTest; vars.mod2Test/=vars.maxTest; vars.mod3Test/=vars.maxTest; vars.mod4Test/=vars.maxTest;}
 
         vars.mod2Test = MathFormulas.nativeToInches(((MKDRIVE.maxNativeVelocity * vars.mod2Test) / 100) * vars.dt);
         vars.mod1Test = MathFormulas.nativeToInches(((MKDRIVE.maxNativeVelocity * vars.mod1Test) / 100) * vars.dt);
@@ -405,7 +405,7 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
         SmartDashboard.putNumber("mod2Test", vars.mod2Test);
         SmartDashboard.putNumber("mod3Test", vars.mod3Test);
         SmartDashboard.putNumber("mod4Test", vars.mod4Test);
-        SmartDashboard.putNumber("avgDistTest", vars.avgDistTest);
+        SmartDashboard.putNumber("avgDistTest", vars.avgDistTest * AUTO.measToPredictRatio);
     }
 
 
@@ -663,13 +663,15 @@ return setpoint;
 
     public void etherAutoUpdate(double thetaTurn, double heading, int side)
     {
+        
                                             //numbers fall short of high by 3ish inches and short of length by 4ish inches
-        double RCWtemp = 0.1; //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
+        double RCWtemp = 0; //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
                                                                             //minus subtracotr
         double calcangle = ((heading) + (((-thetaTurn/2)+(((vars.avgDistTest * AUTO.measToPredictRatio)/(vars.totalDistance))*(thetaTurn)))));
         vars.FWDauto = -1* Math.cos(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         vars.STRauto = Math.sin(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         etherAutoSwerve(vars.FWDauto, -vars.STRauto, RCWtemp, ControlMode.PercentOutput);
+        etherRCWFinder(0, vars.STRauto, 0);
         SmartDashboard.putNumber("heading", heading);
         SmartDashboard.putNumber("side", side);
 
@@ -683,8 +685,8 @@ return setpoint;
         //SmartDashboard.putNumber("avgDist", vars.avgDistInches);
         //SmartDashboard.putNumber("distA", vars.distanceA);
         //SmartDashboard.putNumber("calcangle", calcangle);
-        //SmartDashboard.putNumber("FWDauto", vars.FWDauto);
-        //SmartDashboard.putNumber("STRauto", vars.STRauto);*/
+        SmartDashboard.putNumber("FWDauto", vars.FWDauto);
+        SmartDashboard.putNumber("STRauto", vars.STRauto);
         SmartDashboard.putNumber("calcangle", calcangle%360);
 /* 
         if(heading > 0 && side > 0)
@@ -855,6 +857,7 @@ return setpoint;
         public double mod3Test;
         public double mod4Test;
         public double avgDistTest;
+        public double maxTest;
 
         public double dt;
 

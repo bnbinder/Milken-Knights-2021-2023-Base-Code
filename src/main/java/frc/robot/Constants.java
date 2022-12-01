@@ -356,7 +356,7 @@ public final class Constants {
     public static class AUTO
     {
 
-        public static final double measToPredictRatio = 0.93320900560016;
+        public static final double measToPredictRatio = 0.823270434926127; //0.93320900560016;
 
         public static class DISTANGLE 
         {                             

@@ -504,7 +504,7 @@ public class SupaStruct {
         }
         if(turntesttimer.get() > 0.00000000000000001 && turntesttimer.get() < 5)
         {
-            fwd = 0.5;
+            fwd = 0.3;
         }
         if(xbox.getRawAxis(4) > 0.1 && (turntesttimer.get() > 0.00000000000000001 && turntesttimer.get() < 5))
         {
@@ -512,7 +512,7 @@ public class SupaStruct {
             count++;
         }
         
-        if(fwd == 0.5 || rcw == 0.5)
+        if(fwd == 0.3 || rcw == 0.5)
         {
             train.etherSwerve(fwd, 0, rcw, ControlMode.PercentOutput);
             train.etherRCWFinder(fwd, 0, 0);
@@ -522,7 +522,7 @@ public class SupaStruct {
             train.stopEverything();
         }
         SmartDashboard.putNumber("count", count);
-
+        SmartDashboard.putNumber("meastopredictratio", train.vars.avgDistInches/train.vars.avgDistTest);
         SmartDashboard.putNumber("delta", train.vars.avgDistTest * AUTO.measToPredictRatio);
         
         /*
