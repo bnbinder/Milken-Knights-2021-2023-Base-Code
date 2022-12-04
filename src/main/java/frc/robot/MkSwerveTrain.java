@@ -376,20 +376,20 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
     {
 
         vars.dt = DeltaAirlines.getInstance().getDT();
-        vars.yaw = 0;//navx.getInstance().getNavxYaw();
-        //vars.temp = FWD * Math.cos(Math.toRadians(vars.yaw)) + STR * Math.sin(Math.toRadians(vars.yaw));
-        STR = -FWD * Math.sin(Math.toRadians(vars.yaw)) + STR * Math.cos(Math.toRadians(vars.yaw));
-        FWD = vars.temp;
+        vars.yawTest = 0;//navx.getInstance().getNavxYaw();
+        vars.tempTest = FWD * Math.cos(Math.toRadians(vars.yawTest)) + STR * Math.sin(Math.toRadians(vars.yawTest));
+        STR = -FWD * Math.sin(Math.toRadians(vars.yawTest)) + STR * Math.cos(Math.toRadians(vars.yawTest));
+        FWD = vars.tempTest;
 
-        vars.A = STR - RCW*(MKTRAIN.L/MKTRAIN.R);
-        vars.B = STR + RCW*(MKTRAIN.L/MKTRAIN.R);
-        vars.C = FWD - RCW*(MKTRAIN.W/MKTRAIN.R);
-        vars.D = FWD + RCW*(MKTRAIN.W/MKTRAIN.R);
+        vars.ATest = STR - RCW*(MKTRAIN.L/MKTRAIN.R);
+        vars.BTest = STR + RCW*(MKTRAIN.L/MKTRAIN.R);
+        vars.CTest = FWD - RCW*(MKTRAIN.W/MKTRAIN.R);
+        vars.DTest = FWD + RCW*(MKTRAIN.W/MKTRAIN.R);
 
-        vars.mod2Test = (Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.C, 2))));
-        vars.mod1Test = (Math.sqrt((Math.pow(vars.B, 2)) + (Math.pow(vars.D, 2))));
-        vars.mod3Test = (Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.D, 2))));
-        vars.mod4Test = (Math.sqrt((Math.pow(vars.A, 2)) + (Math.pow(vars.C, 2))));
+        vars.mod2Test = (Math.sqrt((Math.pow(vars.BTest, 2)) + (Math.pow(vars.CTest, 2))));
+        vars.mod1Test = (Math.sqrt((Math.pow(vars.BTest, 2)) + (Math.pow(vars.DTest, 2))));
+        vars.mod3Test = (Math.sqrt((Math.pow(vars.ATest, 2)) + (Math.pow(vars.DTest, 2))));
+        vars.mod4Test = (Math.sqrt((Math.pow(vars.ATest, 2)) + (Math.pow(vars.CTest, 2))));
 
         vars.maxTest=vars.mod1Test; if(vars.mod2Test>vars.maxTest)vars.maxTest=vars.mod2Test; if(vars.mod3Test>vars.maxTest)vars.maxTest=vars.mod3Test; if(vars.mod4Test>vars.maxTest)vars.maxTest=vars.mod4Test;
         if(vars.maxTest>1){vars.mod1Test/=vars.maxTest; vars.mod2Test/=vars.maxTest; vars.mod3Test/=vars.maxTest; vars.mod4Test/=vars.maxTest;}
@@ -858,6 +858,12 @@ return setpoint;
         public double mod4Test;
         public double avgDistTest;
         public double maxTest;
+        public double yawTest;
+        public double tempTest;
+        public double ATest;
+        public double BTest;
+        public double CTest;
+        public double DTest;
 
         public double dt;
 
