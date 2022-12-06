@@ -49,10 +49,10 @@ public class Shooter {
         vars.avgShootSpeedNative = (vars.leftShootVelocityNative + vars.rightShootVelocityNative) / 2;
         vars.leftShootError = shootLeft.getClosedLoopError();
         vars.rightShootError = shootRight.getClosedLoopError();
-        SmartDashboard.putNumber("leftSpeed", shootLeft.getSelectedSensorVelocity());
+       /*SmartDashboard.putNumber("leftSpeed", shootLeft.getSelectedSensorVelocity());
         SmartDashboard.putNumber("rightSpeed", shootRight.getSelectedSensorVelocity());
         SmartDashboard.putNumber("hood position", hood.getSelectedSensorPosition());
-        SmartDashboard.putNumber("hood pid set", hoodPID.getSetpoint());
+        SmartDashboard.putNumber("hood pid set", hoodPID.getSetpoint());*/
     }
 
 

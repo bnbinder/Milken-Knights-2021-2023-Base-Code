@@ -77,8 +77,8 @@ public class SupaStruct {
         shoot.updateShooter();
         lime.updateSensors();
         //ultra.ultraSmartDashboard();
-        color.colorSmartDashboard();
-        lime.limeSmartDashboard();
+        //color.colorSmartDashboard();
+        //lime.limeSmartDashboard();
 
         //--------------------------------------------------------------------//
         //  VARIABLES
@@ -523,7 +523,7 @@ public class SupaStruct {
         }
         SmartDashboard.putNumber("count", count);
         SmartDashboard.putNumber("meastopredictratio", train.vars.avgDistInches/train.vars.avgDistTest);
-        SmartDashboard.putNumber("delta", train.vars.avgDistTest * AUTO.measToPredictRatio);
+        SmartDashboard.putNumber("delta", train.vars.avgDistTest);
         
         /*
          

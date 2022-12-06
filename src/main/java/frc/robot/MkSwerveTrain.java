@@ -298,6 +298,7 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
         vars.temp = FWD * Math.cos(Math.toRadians(vars.yaw)) + STR * Math.sin(Math.toRadians(vars.yaw));
         STR = -FWD * Math.sin(Math.toRadians(vars.yaw)) + STR * Math.cos(Math.toRadians(vars.yaw));
         FWD = vars.temp;
+        
         //SmartDashboard.putNumber("header pid", (Math.toDegrees(Math.atan2(FWD, STR))));
         //RCW = moveToAngy((((((( Math.toDegrees(Math.atan(RCWY/RCWX))+360 ))+ (MathFormulas.signumV4(RCWX)))%360) - MathFormulas.signumAngleEdition(RCWX,RCWY))+360)%360);
         //SmartDashboard.putNumber("rcw", RCW);
@@ -376,10 +377,13 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
     {
 
         vars.dt = DeltaAirlines.getInstance().getDT();
-        vars.yawTest = 0;//navx.getInstance().getNavxYaw();
+        vars.yawTest = 0; //navx.getInstance().getNavxYaw();
         vars.tempTest = FWD * Math.cos(Math.toRadians(vars.yawTest)) + STR * Math.sin(Math.toRadians(vars.yawTest));
         STR = -FWD * Math.sin(Math.toRadians(vars.yawTest)) + STR * Math.cos(Math.toRadians(vars.yawTest));
         FWD = vars.tempTest;
+        SmartDashboard.putNumber("FWD", FWD);
+        SmartDashboard.putNumber("STR", STR);
+
 
         vars.ATest = STR - RCW*(MKTRAIN.L/MKTRAIN.R);
         vars.BTest = STR + RCW*(MKTRAIN.L/MKTRAIN.R);
@@ -390,14 +394,14 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
         vars.mod1Test = (Math.sqrt((Math.pow(vars.BTest, 2)) + (Math.pow(vars.DTest, 2))));
         vars.mod3Test = (Math.sqrt((Math.pow(vars.ATest, 2)) + (Math.pow(vars.DTest, 2))));
         vars.mod4Test = (Math.sqrt((Math.pow(vars.ATest, 2)) + (Math.pow(vars.CTest, 2))));
-
+      
         vars.maxTest=vars.mod1Test; if(vars.mod2Test>vars.maxTest)vars.maxTest=vars.mod2Test; if(vars.mod3Test>vars.maxTest)vars.maxTest=vars.mod3Test; if(vars.mod4Test>vars.maxTest)vars.maxTest=vars.mod4Test;
         if(vars.maxTest>1){vars.mod1Test/=vars.maxTest; vars.mod2Test/=vars.maxTest; vars.mod3Test/=vars.maxTest; vars.mod4Test/=vars.maxTest;}
 
-        vars.mod2Test = MathFormulas.nativeToInches(((MKDRIVE.maxNativeVelocity * vars.mod2Test) / 100) * vars.dt);
-        vars.mod1Test = MathFormulas.nativeToInches(((MKDRIVE.maxNativeVelocity * vars.mod1Test) / 100) * vars.dt);
-        vars.mod3Test = MathFormulas.nativeToInches(((MKDRIVE.maxNativeVelocity * vars.mod3Test) / 100) * vars.dt);
-        vars.mod4Test = MathFormulas.nativeToInches(((MKDRIVE.maxNativeVelocity * vars.mod4Test) / 100) * vars.dt);
+        vars.mod2Test = MathFormulas.nativeToInches(((MKDRIVE.maxNativeVelocity * (vars.mod2Test)) / 100) * vars.dt);
+        vars.mod1Test = MathFormulas.nativeToInches(((MKDRIVE.maxNativeVelocity * (vars.mod1Test)) / 100) * vars.dt);
+        vars.mod3Test = MathFormulas.nativeToInches(((MKDRIVE.maxNativeVelocity * (vars.mod3Test)) / 100) * vars.dt);
+        vars.mod4Test = MathFormulas.nativeToInches(((MKDRIVE.maxNativeVelocity * (vars.mod4Test)) / 100) * vars.dt);
 
         vars.avgDistTest = vars.avgDistTest + ((Math.abs(vars.mod1Test) + Math.abs(vars.mod2Test) + Math.abs(vars.mod3Test) + Math.abs(vars.mod4Test)) / 4.0);
 
@@ -428,6 +432,8 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
         vars.temp = FWD * Math.cos(Math.toRadians(vars.yaw)) + STR * Math.sin(Math.toRadians(vars.yaw));
         STR = -FWD * Math.sin(Math.toRadians(vars.yaw)) + STR * Math.cos(Math.toRadians(vars.yaw));
         FWD = vars.temp;
+        SmartDashboard.putNumber("FWDreal", FWD);
+        SmartDashboard.putNumber("STRreal", STR);
         //SmartDashboard.putNumber("header pid", (Math.toDegrees(Math.atan2(FWD, STR))));
         //RCW = moveToAngy((((((( Math.toDegrees(Math.atan(RCWY/RCWX))+360 ))+ (MathFormulas.signumV4(RCWX)))%360) - MathFormulas.signumAngleEdition(RCWX,RCWY))+360)%360);
 
@@ -489,7 +495,7 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
             vars.mod4[0] = Math.abs(vars.mod4[0]);
         }*/
     
-        setModuleDrive(mode, vars.mod1[0]/5, vars.mod2[0]/5, vars.mod3[0]/5, vars.mod4[0]/5);
+        setModuleDrive(mode, vars.mod1[0], vars.mod2[0], vars.mod3[0], vars.mod4[0]);
         setModuleTurn(vars.mod1[1], vars.mod2[1], vars.mod3[1], vars.mod4[1]);
     }
 
@@ -665,13 +671,13 @@ return setpoint;
     {
         
                                             //numbers fall short of high by 3ish inches and short of length by 4ish inches
-        double RCWtemp = 0; //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
+        double RCWtemp = 0.3; //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
                                                                             //minus subtracotr
         double calcangle = ((heading) + (((-thetaTurn/2)+(((vars.avgDistTest * AUTO.measToPredictRatio)/(vars.totalDistance))*(thetaTurn)))));
-        vars.FWDauto = -1* Math.cos(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
-        vars.STRauto = Math.sin(calcangle* (Constants.kPi/180));//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
+        vars.FWDauto = (-1* Math.cos(calcangle* (Constants.kPi/180)))/5;//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
+        vars.STRauto = (Math.sin(calcangle* (Constants.kPi/180)))/5;//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         etherAutoSwerve(vars.FWDauto, -vars.STRauto, RCWtemp, ControlMode.PercentOutput);
-        etherRCWFinder(0, vars.STRauto, 0);
+        etherRCWFinder(vars.FWDauto, -vars.STRauto, 0);
         SmartDashboard.putNumber("heading", heading);
         SmartDashboard.putNumber("side", side);
 
