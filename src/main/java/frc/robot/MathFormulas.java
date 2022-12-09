@@ -334,4 +334,17 @@ public class MathFormulas {
   public static double limitAbsolute(double a, double max) {
     return Math.abs(a) < max ? a : Math.copySign(max, a);
   }
+
+
+
+
+  public double finalAngleRCW(double[] pointOne, double[] pointTwo)
+  {
+    return 90-(Math.atan((pointTwo[1]-pointOne[1])/(pointTwo[0]-pointOne[0])));
+  }
+
+  public double calcA(double[] pointOne, double[] pointTwo)
+  {
+    return Math.sqrt(Math.pow(pointTwo[0]-pointOne[0], 2) + Math.pow(pointTwo[1] - pointOne[1], 2));
+  }
 }
