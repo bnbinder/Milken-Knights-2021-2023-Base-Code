@@ -204,12 +204,14 @@ private Motor mMotor = Motor.getInstance();
         SmartDashboard.putNumber("distancetbotleft", vars.posInchBL);
         SmartDashboard.putNumber("distancetbotright", vars.posInchBR);
         SmartDashboard.putNumber("calcangle teletop", ((360) + ((-anglereal/2)+((vars.avgDistInches/(distancereal))*(anglereal)))));*/
-        SmartDashboard.putNumber("topdriveleft", MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorPosition()));
+        /*SmartDashboard.putNumber("topdriveleft", MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorPosition()));
         SmartDashboard.putNumber("topdriveright", MathFormulas.nativeToInches(topDriveRight.getSelectedSensorPosition()));
         SmartDashboard.putNumber("botdriveleft", MathFormulas.nativeToInches(bottomDriveLeft.getSelectedSensorPosition()));
-        SmartDashboard.putNumber("botdriveright", MathFormulas.nativeToInches(bottomDriveRight.getSelectedSensorPosition()));
+        SmartDashboard.putNumber("botdriveright", MathFormulas.nativeToInches(bottomDriveRight.getSelectedSensorPosition()));*/
+        SmartDashboard.putNumber("avgvelnative", vars.avgVelNative);
         SmartDashboard.putNumber("avgdistinches", vars.avgDistInches);
         SmartDashboard.putNumber("navx", vars.yaw);
+        SmartDashboard.putNumber("avgdistusevelo", vars.avgDistInchUseVelo);
         //SmartDashboard.putNumber("MPH", MathFormulas.nativePer100MsToMilesPerHour(Math.abs(topDriveLeft.getSelectedSensorVelocity())));
         /*SmartDashboard.putNumber("TopLeft", tlCoder());
         SmartDashboard.putNumber("TopRight", trCoder());
@@ -241,11 +243,12 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
         vars.degBL = blDeg();
         vars.degBR = brDeg();
 
-
+        //vars.avgDistInchUseVelo = vars.avgDistInchUseVelo + ((Math.abs(MathFormulas.nativeToInches((()) / 100) * vars.dt))))
         vars.avgDistInches = (Math.abs(vars.posInchTL) + Math.abs(vars.posInchTR) + Math.abs(vars.posInchBL) + Math.abs(vars.posInchBR)) /4.0;
         vars.avgVelInches = (vars.velInchTL + vars.velInchTR + vars.velInchBL + vars.velInchBR) / 4.0;
         vars.avgVelNative = (vars.velNativeTL + vars.velNativeTR + vars.velNativeBL + vars.velNativeBR) / 4.0;
         vars.avgDeg = (vars.degTL + vars.degTR + vars.degBL + vars.degBR) / 4.0;
+        
         //TODO maybe abs values if some are negative and some are positive?
     }
 
@@ -360,6 +363,13 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
             vars.mod3[0] = Math.abs(vars.mod3[0]);
             vars.mod4[0] = Math.abs(vars.mod4[0]);
         }*/
+        vars.avgDistInchUseVelo = vars.avgDistInchUseVelo + ((
+            MathFormulas.nativePer100MsToInches(topDriveLeft.getSelectedSensorVelocity());
+            MathFormulas.
+            MathFormulas.
+            MathFormulas.
+        )/4.0)
+        etherRCWFinder(FWD, -STR, RCW);
         setModuleDrive(mode, vars.mod1[0], vars.mod2[0], vars.mod3[0], vars.mod4[0]);
         setModuleTurn(vars.mod1[1], vars.mod2[1], vars.mod3[1], vars.mod4[1]);
     }
@@ -397,18 +407,20 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
       
         vars.maxTest=vars.mod1Test; if(vars.mod2Test>vars.maxTest)vars.maxTest=vars.mod2Test; if(vars.mod3Test>vars.maxTest)vars.maxTest=vars.mod3Test; if(vars.mod4Test>vars.maxTest)vars.maxTest=vars.mod4Test;
         if(vars.maxTest>1){vars.mod1Test/=vars.maxTest; vars.mod2Test/=vars.maxTest; vars.mod3Test/=vars.maxTest; vars.mod4Test/=vars.maxTest;}
-
-        vars.mod2Test = MathFormulas.nativeToInches(((MKDRIVE.maxNativeVelocity * (vars.mod2Test)) / 100) * vars.dt);
-        vars.mod1Test = MathFormulas.nativeToInches(((MKDRIVE.maxNativeVelocity * (vars.mod1Test)) / 100) * vars.dt);
-        vars.mod3Test = MathFormulas.nativeToInches(((MKDRIVE.maxNativeVelocity * (vars.mod3Test)) / 100) * vars.dt);
-        vars.mod4Test = MathFormulas.nativeToInches(((MKDRIVE.maxNativeVelocity * (vars.mod4Test)) / 100) * vars.dt);
-
-        vars.avgDistTest = vars.avgDistTest + ((Math.abs(vars.mod1Test) + Math.abs(vars.mod2Test) + Math.abs(vars.mod3Test) + Math.abs(vars.mod4Test)) / 4.0);
-
+        
         SmartDashboard.putNumber("mod1Test", vars.mod1Test);
         SmartDashboard.putNumber("mod2Test", vars.mod2Test);
         SmartDashboard.putNumber("mod3Test", vars.mod3Test);
         SmartDashboard.putNumber("mod4Test", vars.mod4Test);
+
+        vars.mod2Test = MathFormulas.nativeToInches(((MKDRIVE.maxDrivingVelocity * (vars.mod2Test)) / 100) * vars.dt);
+        vars.mod1Test = MathFormulas.nativeToInches(((MKDRIVE.maxDrivingVelocity * (vars.mod1Test)) / 100) * vars.dt);
+        vars.mod3Test = MathFormulas.nativeToInches(((MKDRIVE.maxDrivingVelocity * (vars.mod3Test)) / 100) * vars.dt);
+        vars.mod4Test = MathFormulas.nativeToInches(((MKDRIVE.maxDrivingVelocity * (vars.mod4Test)) / 100) * vars.dt);
+
+        vars.avgDistTest = vars.avgDistTest + ((Math.abs(vars.mod1Test) + Math.abs(vars.mod2Test) + Math.abs(vars.mod3Test) + Math.abs(vars.mod4Test)) / 4.0);
+
+        
         SmartDashboard.putNumber("avgDistTest", vars.avgDistTest * AUTO.measToPredictRatio);
     }
 
@@ -458,6 +470,10 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
             vars.max=vars.mod1[0]; if(vars.mod2[0]>vars.max)vars.max=vars.mod2[0]; if(vars.mod3[0]>vars.max)vars.max=vars.mod3[0]; if(vars.mod4[0]>vars.max)vars.max=vars.mod4[0];
             if(vars.max>1){vars.mod1[0]/=vars.max; vars.mod2[0]/=vars.max; vars.mod3[0]/=vars.max; vars.mod4[0]/=vars.max;}
 
+            SmartDashboard.putNumber("mod1drive", vars.mod1[0]);
+            SmartDashboard.putNumber("mod2drive", vars.mod2[0]);
+            SmartDashboard.putNumber("mod3drive", vars.mod3[0]);
+            SmartDashboard.putNumber("mod4drive", vars.mod4[0]);
             /*vars.mod1 = MathFormulas.optimize(topLeftModule.getTurnDeg(), vars.mod1);
             vars.mod2 = MathFormulas.optimize(topRightModule.getTurnDeg(), vars.mod2);
             vars.mod3 = MathFormulas.optimize(bottomLeftModule.getTurnDeg(), vars.mod3);
@@ -671,15 +687,15 @@ return setpoint;
     {
         
                                             //numbers fall short of high by 3ish inches and short of length by 4ish inches
-        double RCWtemp = 0.3; //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
+        double RCWtemp = 0.0; //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
                                                                             //minus subtracotr
-        double calcangle = ((heading) + (((-thetaTurn/2)+(((vars.avgDistTest * AUTO.measToPredictRatio)/(vars.totalDistance))*(thetaTurn)))));
+        double calcangle = ((heading) + (((-thetaTurn/2)+(((vars.avgDistInches/*vars.avgDistTest * AUTO.measToPredictRatio*/)/(vars.totalDistance))*(thetaTurn)))));
         vars.FWDauto = (-1* Math.cos(calcangle* (Constants.kPi/180)))/5;//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         vars.STRauto = (Math.sin(calcangle* (Constants.kPi/180)))/5;//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         etherAutoSwerve(vars.FWDauto, -vars.STRauto, RCWtemp, ControlMode.PercentOutput);
         etherRCWFinder(vars.FWDauto, -vars.STRauto, 0);
-        SmartDashboard.putNumber("heading", heading);
-        SmartDashboard.putNumber("side", side);
+        //SmartDashboard.putNumber("heading", heading);
+        //SmartDashboard.putNumber("side", side);
 
 
         //totaldistance+(err^limit(0,1,(floor(dist/total-a))))
@@ -870,6 +886,7 @@ return setpoint;
         public double BTest;
         public double CTest;
         public double DTest;
+        public double avgDistInchUseVelo;
 
         public double dt;
 

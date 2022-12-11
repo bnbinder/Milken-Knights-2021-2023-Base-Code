@@ -129,6 +129,10 @@ public class SupaStruct {
             navx.getInstance().reset();
             povValue = 0;
             inverseTanAngleOG = 0;
+            train.vars.avgDistTest = 0;
+            train.vars.avgDistInches = 0;
+            train.vars.avgDistInchUseVelo = 0;
+            train.startDrive();
            // shoot.zeroHood();
            // rcw = lime.etherLimeRCWValue();
 

@@ -190,6 +190,11 @@ public class MathFormulas {
     return (gimmeDeg * MKFALCON.oneEncoderRotation * greerRatio) / 360;
   }
 
+  public static double nativePer100MsToInches(double gimmeNative)
+  {
+    return nativePer100MstoInchesPerSec(gimmeNative) / 50;
+  }
+
   /**
    * "Get the closest angle between the given angles."
    * @param a angle a
