@@ -343,12 +343,12 @@ public class MathFormulas {
 
 
 
-  public double finalAngleRCW(double[] pointOne, double[] pointTwo)
+  public static double finalAngleRCW(double[] pointOne, double[] pointTwo)
   {
     return 90-(Math.atan((pointTwo[1]-pointOne[1])/(pointTwo[0]-pointOne[0])));
   }
 
-  public double calcA(double[] pointOne, double[] pointTwo)
+  public static double calcA(double[] pointOne, double[] pointTwo)
   {
     return Math.sqrt(Math.pow(pointTwo[0]-pointOne[0], 2) + Math.pow(pointTwo[1] - pointOne[1], 2));
   }

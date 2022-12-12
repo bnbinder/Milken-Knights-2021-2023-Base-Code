@@ -60,6 +60,8 @@ private Motor mMotor = Motor.getInstance();
         vars.mod2 = new double[2];
         vars.mod3 = new double[2];
         vars.mod4 = new double[2];
+        vars.pointOne = new double[]{1,10};
+        vars.pointTwo = new double[]{1,13};
 
         turn = new PIDController(vars.hP, vars.hI, vars.hD);
         turn.enableContinuousInput(0, 360);
@@ -210,6 +212,8 @@ private Motor mMotor = Motor.getInstance();
         SmartDashboard.putNumber("botdriveright", MathFormulas.nativeToInches(bottomDriveRight.getSelectedSensorPosition()));*/
         SmartDashboard.putNumber("avgvelnative", vars.avgVelNative);
         SmartDashboard.putNumber("avgdistinches", vars.avgDistInches);
+        SmartDashboard.putNumber("finalangle", MathFormulas.finalAngleRCW(vars.pointOne, vars.pointTwo));
+        SmartDashboard.putNumber("distancebetweenpoints", MathFormulas.calcA(vars.pointOne, vars.pointTwo));
         SmartDashboard.putNumber("navx", vars.yaw);
         SmartDashboard.putNumber("avgdistusevelo", vars.avgDistInchUseVelo);
         //SmartDashboard.putNumber("MPH", MathFormulas.nativePer100MsToMilesPerHour(Math.abs(topDriveLeft.getSelectedSensorVelocity())));
@@ -227,7 +231,7 @@ private Motor mMotor = Motor.getInstance();
         vars.posInchTR = MathFormulas.nativeToInches(topDriveRight.getSelectedSensorPosition());
         vars.posInchBL = MathFormulas.nativeToInches(bottomDriveLeft.getSelectedSensorPosition());
         vars.posInchBR = MathFormulas.nativeToInches(bottomDriveRight.getSelectedSensorPosition());
-SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
+
         vars.velNativeTL = topDriveLeft.getSelectedSensorVelocity();
         vars.velNativeTR = topDriveRight.getSelectedSensorVelocity();
         vars.velNativeBL = bottomDriveLeft.getSelectedSensorVelocity();
@@ -364,11 +368,12 @@ SmartDashboard.putNumber("avgdistinch", vars.avgDistInches);
             vars.mod4[0] = Math.abs(vars.mod4[0]);
         }*/
         vars.avgDistInchUseVelo = vars.avgDistInchUseVelo + ((
-            MathFormulas.nativePer100MsToInches(topDriveLeft.getSelectedSensorVelocity());
-            MathFormulas.
-            MathFormulas.
-            MathFormulas.
-        )/4.0)
+            MathFormulas.nativePer100MsToInches(topDriveLeft.getSelectedSensorVelocity())+
+            MathFormulas.nativePer100MsToInches(topDriveRight.getSelectedSensorVelocity())+
+            MathFormulas.nativePer100MsToInches(bottomDriveLeft.getSelectedSensorVelocity())+
+            MathFormulas.nativePer100MsToInches(bottomDriveRight.getSelectedSensorVelocity())
+        )/4.0);
+
         etherRCWFinder(FWD, -STR, RCW);
         setModuleDrive(mode, vars.mod1[0], vars.mod2[0], vars.mod3[0], vars.mod4[0]);
         setModuleTurn(vars.mod1[1], vars.mod2[1], vars.mod3[1], vars.mod4[1]);
@@ -944,6 +949,9 @@ return setpoint;
     public double yawTemp;
 
     public double errInterpoLerpo;
+
+    public double[] pointOne;
+    public double[] pointTwo;
 
     }
 }
