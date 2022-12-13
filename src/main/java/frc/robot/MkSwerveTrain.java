@@ -16,6 +16,7 @@ import frc.robot.Constants.AUTO;
 import frc.robot.Constants.CANID;
 import frc.robot.Constants.MKCANCODER;
 import frc.robot.Constants.MKDRIVE;
+import frc.robot.Constants.MKFALCON;
 import frc.robot.Constants.MKTRAIN;
 import frc.robot.Constants.MKTURN;
 
@@ -210,12 +211,6 @@ private Motor mMotor = Motor.getInstance();
         SmartDashboard.putNumber("topdriveright", MathFormulas.nativeToInches(topDriveRight.getSelectedSensorPosition()));
         SmartDashboard.putNumber("botdriveleft", MathFormulas.nativeToInches(bottomDriveLeft.getSelectedSensorPosition()));
         SmartDashboard.putNumber("botdriveright", MathFormulas.nativeToInches(bottomDriveRight.getSelectedSensorPosition()));*/
-        SmartDashboard.putNumber("avgvelnative", vars.avgVelNative);
-        SmartDashboard.putNumber("avgdistinches", vars.avgDistInches);
-        SmartDashboard.putNumber("finalangle", MathFormulas.finalAngleRCW(vars.pointOne, vars.pointTwo));
-        SmartDashboard.putNumber("distancebetweenpoints", MathFormulas.calcA(vars.pointOne, vars.pointTwo));
-        SmartDashboard.putNumber("navx", vars.yaw);
-        SmartDashboard.putNumber("avgdistusevelo", vars.avgDistInchUseVelo);
         //SmartDashboard.putNumber("MPH", MathFormulas.nativePer100MsToMilesPerHour(Math.abs(topDriveLeft.getSelectedSensorVelocity())));
         /*SmartDashboard.putNumber("TopLeft", tlCoder());
         SmartDashboard.putNumber("TopRight", trCoder());
@@ -226,6 +221,8 @@ private Motor mMotor = Motor.getInstance();
         //SmartDashboard.putNumber("trdeg", trDeg());
         SmartDashboard.putNumber("brdeg", brDeg());
         SmartDashboard.putNumber("brcider", brCoder());
+        SmartDashboard.putNumber("avgDistTest", vars.avgDistTest * AUTO.measToPredictRatio);
+        SmartDashboard.putNumber("avgDistinches", vars.avgDistInches);
 
         vars.posInchTL = MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorPosition());
         vars.posInchTR = MathFormulas.nativeToInches(topDriveRight.getSelectedSensorPosition());
@@ -367,12 +364,7 @@ private Motor mMotor = Motor.getInstance();
             vars.mod3[0] = Math.abs(vars.mod3[0]);
             vars.mod4[0] = Math.abs(vars.mod4[0]);
         }*/
-        vars.avgDistInchUseVelo = vars.avgDistInchUseVelo + ((
-            MathFormulas.nativePer100MsToInches(topDriveLeft.getSelectedSensorVelocity())+
-            MathFormulas.nativePer100MsToInches(topDriveRight.getSelectedSensorVelocity())+
-            MathFormulas.nativePer100MsToInches(bottomDriveLeft.getSelectedSensorVelocity())+
-            MathFormulas.nativePer100MsToInches(bottomDriveRight.getSelectedSensorVelocity())
-        )/4.0);
+        
 
         etherRCWFinder(FWD, -STR, RCW);
         setModuleDrive(mode, vars.mod1[0], vars.mod2[0], vars.mod3[0], vars.mod4[0]);
@@ -418,15 +410,13 @@ private Motor mMotor = Motor.getInstance();
         SmartDashboard.putNumber("mod3Test", vars.mod3Test);
         SmartDashboard.putNumber("mod4Test", vars.mod4Test);
 
-        vars.mod2Test = MathFormulas.nativeToInches(((MKDRIVE.maxDrivingVelocity * (vars.mod2Test)) / 100) * vars.dt);
-        vars.mod1Test = MathFormulas.nativeToInches(((MKDRIVE.maxDrivingVelocity * (vars.mod1Test)) / 100) * vars.dt);
-        vars.mod3Test = MathFormulas.nativeToInches(((MKDRIVE.maxDrivingVelocity * (vars.mod3Test)) / 100) * vars.dt);
-        vars.mod4Test = MathFormulas.nativeToInches(((MKDRIVE.maxDrivingVelocity * (vars.mod4Test)) / 100) * vars.dt);
+        vars.mod2Test = MathFormulas.nativePer100MsToInches(MKDRIVE.maxNativeVelocity * vars.mod2Test, vars.dt);
+        vars.mod1Test = MathFormulas.nativePer100MsToInches(MKDRIVE.maxNativeVelocity * vars.mod1Test, vars.dt);
+        vars.mod3Test = MathFormulas.nativePer100MsToInches(MKDRIVE.maxNativeVelocity * vars.mod3Test, vars.dt);
+        vars.mod4Test = MathFormulas.nativePer100MsToInches(MKDRIVE.maxNativeVelocity * vars.mod4Test, vars.dt);
 
-        vars.avgDistTest = vars.avgDistTest + ((Math.abs(vars.mod1Test) + Math.abs(vars.mod2Test) + Math.abs(vars.mod3Test) + Math.abs(vars.mod4Test)) / 4.0);
+        vars.avgDistTest = (vars.avgDistTest + ((Math.abs(vars.mod1Test) + Math.abs(vars.mod2Test) + Math.abs(vars.mod3Test) + Math.abs(vars.mod4Test)) / 4.0));
 
-        
-        SmartDashboard.putNumber("avgDistTest", vars.avgDistTest * AUTO.measToPredictRatio);
     }
 
 
@@ -515,6 +505,13 @@ private Motor mMotor = Motor.getInstance();
             vars.mod3[0] = Math.abs(vars.mod3[0]);
             vars.mod4[0] = Math.abs(vars.mod4[0]);
         }*/
+
+        vars.avgDistInchUseVelo = vars.avgDistInchUseVelo + ((
+            MathFormulas.nativePer100MsToInches(topDriveLeft.getSelectedSensorVelocity(), vars.dt)+
+            MathFormulas.nativePer100MsToInches(topDriveRight.getSelectedSensorVelocity(), vars.dt)+
+            MathFormulas.nativePer100MsToInches(bottomDriveLeft.getSelectedSensorVelocity(), vars.dt)+
+            MathFormulas.nativePer100MsToInches(bottomDriveRight.getSelectedSensorVelocity(), vars.dt)
+        )/4.0);
     
         setModuleDrive(mode, vars.mod1[0], vars.mod2[0], vars.mod3[0], vars.mod4[0]);
         setModuleTurn(vars.mod1[1], vars.mod2[1], vars.mod3[1], vars.mod4[1]);
@@ -694,22 +691,22 @@ return setpoint;
                                             //numbers fall short of high by 3ish inches and short of length by 4ish inches
         double RCWtemp = 0.0; //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
                                                                             //minus subtracotr
-        double calcangle = ((heading) + (((-thetaTurn/2)+(((vars.avgDistInches/*vars.avgDistTest * AUTO.measToPredictRatio*/)/(vars.totalDistance))*(thetaTurn)))));
+        double calcangle = ((heading) + (((-thetaTurn/2)+(((vars.avgDistTest * AUTO.measToPredictRatio)/(vars.totalDistance))*(thetaTurn)))));
         vars.FWDauto = (-1* Math.cos(calcangle* (Constants.kPi/180)))/5;//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         vars.STRauto = (Math.sin(calcangle* (Constants.kPi/180)))/5;//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
         etherAutoSwerve(vars.FWDauto, -vars.STRauto, RCWtemp, ControlMode.PercentOutput);
         etherRCWFinder(vars.FWDauto, -vars.STRauto, 0);
         //SmartDashboard.putNumber("heading", heading);
         //SmartDashboard.putNumber("side", side);
-
-
+        SmartDashboard.putNumber("avgdistsimilarity", vars.avgDistInches - (vars.avgDistTest * AUTO.measToPredictRatio));
+        SmartDashboard.putNumber("calcangletestsimilarrity", ((heading) + (((-thetaTurn/2)+(((vars.avgDistInches)/(vars.totalDistance))*(thetaTurn))))) % 360);
         //totaldistance+(err^limit(0,1,(floor(dist/total-a))))
         //a is threshold stuff if needed
         //boolean the err so it only goes when distance is done, dont need to change angle or dist
 
         
         //SmartDashboard.putNumber("thetaTurn", thetaTurn);
-        //SmartDashboard.putNumber("avgDist", vars.avgDistInches);
+        
         //SmartDashboard.putNumber("distA", vars.distanceA);
         //SmartDashboard.putNumber("calcangle", calcangle);
         SmartDashboard.putNumber("FWDauto", vars.FWDauto);

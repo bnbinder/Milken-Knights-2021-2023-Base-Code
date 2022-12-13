@@ -190,9 +190,9 @@ public class MathFormulas {
     return (gimmeDeg * MKFALCON.oneEncoderRotation * greerRatio) / 360;
   }
 
-  public static double nativePer100MsToInches(double gimmeNative)
+  public static double nativePer100MsToInches(double gimmeNative, double dt)
   {
-    return nativePer100MstoInchesPerSec(gimmeNative) / 50;
+    return nativePer100MstoInchesPerSec(gimmeNative) / (1000/dt);
   }
 
   /**

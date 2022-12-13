@@ -34,7 +34,6 @@ public final class Constants {
         public static final double kV = 0.1;
 
         public static final double maxNativeVelocity = 21600;
-        public static final double maxDrivingVelocity = 21600/1.5;
         public static final double maxNativeAcceleration = maxNativeVelocity / 8;
         
         public static final double kP = 0.21;
