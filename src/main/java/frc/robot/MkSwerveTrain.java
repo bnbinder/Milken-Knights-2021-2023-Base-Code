@@ -203,10 +203,10 @@ private Motor mMotor = Motor.getInstance();
         distancereal = Constants.AUTO.DISTANGLE.distance;
 
         //SmartDashboard.putNumber("degtopleft", vars.degTL);
-        /*SmartDashboard.putNumber("distancetopright", vars.posInchTR);
+        SmartDashboard.putNumber("distancetopright", vars.posInchTR);
         SmartDashboard.putNumber("distancetbotleft", vars.posInchBL);
         SmartDashboard.putNumber("distancetbotright", vars.posInchBR);
-        SmartDashboard.putNumber("calcangle teletop", ((360) + ((-anglereal/2)+((vars.avgDistInches/(distancereal))*(anglereal)))));*/
+        //SmartDashboard.putNumber("calcangle teletop", ((360) + ((-anglereal/2)+((vars.avgDistInches/(distancereal))*(anglereal)))));
         /*SmartDashboard.putNumber("topdriveleft", MathFormulas.nativeToInches(topDriveLeft.getSelectedSensorPosition()));
         SmartDashboard.putNumber("topdriveright", MathFormulas.nativeToInches(topDriveRight.getSelectedSensorPosition()));
         SmartDashboard.putNumber("botdriveleft", MathFormulas.nativeToInches(bottomDriveLeft.getSelectedSensorPosition()));
@@ -441,6 +441,7 @@ private Motor mMotor = Motor.getInstance();
         FWD = vars.temp;
         SmartDashboard.putNumber("FWDreal", FWD);
         SmartDashboard.putNumber("STRreal", STR);
+        SmartDashboard.putNumber("RCWreal", RCW);
         //SmartDashboard.putNumber("header pid", (Math.toDegrees(Math.atan2(FWD, STR))));
         //RCW = moveToAngy((((((( Math.toDegrees(Math.atan(RCWY/RCWX))+360 ))+ (MathFormulas.signumV4(RCWX)))%360) - MathFormulas.signumAngleEdition(RCWX,RCWY))+360)%360);
 
@@ -509,13 +510,20 @@ private Motor mMotor = Motor.getInstance();
             MathFormulas.nativePer100MsToInches(bottomDriveLeft.getSelectedSensorVelocity(), vars.dt)+
             MathFormulas.nativePer100MsToInches(bottomDriveRight.getSelectedSensorVelocity(), vars.dt)
         )/4.0);
-    
-        SmartDashboard.putNumber("mod1drive", vars.mod1[0]);
+    /* 
+            SmartDashboard.putNumber("mod1drive", vars.mod1[0]);
             SmartDashboard.putNumber("mod2drive", vars.mod2[0]);
             SmartDashboard.putNumber("mod3drive", vars.mod3[0]);
-            SmartDashboard.putNumber("mod4drive", vars.mod4[0]);
+            SmartDashboard.putNumber("mod4drive", vars.mod4[0]);*/
+
+            SmartDashboard.putNumber("a", vars.A);
+            SmartDashboard.putNumber("b", vars.B);
+            SmartDashboard.putNumber("c", vars.C);
+            SmartDashboard.putNumber("d", vars.D);
         setModuleDrive(mode, vars.mod1[0], vars.mod2[0], vars.mod3[0], vars.mod4[0]);
         setModuleTurn(vars.mod1[1], vars.mod2[1], vars.mod3[1], vars.mod4[1]);
+        SmartDashboard.putNumber("topdrileftvelo", topDriveLeft.getSelectedSensorVelocity());
+        vars.skipper = true;
     }
 
 
@@ -688,9 +696,9 @@ return setpoint;
 
     public void etherAutoUpdate(double thetaTurn, double heading)
     {
-        
+        vars.skipper = false;
                                             //numbers fall short of high by 3ish inches and short of length by 4ish inches
-        double RCWtemp = moveToAngy(MathFormulas.arcTanRCWAngle(vars.radius, vars.avgDistTest * AUTO.measToPredictRatio)); //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
+        double RCWtemp = moveToAngy(90);//MathFormulas.arcTanRCWAngle(vars.radius, vars.avgDistTest * AUTO.measToPredictRatio)); //50,10 = 15 ... 40,10 = 10 ... 30,10 = 5 ... 20,10 = 0 <-- (even if just circle, 4 inches from height but hits target)
                                                                             //minus subtracotr
         double calcangle = ((heading) + (((-thetaTurn/2)+(((vars.avgDistTest * AUTO.measToPredictRatio)/(vars.totalDistance))*(thetaTurn)))));
         vars.FWDauto = (-1* Math.cos(calcangle* (Constants.kPi/180)))/5;//(90-(thetaTurn/2))+((vars.avgDistInches/vars.totalDistance)*(thetaTurn)) * (Constants.kPi/180));//(((-1 * thetaTurn) + (2 * ((vars.avgDistInches/vars.totalDistance)*thetaTurn))) * Constants.kPi / 180);
@@ -704,7 +712,7 @@ return setpoint;
         //totaldistance+(err^limit(0,1,(floor(dist/total-a))))
         //a is threshold stuff if needed
         //boolean the err so it only goes when distance is done, dont need to change angle or dist
-
+        SmartDashboard.putBoolean("skipper", vars.skipper);
         
         //SmartDashboard.putNumber("thetaTurn", thetaTurn);
         
@@ -893,6 +901,7 @@ return setpoint;
         public double DTest;
         public double avgDistInchUseVelo;
         public double radius;
+        public boolean skipper;
 
         public double dt;
 
