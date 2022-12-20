@@ -36,7 +36,7 @@ public class AprilTags {
     private AprilTags()
     {
         PortForwarder.add(5800, "photonvision.local", 5800);
-        camera = new PhotonCamera("CharminBearsLoveToShit");
+        camera = new PhotonCamera("ShoutOutToMyStove");
         turnPID = new PIDController(MKAPRIL.kP, MKAPRIL.kI, MKAPRIL.kD);
         camera.setPipelineIndex(0);
             // Set driver mode to off.
