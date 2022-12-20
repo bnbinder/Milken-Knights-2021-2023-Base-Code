@@ -765,6 +765,18 @@ return setpoint;
 
 
 
+    public void setEtherTurn(double angle)
+    {
+
+    }
+
+    public boolean isTurnFinished()
+    {
+        return Math.abs(vars.yaw) - Math.abs(vars.angle) <= 1;
+    }
+
+
+
 
 
     /**
@@ -902,6 +914,7 @@ return setpoint;
         public double avgDistInchUseVelo;
         public double radius;
         public boolean skipper;
+        public double angle;
 
         public double dt;
 

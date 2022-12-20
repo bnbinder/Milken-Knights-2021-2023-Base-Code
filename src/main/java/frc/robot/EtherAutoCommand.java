@@ -69,6 +69,8 @@ public class EtherAutoCommand extends CommandBase {
     //System.out.println("end move dist: " + train.vars.avgDistInches);
     //System.out.println("motor dist: " + train.tlDist());
     train.stopEverything();
+    train.startDrive();
+    train.vars.avgDistTest = 0;
   }
 
   // Returns true when the command should end.

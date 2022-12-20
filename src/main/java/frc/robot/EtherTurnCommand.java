@@ -8,40 +8,37 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class EtherStraightCommand extends CommandBase {
-  /** Creates a new EtherStraightCommand. */
-  private double dist, FWD, STR, angle;
+public class EtherTurnCommand extends CommandBase {
+  /** Creates a new EtherTurnCommand. */
+  private double angle;
   private MkSwerveTrain train = MkSwerveTrain.getInstance();
-  public EtherStraightCommand(double dist, double FWD, double STR, double angle) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.dist = dist;
-    this.FWD = FWD;
-    this.STR = STR;
+  public EtherTurnCommand(double angle) {
     this.angle = angle;
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    train.startDrive();
-    train.setEtherAuto(dist, 0, 0);
+    train.setEtherTurn(angle);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    train.etherAutoSwerve(FWD, STR, train.moveToAngy(angle), ControlMode.PercentOutput);
+    train.etherSwerve(0, 0, train.moveToAngy(angle)/5, ControlMode.PercentOutput);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    train.startDrive();
+    train.vars.avgDistTest = 0;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return train.isFinished();
+    return false;
   }
 }
