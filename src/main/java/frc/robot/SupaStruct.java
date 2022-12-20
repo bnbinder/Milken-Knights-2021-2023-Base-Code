@@ -10,14 +10,13 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants.AUTO;
 import frc.robot.Constants.MKBABY;
 import frc.robot.Constants.MKCOLOR;
 import frc.robot.Constants.CONTROLLERS.ClimbInput;
 import frc.robot.Constants.CONTROLLERS.DriveInput;
 import frc.robot.Constants.CONTROLLERS.ElevatorInput;
 
-/** Add your docs here. */
+/**Robot stuff in here*/
 public class SupaStruct {
     
     private XboxController xbox = new XboxController(0);
@@ -38,18 +37,11 @@ public class SupaStruct {
     private Timer shootTimer = new Timer();
     private Timer supportTimer = new Timer();
 
+
+    private Timer turntesttimer = new Timer();
+    private Timer turntesttimertwo = new Timer();
+    private double count = 0;
     
-    private boolean leftGoingUp = false;
-    private boolean rightGoingUp = false;
-    private boolean toggleClimbPressed = false;
-    private boolean toggleLeftClimbOn = false;
-   private boolean toggleRightClimbOn = false;
-
-
-   private Timer turntesttimer = new Timer();
-   private Timer turntesttimertwo = new Timer();
-   private double count = 0;
-   
     public static SupaStruct getInstance()
     {
         return InstanceHolder.mInstance;
@@ -59,9 +51,7 @@ public class SupaStruct {
     {
         navxRotate = navx.getInstance().getNavxYaw();
         SmartDashboard.putNumber("hoodPosSet", 0);
-        //SmartDashboard.putNumber("percentoutputvalauueueue", 0);
         SmartDashboard.putNumber("SHOOOO", 0);
-
     }
 
     public void updateTele()
@@ -100,17 +90,12 @@ public class SupaStruct {
         xbutton = xbox.getXButton();
         abutton = xbox.getAButtonPressed();
         rbbutton = xbox.getRightBumper();
-        //rbbutton2 = xboxOP.getRightBumper();
         lbbutton = xbox.getLeftBumper();
-        //lbbutton2 = xboxOP.getLeftBumper();
         ltrigger = Math.abs(xbox.getRawAxis(2)) > 0.1;
         rtrigger = Math.abs(xbox.getRawAxis(3)) > 0.1;
-        //leftjoy = Math.abs(xboxOP.getRawAxis(1));
-        //ybutton = xboxOP.getYButton();
         pov = xbox.getPOV() != -1;
 
         hoodPosSet = SmartDashboard.getNumber("hoodPosSet", 0);
-        //hoooooodvaaaalluuueee = SmartDashboard.getNumber("percentoutputvalauueueue", 0);
         SHOOOO = SmartDashboard.getNumber("SHOOOO", 0);
 //      i dont remember how i got this lol
         inverseTanAngleOG = ((((((Math.toDegrees(Math.atan(rcwY/rcwX))+360 )) + 
@@ -134,60 +119,29 @@ public class SupaStruct {
             inverseTanAngleOG = 0;
             train.vars.avgDistTest = 0;
             train.vars.avgDistInches = 0;
-            train.vars.avgDistInchUseVelo = 0;
             train.startDrive();
-           // shoot.zeroHood();
-           // rcw = lime.etherLimeRCWValue();
-
-        }/*
-        if(resetDrive)
-        {
-            MkSwerveTrain.getInstance().vars.avgDistInches = 0;
-            MkSwerveTrain.getInstance().startDrive();
-            //str = Math.cos(inverseTanAngleDrive* (Constants.kPi/180));
-            //fwd = Math.sin(inverseTanAngleDrive* (Constants.kPi/180));
-        }*/
+        }
 
         //--------------------------------------------------------------------//
         //  POV ROTATION
         //--------------------------------------------------------------------//
-        
-//      for toggle so povValue doesnt equal -1 and toggle for povToggle
-        /*if(pov)
+       
+        if(Math.abs(xbox.getRawAxis(DriveInput.rcwX)) >= 0.1)
         {
-            povValue = xbox.getPOV();
-            povToggled = true;
-        }*/
-        
-//      if statments
-        /*if(ybutton)
-        {
-            rcw = rcwX/5;
-            povToggled = false;
-        }       */
-        if(/*Math.abs(xbox.getRawAxis(DriveInput.rcwY)) >= 0.1 ||*/ Math.abs(xbox.getRawAxis(DriveInput.rcwX)) >= 0.1)
-        {
-            //rcw = train.moveToAngy((inverseTanAngleOG + 270) % 360);
             rcw = rcwX;
-            //povToggled = false;
-            //!povToggled is so moving the stick disabled the auto rotate pov function (like in video games, shooting a gun disables the ability to sprint)
         }
         if(Math.abs(rcwX) >= 0.1)
         {
             navxRotate = navx.getInstance().getNavxYaw();
         }
-        else if(!ltrigger && isRCWrunningWithNavx) //(rcwX <= 0.5 && !ltrigger)
+        else if(!ltrigger && isRCWrunningWithNavx)
         {
             rcw = train.moveToAngy(navxRotate);
         }
-       /* else if(povToggled)
-        {
-            rcw = train.moveToAngy((povValue+180)% 360);
-        }*/
         
         //this is useless, remove entire variable if you want
 //      else statements (should be at bottom but what the heck ill do it next season)
-        if(!ltrigger && /*&& !ybutton&&*/ /*!povToggled &&*/ /*!bbutton&&*/ Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1 && Math.abs(xbox.getRawAxis(DriveInput.rcwX)) < 0.1)
+        if(!ltrigger && Math.abs(xbox.getRawAxis(DriveInput.rcwY)) < 0.1 && Math.abs(xbox.getRawAxis(DriveInput.rcwX)) < 0.1)
         {
             rcw = 0;
         }
@@ -218,40 +172,25 @@ public class SupaStruct {
         //--------------------------------------------------------------------//
         if(abutton)
         {
-            //System.out.println(!itsreal);
-            //itsreal = !itsreal;
             intake.intakeSet(!intake.getIntakeState());
         }
 
         //--------------------------------------------------------------------//
         //  ELEVATOR AND SHITTER CONTROL
         //--------------------------------------------------------------------//
-    if(!ballEnterOvverride)
-    {
-        if(rtrigger)
-        { 
-            //elevatorOvveride = true;
-            elevator.setElevator(ControlMode.PercentOutput,-.3);
-            elevator.setShitter(ControlMode.PercentOutput,.3);
-        }
-        /*else if(lbbutton2)
+        if(!ballEnterOvverride)
         {
-            //elevatorOvveride = true;
-            elevator.setElevator(ControlMode.PercentOutput,-.3);
-            elevator.setShitter(ControlMode.PercentOutput,.3);
-        }*/
-        else
-        {
-            //elevator.setShitter(ControlMode.PercentOutput,0);
-            //elevator.setElevator(ControlMode.PercentOutput,0);
-            //elevatorOvveride = false;
+            if(rtrigger)
+            { 
+                elevator.setElevator(ControlMode.PercentOutput,-.3);
+                elevator.setShitter(ControlMode.PercentOutput,.3);
+            }
+            else
+            {
+
+            }
         }
-    }
 
-    ////////////////////////////////////////////////////////////////////////////
-
-//if(!elevatorOvveride)
-//{
         if(color.getColor() == DriverStation.getAlliance().toString())
         {
             ballEnterOvverride = true;
@@ -268,9 +207,7 @@ public class SupaStruct {
             }
         }
         else if(color.getColor() == MKCOLOR.unkown)
-        {
-            //elevator.setShitter(ControlMode.PercentOutput, 0);
-        
+        {        
             colorCheckTimer.stop();
             colorCheckStartTimer = false;
             ballEnterOvverride = false;
@@ -285,20 +222,7 @@ public class SupaStruct {
             colorCheckTimer.reset();
             colorCheckStartTimer = false;
         }
-//    }
-       
-       
-    /*   
-            }(DriverStation.getAlliance().toString()==color.getColor())
-        {
-            elevator.setShitter(ControlMode.PercentOutput, 0);
-        }
-        else if (DriverStation.getAlliance().toString()!=color.getColor())
-        {
-            elevator.setShitter(ControlMode.PercentOutput, 0.3);
-        }
 
-*/
         //--------------------------------------------------------------------//
         //  CLIMBER CONTROL
         //--------------------------------------------------------------------//
@@ -342,15 +266,14 @@ public class SupaStruct {
 
 
 //TODO climber could be simple but we copy paste cuz we late loooool        
+
         //--------------------------------------------------------------------//
         //  SHOOTER CONTROL
         //--------------------------------------------------------------------//
+
         SmartDashboard.putNumber("timeeeeeeee", shootTimer.get());
         if(ltrigger)
         {
-            //shoot.setShooter(ControlMode.PercentOutput, xboxOP.getLeftTriggerAxis()/1);
-            //shoot.setShooter(ControlMode.Velocity, 8000);
-            //lime.setShooterFinal();
             if(!shootTimerFirst)
             {
                 shootTimer.start();
@@ -361,15 +284,11 @@ public class SupaStruct {
                 supportTimer.start();
                 supportTimerFirst = true;
             }
-
-            //shoot.setShooter(ControlMode.Velocity, Math.abs(SHOOOO - shoot.shooterFeedForward(SHOOOO)));
-            //lime.setShooterFinal();
-            //shoot.setShooter(ControlMode.Velocity, Math.abs(SHOOOO - shoot.shooterFeedForward(SHOOOO)));
             rcw = lime.etherLimeRCWValue();
             elevator.setElevator(ControlMode.PercentOutput,-.6);
             if(supportTimer.get() < 1)
             {
-                //shoot.setSupport(ControlMode.PercentOutput, -.2);
+
             }
             else
             {
@@ -377,22 +296,17 @@ public class SupaStruct {
             }
             if(shootTimer.get() > 3)
             {
-            if(shoot.vars.avgShootSpeedNative > InterpoLerpo.getInstance().shooterInterpoLerpo(lime.getDistance())-100)
-            {
-            //shoot.setShooter(ControlMode.Velocity, Math.abs(SHOOOO - shoot.shooterFeedForward(SHOOOO)));
-            //shoot.setSupport(ControlMode.PercentOutput, .15);
-            elevator.setElevator(ControlMode.PercentOutput,.6);
-            elevator.setShitter(ControlMode.PercentOutput,.1);
-            SmartDashboard.putBoolean("ShooterSpeed", true);
+                if(shoot.vars.avgShootSpeedNative > InterpoLerpo.getInstance().shooterInterpoLerpo(lime.getDistance())-100)
+                {
+                    elevator.setElevator(ControlMode.PercentOutput,.6);
+                    elevator.setShitter(ControlMode.PercentOutput,.1);
+                    SmartDashboard.putBoolean("ShooterSpeed", true);
+                }
             }
-        }
-            
-
         }
         else
         {
             shoot.setShooter(ControlMode.PercentOutput, 0);
-            //shoot.setSupport(ControlMode.PercentOutput, .0);
             shootTimer.stop();
             shootTimer.reset();
             shootTimerFirst = false;
@@ -410,23 +324,6 @@ public class SupaStruct {
         {
             shoot.setSupport(ControlMode.PercentOutput, 0);
         }
-
-
-        /*SmartDashboard.putNumber("HoodPos", hoodPosSet);
-        SmartDashboard.putNumber("shooterlsidieer", SHOOOO);
-        SmartDashboard.putNumber("fffff subtracto numero uno", hoodPosSet+shoot.hoodposiitongettt());
-        SmartDashboard.putNumber("ffshoot", shoot.shooterFeedForward(SHOOOO) - SHOOOO);
-        if(xbutton)
-        {
-            SmartDashboard.putNumber("fffffff", shoot.hoodFeedForward(hoodPosSet));
-            //shoot.setHoodPositionPercent(3000);
-            shoot.setHoodPositionPercent(hoodPosSet + 160);
-        }
-        else
-        {
-            shoot.setHood(ControlMode.PercentOutput, 0);
-        }
-*/
 
         //--------------------------------------------------------------------//
         //  ELSE STATEMENTS
@@ -470,12 +367,8 @@ public class SupaStruct {
         }
         else
         {
-            //SmartDashboard.putBoolean("ResetNavx", resetNavx);
             train.stopEverything();
         }
-        //SmartDashboard.putBoolean("ballovverride", ballEnterOvverride);
-        //SmartDashboard.putBoolean("elevatorovverride", elevatorOvveride);
-        
     }
 
     public void teleopDisabled()
@@ -485,7 +378,6 @@ public class SupaStruct {
         xbutton = false;
         ybutton = false;
         pov = false;
-        //povToggled = false;
         itsreal = false;
         turntesttimer.stop();
         turntesttimer.reset();
@@ -500,6 +392,7 @@ public class SupaStruct {
     turntesttimertwo.reset();
     train.startTrain();
    }
+
 //measured over predicted * predicted
     public void updateTest()
     {
@@ -528,21 +421,14 @@ public class SupaStruct {
         {
             train.stopEverything();
         }
+
         SmartDashboard.putNumber("count", count);
         SmartDashboard.putNumber("meastopredictratio", train.vars.avgDistInches/train.vars.avgDistTest);
         SmartDashboard.putNumber("delta", train.vars.avgDistTest);
-        
-        /*
-         
-         */
-      
     }
 
     private static class InstanceHolder
     {
             private static final SupaStruct mInstance = new SupaStruct();
-    } 
-
-
-
+    }
 }

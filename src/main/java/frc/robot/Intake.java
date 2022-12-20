@@ -6,16 +6,12 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
-import edu.wpi.first.hal.util.UncleanStatusException;
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.Constants.CANID;
 import frc.robot.Constants.MKINTAKE;
 
-/** Add your docs here. */
+/**The Intake class contains everything relating to the intake mechanism*/
 public class Intake {
     private Motor mMotor = Motor.getInstance();
     private TalonFX roller;
@@ -24,11 +20,7 @@ public class Intake {
     private Intake()
     {
         roller = mMotor.motor(CANID.rollerCANID, MKINTAKE.rollerNeutralMode, 0, MKINTAKE.pidf, MKINTAKE.inverted);
-        
-
-            intake = new Solenoid(PneumaticsModuleType.REVPH, CANID.intakeCANID);
-          
-        
+        intake = new Solenoid(PneumaticsModuleType.REVPH, CANID.intakeCANID);
     }
 
     public static Intake getInstance()

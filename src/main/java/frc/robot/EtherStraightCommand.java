@@ -5,11 +5,9 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class EtherStraightCommand extends CommandBase {
-  /** Creates a new EtherStraightCommand. */
   private double dist, FWD, STR, angle;
   private MkSwerveTrain train = MkSwerveTrain.getInstance();
   public EtherStraightCommand(double dist, double FWD, double STR, double angle) {

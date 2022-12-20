@@ -15,9 +15,7 @@ import com.ctre.phoenix.sensors.SensorVelocityMeasPeriod;
 
 import frc.robot.Constants.MKCANCODER;
 import frc.robot.Constants.MKDRIVE;
-import frc.robot.Constants.MKELEVATOR;
 import frc.robot.Constants.MKFALCON;
-import frc.robot.Constants.MKINTAKE;
 import frc.robot.Constants.MKTURN;
 
 /** Add your docs here. */

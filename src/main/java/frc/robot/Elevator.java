@@ -6,11 +6,10 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
 import frc.robot.Constants.CANID;
 import frc.robot.Constants.MKELEVATOR;
 
-/** Add your docs here. */
+/**The Elevator class contains everything relating to the elevator mechanism*/
 public class Elevator {
     private Motor mMotor = Motor.getInstance();
     private TalonFX elevator;

@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-/** Add your docs here. */
+/**Interpolates from distance graph to get hood and shooter setpoints*/
 public class InterpoLerpo 
 {
     public static InterpoLerpo getInstance()
@@ -17,19 +17,16 @@ public class InterpoLerpo
 
     }
 
+    /**Gets hood setpoint from distance graph*/
     public double hoodInterpoLerpo(double inches)
     {
         return 748+(-12*inches)+(0.282*(Math.pow(inches,2)));
     }
 
+    /**Gets shooter setpoint from distance graph*/
     public double shooterInterpoLerpo(double inches)
     {
         return (10.5*inches) + 4668;
-    }
-
-    public double autoInterpoLErpo(double distance)
-    {
-        return 0;
     }
 
     private static class InstanceHolder 

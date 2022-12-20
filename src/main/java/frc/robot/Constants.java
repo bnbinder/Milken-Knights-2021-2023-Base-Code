@@ -6,13 +6,12 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
-
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 
-/** Add your docs here. */
+/**All variables that remain constant stored here*/
 public final class Constants {
 
     public static final double kPi = 3.14159265359;
@@ -39,7 +38,7 @@ public final class Constants {
         public static final double kP = 0.21;
         public static final double kI = 0;
         public static final double kD = 0 * kP;
-        public static final double kF = 0;// 1023.0 / maxNativeVelocity; //TODO might break the pidf, delete if does
+        public static final double kF = 0;
 
         public static final double[] pidf = {kP, kI, kD, kF};
 
@@ -57,7 +56,7 @@ public final class Constants {
 
     public static class MKTURN 
     {
-        public static final double kP = 0.087;//0.00008;
+        public static final double kP = 0.087;
         public static final double kI = 0;
         public static final double kD = 0.00000001;
         public static final double kF = 0;
@@ -75,10 +74,10 @@ public final class Constants {
 
     public static class MKCANCODER
     {
-        public static final double topLeftOffset = -115.224609375;//-115.048828125;
-        public static final double topRightOffset = -84.19921875;//-84.19921875; 
-        public static final double bottomLeftOffset = -87.099609375; //CCW     //179.296875;//-83.3203125;//-83.056640625;
-        public static final double bottomRightOffset = -128.232421875 + 180;//34.888392857142854;//179.033203125;
+        public static final double topLeftOffset = -115.224609375;
+        public static final double topRightOffset = -84.19921875;
+        public static final double bottomLeftOffset = -87.099609375;
+        public static final double bottomRightOffset = -128.232421875 + 180;
         
         public static final double[] offset = {MKCANCODER.topLeftOffset, MKCANCODER.topRightOffset, MKCANCODER.bottomLeftOffset, MKCANCODER.bottomRightOffset};
 
@@ -348,16 +347,10 @@ public final class Constants {
 
         //intake and roller motors
         public static final int intakeCANID = 0;
-     
         public static final int rollerCANID = 21;
+
+        //revh ph
         public static final int revphCANID = 1; //MUST MAKE SURE IT IS ON RIO NOT CANIVORE 
-        
-        /* 
-        public static final int[] topLeftCANID = {topDriveLeftCANID, topTurnLeftCANID, topTurnLeftCANCoderCANID};
-        public static final int[] topRightCANID = {topDriveRightCANID, topTurnRightCANID, topTurnRightCANCoderCANID};
-        public static final int[] bottomLeftCANID = {bottomDriveLeftCANID, bottomTurnLeftCANID, bottomTurnLeftCANCoderCANID};
-        public static final int[] bottomRightCANID = {bottomDriveRightCANID, bottomTurnRightCANID, bottomTurnRightCANCoderCANID};
-        */
     }
 
     public static class AUTO
@@ -367,11 +360,8 @@ public final class Constants {
 
         public static class DISTANGLE 
         {                             
-            /*
-                +, +, -, -
-            */
             public static final double distanceA = 80;
-            public static final double lengthB = 30;///2;
+            public static final double lengthB = 30;
 
             public static final int sidePos = 1;
             public static final int sideCon = -1;
@@ -395,12 +385,12 @@ public final class Constants {
             public static final double headingfourt = -180;
             public static final double headingfif = -360;
             public static final double headingsixt = -180;
-                                                                              //          /2
+
             public static final double distance = MathFormulas.calculateArcOfPath(distanceA, lengthB);
             public static final double angle = MathFormulas.calculateAngleOfPath(distanceA, lengthB);
 
         }
-        //auto controlling pid
+        //for wpi
         public static final double turnSwerveControlKp = 1;
         public static final double driveSwerveControlKpY = 1;
         public static final double driveSwerveControlKpX = 1;

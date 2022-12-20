@@ -5,11 +5,9 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class EtherTurnCommand extends CommandBase {
-  /** Creates a new EtherTurnCommand. */
   private double angle;
   private MkSwerveTrain train = MkSwerveTrain.getInstance();
   public EtherTurnCommand(double angle) {

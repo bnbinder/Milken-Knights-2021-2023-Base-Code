@@ -14,24 +14,23 @@ import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
 
-/** Add your docs here. */
+/**Not JuneTags. Not FebruaryTags.*/
 public class AprilTags {
 
     private PIDController turnPID;
     // Constants such as camera and target height stored. Change per robot and goal!
-    final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(24);
-    final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
+    private final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(24);
+    private final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
 
     // Angle between horizontal and the camera.
-    final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
+    private final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
 
     // How far from the target we want to be
-    final double GOAL_RANGE_METERS = Units.feetToMeters(3);
+    private final double GOAL_RANGE_METERS = Units.feetToMeters(3);
 
-    // Change this to match the name of your camera
-    PhotonCamera camera;
+    private PhotonCamera camera;
 
-    PhotonPipelineResult result;
+    private PhotonPipelineResult result;
 
     private AprilTags()
     {
@@ -39,7 +38,7 @@ public class AprilTags {
         camera = new PhotonCamera("ShoutOutToMyStove");
         turnPID = new PIDController(MKAPRIL.kP, MKAPRIL.kI, MKAPRIL.kD);
         camera.setPipelineIndex(0);
-            // Set driver mode to off.
+        // Set driver mode to off.
         camera.setDriverMode(false);
     }
 
@@ -48,6 +47,7 @@ public class AprilTags {
         return InstanceHolder.mInstance;
     }
 
+    /**Gets yaw, calculates pid for RCW for etherSwerve*/
     public double getRCWApril()
     {
         if (result.hasTargets()) {
@@ -65,6 +65,7 @@ public class AprilTags {
         result = camera.getLatestResult();
     }
 
+    /**Gets distance from tag*/
     public double getRange()
     {
         if (result.hasTargets()) {

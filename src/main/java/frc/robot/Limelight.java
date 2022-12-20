@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.MKBABY;
 import frc.robot.Constants.MKLIME;
 
-/** Add your docs here. */
+/**The Limelight class contains everything relating to the limelight mechanism*/
 public class Limelight {
     private final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     private final NetworkTableEntry tx = table.getEntry("tx");
@@ -26,16 +26,19 @@ public class Limelight {
     private InterpoLerpo interp = InterpoLerpo.getInstance();
 
 
-private Limelight() {
-    table.getEntry("pipeline").setValue(MKLIME.pipeline);
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
-  }
+    private Limelight() 
+    {
+      table.getEntry("pipeline").setValue(MKLIME.pipeline);
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+    }
 
-  public static Limelight getInstance() {
+  public static Limelight getInstance() 
+  {
     return InstanceHolder.mInstance;
   }
 
-  public void updateSensors() {
+  public void updateSensors() 
+  {
     visionYaw = tx.getDouble(0.0);
     visionPitch = ty.getDouble(0.0);
     distance = calcDistance(visionPitch);
@@ -48,40 +51,45 @@ private Limelight() {
     hoodPos = interp.hoodInterpoLerpo(distance);
     
     Shooter.getInstance().setShooterCalc(RPM);
-    SmartDashboard.putNumber("hoodvalauto", hoodPos);
-    //Shooter.getInstance().setHoodPositionPercent(hoodPos+160);
   }
 
   public double etherLimeRCWValue()
   {
-    SmartDashboard.putNumber("visionyayayay", MathFormulas.limit(visionYaw/MKLIME.maxTX, -.5,.5));
     return MathFormulas.limit(visionYaw/MKLIME.maxTX, -.5,.5) / MKBABY.rcwBABY;
   }
 
-  public boolean inRange() {
-    return hasTarget && Math.abs(visionYaw) < MKLIME.shootTolerance;
-  }
-
+  /**Calculates distance from target */
   public double calcDistance(double pitch)
   {
     return (MKLIME.goalHeightInches - MKLIME.limeHeightInches) / (Math.tan(Math.toRadians(MKLIME.limeAngle + pitch)));
   }
 
+  /**Rotate to limelight target*/
   public void autoRotate()
   {
     MkSwerveTrain.getInstance().etherSwerve(0, 0, etherLimeRCWValue(), ControlMode.PercentOutput);
   }
 
+  public void toggleLED() 
+  {
+    if (led.getDouble(0.0) == 1) {
+      table.getEntry("ledMode").setValue(3);
+    } else {
+      table.getEntry("ledMode").setValue(1);
+    }
+  }
+
   public void limeSmartDashboard()
   {
     SmartDashboard.putNumber("distance to gowl", distance);
+    SmartDashboard.putNumber("visionyayayay", MathFormulas.limit(visionYaw/MKLIME.maxTX, -.5,.5));
+    SmartDashboard.putNumber("hoodvalauto", hoodPos);
   }
 
   public double getDistance()
   {
     return distance;
   }
-
 
   private static class InstanceHolder {
 

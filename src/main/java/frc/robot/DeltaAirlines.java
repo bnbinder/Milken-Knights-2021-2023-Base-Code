@@ -9,16 +9,17 @@ import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/** Add your docs here. */
+/**Handles all dt related activities*/
 public class DeltaAirlines {
-    private int loopOverrunWarning;
+  private int loopOverrunWarning;
   private int loopCounter;
   private double lastTime = Timer.getFPGATimestamp();
   private double dt = 0;
-    public static DeltaAirlines getInstance()
-    {
-        return InstanceHolder.mInstance;
-    }
+
+  public static DeltaAirlines getInstance()
+  {
+    return InstanceHolder.mInstance;
+  }
 
     public void updateDeltaTime() {
         loopCounter++;

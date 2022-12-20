@@ -17,8 +17,6 @@ public class autoOne extends SequentialCommandGroup {
    addCommands(
       deadline(new shootAuto().withTimeout(5)),
       deadline(new shootAuto().withTimeout(5)),
-      deadline(new MotionMagicAuto(90, 180).withTimeout(7)));
-      //deadline(new limeShootAuto()).withTimeout(7));
-    
+      deadline(new MotionMagicAuto(90, 180).withTimeout(7)));    
   }
 }

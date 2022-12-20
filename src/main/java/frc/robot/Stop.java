@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Stop extends CommandBase {
-  /** Creates a new Stop. */
   private MkSwerveTrain train = MkSwerveTrain.getInstance();
   public Stop() {
     // Use addRequirements() here to declare subsystem dependencies.

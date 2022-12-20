@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants.MKCOLOR;
-
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
@@ -51,10 +50,6 @@ public class ColorSensor {
  private int proximity = m_colorSensor.getProximity();
  private Color detectedColor = m_colorSensor.getColor();
  private double IR =  m_colorSensor.getIR();
-
-
-
-
  private String colorString;
  private ColorMatchResult match;
  
@@ -68,7 +63,6 @@ public class ColorSensor {
     m_colorMatcher.addColorMatch(kBlueTarget);
     m_colorMatcher.addColorMatch(kGreenTarget);
     m_colorMatcher.addColorMatch(kRedTarget);
-   // m_colorMatcher.addColorMatch(kfield);   
   }
 
 
@@ -125,8 +119,7 @@ public class ColorSensor {
       colorString = "Blue";
     } else if (match.color == kRedTarget) {
       colorString = "Red";
-    } //else if (match.color == kfield) {
-      //colorString = "none";
+    }
      else {
       colorString = MKCOLOR.unkown;
     }
@@ -153,15 +146,7 @@ public class ColorSensor {
 
   public void colorSmartDashboard()
   {
-   // SmartDashboard.putNumber("Red", detectedColor.red);
-    //SmartDashboard.putNumber("Green", detectedColor.green);
-    //SmartDashboard.putNumber("Blue", detectedColor.blue);
-   // SmartDashboard.putNumber("IR", IR);
-   // SmartDashboard.putNumber("Proximity", proximity);
-    //SmartDashboard.putNumber("red", m_colorSensor.getRed());
     SmartDashboard.putString("Detected Color", colorString);
-
-  //  SmartDashboard.putNumber("Confidence", match.confidence);
   }
 
   
@@ -170,33 +155,3 @@ public class ColorSensor {
       private static final ColorSensor mInstance = new ColorSensor();
   } 
 }
-
-
-
-
-/*
-
-test for distances
-
-measurmenents from robot to wall 
-(robot distance - length of sensor = actual distance)
-
-ir - inches
-
-
-800 - 1 inch
-
-1500 - 33 inches
-the heck happened between these numbers (._.)
-2000 - 46 inches
-
-3500 - 57 inches 
-
-4100 - 67 inches
-
-5000 - 108 inches
-
-
-in conclsion - the color distance sensor is kinda poopy (if my data is correct)
-
-*/

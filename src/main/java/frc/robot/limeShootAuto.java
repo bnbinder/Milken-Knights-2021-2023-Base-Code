@@ -18,7 +18,7 @@ public class limeShootAuto extends CommandBase {
   private Shooter shoot = Shooter.getInstance();
   private Elevator elevator = Elevator.getInstance();
 
-  /** Creates a new limeShootAuto. */
+  /**Creates a new limeShootAuto.*/
   public limeShootAuto() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -29,49 +29,34 @@ public class limeShootAuto extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    
-            //shoot.setShooter(ControlMode.PercentOutput, xboxOP.getLeftTriggerAxis()/1);
-            //shoot.setShooter(ControlMode.Velocity, 8000);
-            //lime.setShooterFinal();
-            if(!shootTimerFirst)
-            {
-                shootTimer.start();
-                shootTimerFirst = true;
-            }
-            if(!supportTimerFirst)
-            {
-                supportTimer.start();
-                supportTimerFirst = true;
-            }
-
-            //shoot.setShooter(ControlMode.Velocity, Math.abs(SHOOOO - shoot.shooterFeedForward(SHOOOO)));
-            //lime.setShooterFinal();
-            //shoot.setShooter(ControlMode.Velocity, Math.abs(SHOOOO - shoot.shooterFeedForward(SHOOOO)));
-            MkSwerveTrain.getInstance().etherSwerve(0, 0, lime.etherLimeRCWValue(), ControlMode.PercentOutput);
-            elevator.setElevator(ControlMode.PercentOutput,-.6);
-            if(supportTimer.get() < 1)
-            {
-                shoot.setSupport(ControlMode.PercentOutput, .2);
-            }
-            else
-            {
-                lime.setShooterFinal();
-            }
-            if(shootTimer.get() > 3)
-            {
-            if(shoot.vars.avgShootSpeedNative > InterpoLerpo.getInstance().shooterInterpoLerpo(lime.getDistance()))
-            {
-            //shoot.setShooter(ControlMode.Velocity, Math.abs(SHOOOO - shoot.shooterFeedForward(SHOOOO)));
-            shoot.setSupport(ControlMode.PercentOutput, -.15);
-            elevator.setElevator(ControlMode.PercentOutput,.1);
-            elevator.setShitter(ControlMode.PercentOutput,-.1);
-            SmartDashboard.putBoolean("ShooterSpeed", true);
-            }
-        }
-            
-
-        }
+  public void execute() 
+  {
+    if(!shootTimerFirst)
+    {
+        shootTimer.start();
+        shootTimerFirst = true;
+    }
+    MkSwerveTrain.getInstance().etherSwerve(0, 0, lime.etherLimeRCWValue(), ControlMode.PercentOutput);
+    elevator.setElevator(ControlMode.PercentOutput,-.6);
+    if(supportTimer.get() < 1)
+    {
+        shoot.setSupport(ControlMode.PercentOutput, .2);
+    }
+    else
+    {
+        lime.setShooterFinal();
+    }
+    if(shootTimer.get() > 3)
+    {
+      if(shoot.vars.avgShootSpeedNative > InterpoLerpo.getInstance().shooterInterpoLerpo(lime.getDistance()))
+      {
+        shoot.setSupport(ControlMode.PercentOutput, -.15);
+        elevator.setElevator(ControlMode.PercentOutput,.1);
+        elevator.setShitter(ControlMode.PercentOutput,-.1);
+        SmartDashboard.putBoolean("ShooterSpeed", true);
+      }
+    }
+  }
   
 
   // Called once the command ends or is interrupted.

@@ -6,17 +6,14 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
-import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.CANID;
 import frc.robot.Constants.MKELEVATOR;
 import frc.robot.Constants.MKHOOD;
 import frc.robot.Constants.MKSHOOTER;
-import frc.robot.Constants.MKTURRET;
 
-/** Add your docs here. */
+/**The Climber class contains everything relating to the climbing mechanism*/
 public class Shooter {
     public variables vars;
     
@@ -49,10 +46,6 @@ public class Shooter {
         vars.avgShootSpeedNative = (vars.leftShootVelocityNative + vars.rightShootVelocityNative) / 2;
         vars.leftShootError = shootLeft.getClosedLoopError();
         vars.rightShootError = shootRight.getClosedLoopError();
-       /*SmartDashboard.putNumber("leftSpeed", shootLeft.getSelectedSensorVelocity());
-        SmartDashboard.putNumber("rightSpeed", shootRight.getSelectedSensorVelocity());
-        SmartDashboard.putNumber("hood position", hood.getSelectedSensorPosition());
-        SmartDashboard.putNumber("hood pid set", hoodPID.getSetpoint());*/
     }
 
 
@@ -72,24 +65,15 @@ public class Shooter {
         shootRight.set(mode, setpoint);
     }
 
-    /*
-    public void setShooterNativeVeloCalc(double setpoint)
-    {
-         shootLeft.set(ControlMode.Velocity, setpoint);
-         shootRight.set(ControlMode.Velocity, setpoint);
-    }
-    */
-
-/**
- * Calculates feedforward for the shooter. i have been told i should be using majority kF, and little kP. lol.
- * @param setpoint Native velocity setpoint in the {@link #setShooterNativeVelocity} function
- * @return Feedforward that should be added when setting a setpoint
- * @see {@link #setShooterNativeVeloctiy(setpoint)}
- */
+    /**
+     * Calculates feedforward for the shooter. i have been told i should be using majority kF, and little kP. lol.
+     * @param setpoint Native velocity setpoint in the {@link #setShooterNativeVelocity} function
+     * @return Feedforward that should be added when setting a setpoint
+     * @see {@link #setShooterNativeVeloctiy(setpoint)}
+     */
     public double shooterFeedForward(double setpoint)
     {
         return MKSHOOTER.maxError * (Math.cos((Constants.kPi / 2) * (1+(setpoint / MKSHOOTER.maxNativeShooterVelocity))));
-        //return ((SHOOT.maxError * setpoint) / SHOOT.maxVelo);
     }
 
     public void setShooterCalc(double setpoint)

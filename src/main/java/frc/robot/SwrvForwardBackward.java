@@ -16,9 +16,7 @@ public class SwrvForwardBackward extends SequentialCommandGroup {
   public SwrvForwardBackward() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(//deadline(new Turn(((DISTANGLE.angleuno)))).withTimeout(1),
-    //distanceA, lengthB, dist, ang, heading
-    //deadline(new Turn(0)).withTimeout(1),
+    addCommands(
     deadline(new Turn(0).withTimeout(1)), //forward curve
     deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.lengthB, DISTANGLE.distance, ((DISTANGLE.angle)),  DISTANGLE.headinguno)).withTimeout(6),
     deadline(new Turn(0)).withTimeout(1), // backward curve
@@ -39,22 +37,5 @@ public class SwrvForwardBackward extends SequentialCommandGroup {
     deadline(new Turn(0)).withTimeout(1),
     deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.lengthB, DISTANGLE.distance, ((DISTANGLE.angle)),     DISTANGLE.headingocto)).withTimeout(6),
     deadline(new Turn(0)).withTimeout(1));
-/* 
-    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.lengthB, DISTANGLE.distance, ((DISTANGLE.angle)),     DISTANGLE.headingnine)).withTimeout(6),
-    deadline(new Turn(0)).withTimeout(1),
-    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.lengthB, DISTANGLE.distance, ((DISTANGLE.angle)),     DISTANGLE.headingele)).withTimeout(6),
-    deadline(new Turn(0)).withTimeout(1),
-    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.lengthB, DISTANGLE.distance, ((DISTANGLE.angle)),     DISTANGLE.headingele)).withTimeout(6),
-    deadline(new Turn(0)).withTimeout(1),
-    
-    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.lengthB, DISTANGLE.distance, ((DISTANGLE.angle)),     DISTANGLE.headingele)).withTimeout(6),
-    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.lengthB, DISTANGLE.distance, ((DISTANGLE.angle)),     DISTANGLE.headingtwel)).withTimeout(6),
-
-    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.lengthB, DISTANGLE.distance, ((DISTANGLE.angle)),     DISTANGLE.headingthir)).withTimeout(6),
-    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.lengthB, DISTANGLE.distance, ((DISTANGLE.angle)),     DISTANGLE.headingfourt)).withTimeout(6),
-    
-    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.lengthB, DISTANGLE.distance, ((DISTANGLE.angle)),     DISTANGLE.headingfif)).withTimeout(6),
-    deadline(new EtherAutoCommand(DISTANGLE.distanceA, DISTANGLE.lengthB, DISTANGLE.distance, ((DISTANGLE.angle)),     DISTANGLE.headingsixt)).withTimeout(6));
-             // deadline(new Stop()));*/
   }
 }

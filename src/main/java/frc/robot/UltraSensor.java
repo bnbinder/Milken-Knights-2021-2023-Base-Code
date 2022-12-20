@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/** Add your docs here. */
+/**The UltraSensor class contains everything relating to the ultrasonic sensor*/
 public class UltraSensor {
     private final AnalogInput ultrasonic = new AnalogInput(0);
     private double rawValue, voltageFactor, currentDistanceInches;
