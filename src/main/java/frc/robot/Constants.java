@@ -242,6 +242,13 @@ public final class Constants {
         public static final double maxTX = 25;
     }
 
+    public static class MKAPRIL
+    {
+        public static final double kP = 0.1;
+        public static final double kI = 0;
+        public static final double kD = 0;
+    }
+
     public static class MKBABY
     {
         public static final double fwdBABY = 2;

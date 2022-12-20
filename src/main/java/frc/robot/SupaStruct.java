@@ -33,6 +33,7 @@ public class SupaStruct {
     private boolean resetNavx, shootTimerFirst, supportTimerFirst, elevatorOvveride, ballEnterOvverride, colorCheckStartTimer, resetDrive, xbutton, ybutton,rbbutton,rbbutton2, lbbutton2, lbbutton,abutton, ltrigger, rtrigger,  pov, /*povToggled,*/ itsreal = false;
     private boolean isRCWrunningWithNavx = false; 
     private Climber mClimb = Climber.getInstance();
+    private AprilTags april = AprilTags.getInstance();
     private Timer colorCheckTimer = new Timer();
     private Timer shootTimer = new Timer();
     private Timer supportTimer = new Timer();
@@ -72,10 +73,12 @@ public class SupaStruct {
         mClimb.climberUpdate();
         train.updateSwerve();
         color.updateColor();
+        april.updateApril();
         //ultra.updateUltra();
         mClimb.climberUpdate();
         shoot.updateShooter();
         lime.updateSensors();
+        april.aprilSmartDashboard();
         //ultra.ultraSmartDashboard();
         //color.colorSmartDashboard();
         //lime.limeSmartDashboard();
